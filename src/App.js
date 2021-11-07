@@ -1,5 +1,11 @@
-import {Button} from '@mui/material'
+
+import React from 'react'
+import TrendingOrder from './component/TrendingOrder'
 function App() {
-  return (<Button>hi</Button>);
+  return (
+     <TrendingOrder/>
+    
+  );
+
 }
 export default App;

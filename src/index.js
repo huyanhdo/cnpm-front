@@ -4,9 +4,8 @@ import App from './App';
 import {Provider} from 'react-redux';
 
 ReactDOM.render(
-  <Provider store = ''>
-  <App/>
-  </Provider>,
+ 
+  <App/>,
    document.getElementById('root')
 );
 
