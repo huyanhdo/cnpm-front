@@ -114,16 +114,16 @@ hr {
 
 /* footer-section*/
 
-.footer {
+.myCar-footer {
     margin-top: 12px;
 }
 
-.footer .check-out{
+.myCar-footer .check-out{
     text-align: center;
     
 }
 
-.footer .check-out button {
+.myCar-footer .check-out button {
     background-color: #EA6A12;
     color: #FFF;
     padding: 10px 24px;
@@ -131,7 +131,7 @@ hr {
     border-radius: 24px;
     outline: 0 none;
 }
-.footer .check-out button:hover {
+.myCar-footer .check-out button:hover {
     cursor: pointer;
     background-color: #07143B;
     color: #FFFF;

@@ -76,7 +76,7 @@ function MyCart() {
                 })}
             </div>
 
-            <div className="footer">
+            <div className="myCar-footer">
                 <div className="check-out">
                     <button type="submit" >Checkout</button>
                 </div>
