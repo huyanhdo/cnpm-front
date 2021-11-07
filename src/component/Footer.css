@@ -1,0 +1,137 @@
+.footer {
+
+  box-sizing: border-box;
+  width: 580px;
+  height: 600px;
+  background-color: #FFEFD857;
+  font-family: Poppins;
+  color: #EA6A12;
+  padding: 12px;
+  border-radius: 24px;
+  border: solid 1px;
+  position: relative;
+}
+
+
+.mb-16 {
+  margin-bottom: 16px;
+}
+
+.mb-8 {
+  margin-bottom: 8px;
+}
+
+.width-100{
+  width: 100%;
+}
+
+svg {
+  color: #EA6A12;
+}
+
+svg :hover {
+  color: #EA6A12;
+  opacity: 0.5;
+}
+
+h2 {
+  font-family: Playfair Display;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 22px;
+  line-height: 130%;
+  /* identical to box height, or 30px */
+  
+  letter-spacing: 0.02em;
+  
+  /* Text/text-07143B */
+  
+  color: #07143B;
+}
+
+hr {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  height: 2px;
+  background-color:#666;
+  opacity: 0.5;
+}
+
+/* About section*/
+.about-content .social {
+  margin: 10px 0 0 0;
+  display: flex;
+  justify-content: center;
+
+}
+.about-content .social div {
+  padding: 0 10px;
+  display: inline-block;
+}
+
+.about-content .social a svg{
+  height: 40px;
+  width: 40px;
+}
+
+/* Wrapper section */
+.wrapper {
+  display: flex;
+
+}
+.wrapper .box{
+  flex-basis: 100%;
+  padding-top: 10px;
+}
+
+
+
+.address .address-content svg{
+  width: 16px;
+  height: 16px;
+}
+
+.contact-content{
+  margin-right: 10px;
+  margin-top: 12px;
+}
+
+
+.email input{
+  width: 97%;
+}
+
+.msg textarea {
+  width: 98%;
+}
+
+.contact-content .button {
+  margin-top: 10px;
+}
+
+.contact-content button {
+  font-size: 14px;
+  font-weight: bold;
+  background-color: #EA6A12;
+  color: #ffff;
+  padding: 6px 10px;
+  float:right;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.contact-content button:hover {
+  background-color: #07143B;
+  color: #EA6A12;
+}
+
+
+.copyright {
+  position: absolute;
+  bottom: 0;
+}
+
+
+
+

@@ -1,0 +1,140 @@
+.my-cart {
+    box-sizing: border-box;
+    padding:24px ;
+    width: 581px;
+    height: 772px;
+    border-radius: 24px;
+    background-color: #FFEFD857;
+    font-family: Poppins;
+    color: #EA6A12;
+}
+
+/* Header-section*/
+.header {
+
+}
+
+h2 {
+    color: #07143B;
+}
+
+hr {
+    margin: 8px 0;
+}
+/* width */
+::-webkit-scrollbar {
+    width: 2px;
+  }
+  
+  /* Track */
+::-webkit-scrollbar-track {
+    background: #FFFF; 
+  }
+   
+  /* Handle */
+::-webkit-scrollbar-thumb {
+    background: rgb(184, 183, 183); 
+  }
+  
+  /* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(124, 122, 122); 
+  }
+
+
+/*Orderlist-section*/
+
+.order-list {
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+
+}
+
+.item {
+    width: 100%;
+    padding: 48px 0;
+    background-color: #FFF5EE;
+    border-radius: 50px;
+    position: relative;
+    margin: 28px 0;
+}
+
+.item .image-item{
+    width: 116px;
+    height: 116px;
+    position: absolute;
+    left: 0;
+    top:-13px;
+}
+
+.item .image-item img{
+    width: 100%;
+    border-radius: 50%;
+}
+
+.item .name-item {
+    position:absolute;
+    left:155px;
+    bottom: 48px;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 175%;
+    color: #07143B;
+}
+
+.item .count-item{
+    color:#07143B;
+    position: absolute;
+    bottom: 24px;
+    left:155px;
+}
+
+.item .delete-item {
+    position: absolute;
+    right: 30px;
+    top:18px;
+}
+
+.item .delete-item svg:hover{
+    color:#07143B;
+    cursor: pointer;
+}
+
+.item .price-item{
+    color: #07143B;
+    position: absolute;
+    right: 32px;
+}
+
+
+
+
+
+/* footer-section*/
+
+.footer {
+    margin-top: 12px;
+}
+
+.footer .check-out{
+    text-align: center;
+    
+}
+
+.footer .check-out button {
+    background-color: #EA6A12;
+    color: #FFF;
+    padding: 10px 24px;
+    font-size: 16px;
+    border-radius: 24px;
+    outline: 0 none;
+}
+.footer .check-out button:hover {
+    cursor: pointer;
+    background-color: #07143B;
+    color: #FFFF;
+}
+
+
