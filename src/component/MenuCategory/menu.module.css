@@ -1,0 +1,81 @@
+.menu_list{
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    min-height: 500px;
+    min-width: 75%;
+    background-color: rgb(237, 240, 80);
+}
+.menu_category{
+    color: var(--secondarysecondary2);
+    font-family: var(--font-family-products_san-bold);
+    font-size: var(--font-size-s);
+    font-weight: 700;
+    letter-spacing: 0;
+    margin-left: 10px;
+    min-height: 17px;
+}
+.category{
+    align-items: flex-start;
+    display: flex;
+    height: 150px;
+    margin-top: 12px;
+    min-width: none;
+}
+.overlap4 {
+    align-items: center;
+    background-color:rgb(238, 215, 185);
+    border-radius: 100px;
+    display: flex;
+    flex-direction: column;
+    min-height: 150px;
+    padding: 28px 0;
+    width: 100px;
+  }
+.overlap124{
+    align-items: flex-end;
+    background-size: 50% 100%;
+    display: flex;
+    height: 54px;
+    justify-content: flex-end;
+    min-width: 54px;
+    padding: 4.0px 4.0px
+}
+.food_name {
+    letter-spacing: 0;
+    margin-left: 1.0px;
+    margin-top: 45px;
+    min-height: 19px;
+    min-width: 38px;
+    text-align: center;
+  }
+  .overlap3 {
+    align-items: center;
+    background-color:rgb(238, 215, 185);
+    border-radius: 100px;
+    display: flex;
+    flex-direction: column;
+    margin-left: 15px;
+    min-height: 150px;
+    padding: 28px 0;
+    width: 100px;
+  }
+.overlap31{
+  height: 80px;
+  position: relative;
+  width: 80px;
+}
+.hr{
+    text-align: center;
+}
+.arrow {
+  text-align: center;
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+  margin-left: 45%;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
+
