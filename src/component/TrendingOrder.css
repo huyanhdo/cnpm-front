@@ -1,56 +1,67 @@
 .TrendingOrder{
     background-color: rgba(255, 246, 216, 0.34) ;
-    width: 1099px;
-    height: 654px;
+    width: 1720px;
+    
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     /* border:  2px solid gray;  */
 }
 .Trending-title{
-    width: 1099px;
+    width: 1680px;
     height: 100px;
     padding: 24px; 
+    margin-bottom: 40px;
+
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: space-between;
 
 }
-.Trending-top{
-    width: 1051px;
+/* .Trending-top{
+    width: 1670px;
     height: 52px;
     margin-right: 0;
       
     
-}
-.Trending-top > h2{
+} */
+
+.Trending-title > h2{
+   
     margin: 0;
     display: inline-block;
     font-family: 'Playfair Display', serif;
     font-weight: 700;
     font-style: normal;
     font-size: 40px;
-    line-height: 130%;
+    line-height: 2.5;
+    
 }
 .view-all{
+    margin-right: 50px;
     display: inline-block;
-    margin-left: 650px;
+    align-self: center;
+    right: 30px;
+    
    
 }
 .view-all > p{
     font-weight: 400;
     font-size: 16px;
-    line-height: 175%;
     
 }
-.view-all > p >i {
+.view-all > p > i {
     
     color: #EA6A12;
 }
 
-.cards{
-    display: flex;
-    flex-wrap: wrap;
-    margin-left: -103px;
-}
 .card{
-    margin-left: 103px;
-    margin-bottom: 40px;
+    
+    width: 13.5%;
+    
+}
+#thumbnail1{
+    --height: 140px;
+    right: calc( -1 * calc(var(--height) / 2));
 }
