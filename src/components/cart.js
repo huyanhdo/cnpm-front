@@ -39,7 +39,7 @@ const CartItem = (props)=>{
             <Box sx={{flexGrow: 3}}/>
             <Stack
             sx={{
-                flexGrow:3
+                flexGrow:3,
             }}
             >
                 <Typography variant="subtitle1"
@@ -121,7 +121,7 @@ export const Cart = ()=>{
         <Card
         sx={{
             borderRadius: '24px',
-            height: '100%'
+            height: '100%',
         }}
         >
             <Typography variant="h6"

@@ -1,5 +1,7 @@
 import './App.css';
 import { Home } from './pages/home';
+import { PizzaPage } from './pages/pizza';
+import { SinglePage } from './pages/singlePage';
 
 function App() {
   return (
@@ -12,7 +14,7 @@ function App() {
       </head>
       <body>
     <div className="App">
-      <Home/>
+      <SinglePage/>
     </div>
     </body>
     </html>

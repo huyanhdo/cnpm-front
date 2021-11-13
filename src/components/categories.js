@@ -136,8 +136,11 @@ export const PizzaCard = (props)=>{
         setHov(prev => !prev);
     }
     return (
-        <Box>
-        
+        <Box
+        sx={{
+            marginTop: '100px'
+        }}
+        >
         <Box
         onMouseEnter={switchHov}
         onMouseLeave = {switchHov}
@@ -203,7 +206,7 @@ export const PizzaCard = (props)=>{
                     }}
                     >$ {price}
                 </Typography>
-                <IconButton
+               <IconButton
                 size="small"
                 sx={{
                 width: '24px',
@@ -215,7 +218,7 @@ export const PizzaCard = (props)=>{
                         color: hov ? 'white':'rgba(234, 106, 18, 0.7)',
                     }}
                 />
-                </IconButton>
+                </IconButton> 
             </Stack>
         </Box>
         </Box>
@@ -262,8 +265,7 @@ export const Categories = ()=>{
     sx={{
         display: 'flex',
         justifyContent: 'space-evenly',
-        flexWrap: 'wrap',
-        marginTop: '10%'
+        flexWrap: 'wrap'
     }}
     >
         {
