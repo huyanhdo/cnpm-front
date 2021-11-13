@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import {Box, Divider, IconButton, Stack, Typography, Rating, Button} from '@mui/material';
+import {Box, Divider, IconButton, Stack, Typography, Rating, Button, List, ListItem, Modal, TextField, Checkbox, Fade} from '@mui/material';
 import KeyboardArrowLeftRoundedIcon from '@mui/icons-material/KeyboardArrowLeftRounded';
 import KeyboardArrowRightRoundedIcon from '@mui/icons-material/KeyboardArrowRightRounded';
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
 import  AddRoundedIcon  from "@mui/icons-material/AddRounded";
 import RemoveRoundedIcon from '@mui/icons-material/RemoveRounded';
 import { ToppingCard } from "./topping";
+import { Comment } from "./comment";
 const sizes = ['S', 'M', 'L'];
 const soles = ['Soft', 'Crispy'];
 const toppings = [
@@ -15,6 +16,14 @@ const toppings = [
     {image: '/trend4.png', name: 'Topping 4', price: 0.3},
     {image: '/trend5.png', name: 'Topping 5', price: 1.05},
     {image: '/trend6.png', name: 'Topping 6', price: 1.01},
+];
+const comments = [
+    {name: 'Customer 1', share: true, rate: 5, content: "body2. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur, neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti? Eum quasi quidem quibusdam. body2. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur, neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti? Eum quasi quidem quibusdam."},
+    {name: 'Customer 2', share: true, rate: 4, content: "body2. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur, neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti? Eum quasi quidem quibusdam."},
+    {name: 'Customer 3', share: false, rate: 2, content: "body2. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur, neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti? Eum quasi quidem quibusdam."},
+    {name: 'Customer 4', share: false, rate: 3, content: "body2. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur, neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti? Eum quasi quidem quibusdam."},
+    {name: 'Customer 5', share: true, rate: 5, content: "body2. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur, neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti? Eum quasi quidem quibusdam."},
+    {name: 'Customer 6', share: true, rate: 4, content: "body2. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur, neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti? Eum quasi quidem quibusdam."},
 ]
 const round = (num)=> Math.round(num * 100) / 100;
 export const SinglePizza = (props)=>{
@@ -22,6 +31,7 @@ export const SinglePizza = (props)=>{
     const [sole, setSole] = useState(0);
     const [num, setNum] = useState(1);
     const [total, setTotal] = useState(props.price[0]);
+    const [cmt, setCmt] = useState(false);
     const handleAdd = (_id, add)=>{
         setTotal(prev => add ? round(prev + toppings[_id].price) :  round(prev - toppings[_id].price));
     }
@@ -71,7 +81,7 @@ export const SinglePizza = (props)=>{
                     }}
                     >{props.name}
                 </Typography>
-                <div
+                <Typography
                     style={{
                         fontFamily: 'Poppins',
                         fontWeight: 400,
@@ -85,7 +95,7 @@ export const SinglePizza = (props)=>{
                         overflow: 'hidden'
                     }}
                     >{props.description}
-                </div>
+                </Typography>
                 <Divider sx = {{maxWidth: '50%'}}/>
                 <div
                     style={{
@@ -193,8 +203,9 @@ export const SinglePizza = (props)=>{
                         fontSize: '30px',
                         lineHeight: '52px',
                         color: '#07143B',
-                        textAlign: 'center',
-                        m: 1
+                        textAlign: 'start',
+                        m: 1,
+                        marginLeft: '50px'
                     }}
                     >Toppings
         </Typography>
@@ -219,6 +230,185 @@ export const SinglePizza = (props)=>{
             }
         </Box>
         <Divider variant="middle" sx={{m: 5}}/>
+        <Box sx={{display: 'flex', justifyContent: 'space-between', padding: '20px 50px'}}>
+        <Typography variant="h6"
+                    sx={{
+                        fontFamily: 'Playfair Display',
+                        fontWeight: 700,
+                        fontSize: '30px',
+                        lineHeight: '52px',
+                        color: '#07143B',
+                        textAlign: 'start',
+                    }}
+                    >Comments
+        </Typography>
+        <Button variant="contained" 
+                    onClick = {() => {setCmt(true)}}
+                    sx={{
+                        backgroundColor: '#EA6A12',
+                        borderRadius: '100px',
+                        //maxWidth: '150px',
+                        fontFamily: 'Poppins',
+                        fontWeight: 'normal',
+                        fontSize: '15px',
+                        lineHeight: '175%',
+                        color: 'white',
+                        '&:hover, &:active':{
+                            backgroundColor: '#f57c00'
+                        },
+                        marginBottom: 2
+                    }}
+                    >
+                        Add Comment
+        </Button>
+        <Modal open={cmt} onClose = {() => {setCmt(false)}}>
+            <Fade in={cmt} timeout={500}>
+            <Stack
+            spacing = {1}
+            sx={{
+                borderRadius: '24px',
+                backgroundColor: 'white',
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                p: 4,
+                boxShadow: 24,
+                width: '400px'
+            }}
+            >
+                <Typography variant="h6"
+                    sx={{
+                        fontFamily: 'Playfair Display',
+                        fontWeight: 700,
+                        fontSize: '20px',
+                        lineHeight: '52px',
+                        color: '#07143B',
+                        textAlign: 'center',
+                    }}
+                    >Your Comment
+                </Typography>
+                <TextField
+                required
+                id="name-field"
+                label="Name"
+                multiline
+                maxRows={1}
+                color='warning'
+                inputProps={{style: {fontFamily: 'Poppins'}}} // font size of input text
+                InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                sx={{
+                    width: '60%'
+                }}
+                />
+                <TextField
+                color='warning'
+                required
+                id="name-field"
+                label="Comment"
+                multiline
+                rows={4}
+                maxRows = {4}
+                inputProps={{style: {fontFamily: 'Poppins'}}} // font size of input text
+                InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                />
+                <Stack direction="row" spacing={5}
+                sx={{alignItems: 'center'}}
+                >
+                <Typography variant="h6"
+                    sx={{
+                        fontFamily: 'Poppins',
+                        fontWeight: 700,
+                        fontSize: '15px',
+                        lineHeight: '52px',
+                        color: '#07143B',
+                        textAlign: 'center',
+                    }}
+                    >Rate: 
+                </Typography>
+                <Rating
+                sx={{
+                    color: '#EA6A12',
+                }}
+                icon={<StarRoundedIcon/>}
+                emptyIcon={<StarRoundedIcon/>}
+                />
+                </Stack>
+                <Stack direction="row" spacing={1}>
+                <Checkbox sx={{
+                    color: '#EA6A12',
+                    '&.Mui-checked': {
+                        color: '#EA6A12'
+                    }
+                }}/>
+                <Typography variant="h6"
+                    sx={{
+                        fontFamily: 'Poppins',
+                        fontWeight: 700,
+                        fontSize: '12px',
+                        lineHeight: '52px',
+                        color: '#07143B',
+                        textAlign: 'start',
+                        display: 'inline-block'
+                    }}
+                    >I will recommend this product to my friends and family 
+                </Typography>
+                </Stack>
+                <Button variant="contained" 
+                    onClick={()=>{setCmt(false)}}
+                    sx={{
+                        backgroundColor: '#EA6A12',
+                        borderRadius: '100px',
+                        alignSelf: 'center',
+                        fontFamily: 'Poppins',
+                        fontWeight: 'normal',
+                        fontSize: '15px',
+                        lineHeight: '175%',
+                        color: 'white',
+                        '&:hover, &:active':{
+                            backgroundColor: '#f57c00'
+                        },
+                        marginBottom: 2
+                    }}
+                    >
+                    Post
+                </Button>
+            </Stack>
+            </Fade>
+        </Modal>
+        </Box>
+            <Divider variant="middle"/>
+            <Box sx={{margin: '0 20px'}}>
+            <List sx={{width: '100%', height: '90%', overflow: 'auto', 
+            maxHeight: '500px', backgroundColor: 'rgba(252, 237, 227, 0.3)', alignSelf: 'center'
+            }}>
+            {
+                comments.length > 0 ? 
+                comments.map(comment =>{
+                    return(
+                            <ListItem>
+                                <Comment comment = {comment}/>
+                            </ListItem>
+                    )
+                })
+                : 
+                <Typography variant="h6"
+                    sx={{
+                        alignSelf: 'start',
+                        fontFamily: 'Poppins',
+                        fontWeight: 700,
+                        fontSize: '30px',
+                        lineHeight: '52px',
+                        color: '#07143B',
+                        textAlign: 'center',
+                        marginTop: '50px'
+                    }}
+                >No comment
+            </Typography>
+            }
+            </List>
+            </Box>
+            <Divider variant="middle"/>
         <Box sx={{
             m: 1,
             display: 'flex',
@@ -306,6 +496,7 @@ export const SinglePizza = (props)=>{
             </Typography>
         </Box>
         <Divider variant="middle" sx={{m: 5}}/>
+        
         <Button variant="contained" 
                     sx={{
                         backgroundColor: '#EA6A12',

@@ -17,7 +17,7 @@ export const Searchbar = ()=>{
         },
         //marginTop: 15,
         marginLeft: 20
-      });
+    });
     return(
         <AppBar
             position='sticky'

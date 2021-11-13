@@ -4,7 +4,6 @@ import {Box} from '@mui/material';
 import { Searchbar } from "../components/searchbar";
 import { PizzaMenu } from "../components/pizzaMenu";
 import { Footer } from "../components/footer";
-import { SinglePizza } from "../components/singlePizza";
 export const PizzaPage = ()=>{
     return(
         <div style={{

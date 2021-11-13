@@ -4,7 +4,6 @@ import {Box} from '@mui/material';
 import { Searchbar } from "../components/searchbar";
 import { Footer } from "../components/footer";
 import { SinglePizza } from "../components/singlePizza";
-import { PizzaCart } from "../components/mainCart";
 export const SinglePage = ()=>{
     return(
         <div style={{
@@ -20,7 +19,6 @@ export const SinglePage = ()=>{
                 <SinglePizza image = "./burger.png" name="Wonderful Pizza" 
                 description = "body2. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur, neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti? Eum quasi quidem quibusdam."
                 price = {[5.49, 6.49, 7.49]} rate = {4}/>
-                <PizzaCart/>
                 <Footer/>
             </Box>
         </div>

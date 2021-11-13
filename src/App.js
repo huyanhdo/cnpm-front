@@ -1,4 +1,5 @@
 import './App.css';
+import { CartPage } from './pages/cartPage';
 import { Home } from './pages/home';
 import { PizzaPage } from './pages/pizza';
 import { SinglePage } from './pages/singlePage';
@@ -13,7 +14,7 @@ function App() {
       <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Poppins:wght@300&display=swap" rel="stylesheet"></link>
       </head>
       <body>
-    <div className="App">
+        <div className="App">
       <SinglePage/>
     </div>
     </body>
