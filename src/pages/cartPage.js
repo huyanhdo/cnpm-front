@@ -1,28 +1,74 @@
 import React, {useState} from "react";
-import { MenuBar } from "../components/sidebar";
 import {Box, Button, Typography, Modal, TextField, Fade, Stack} from '@mui/material';
-import { Searchbar } from "../components/searchbar";
-import { Footer } from "../components/footer";
-import { PizzaCart } from "../components/mainCart";
+import { Cart } from "../components/mainCart";
+import { useSelector, useDispatch } from "react-redux";
+import {itemRemoved} from '../store/cartSlice';
+import { itemRemoved as comboRemoved, itemUpdated as comboUpdated } from "../store/cartComboSlice";
+import { itemRemoved as extraRemoved, itemUpdated as extraUpdated } from "../store/cartExtraSlice";
+const round = (num)=> Math.round(num * 100) / 100;
 export const CartPage = ()=>{
+    const dispatch = useDispatch();
     const [pay, SetPay] = useState(false);
+    const cart = useSelector(state => state.cart);
+    const cartExtras = useSelector(state => state.cartExtras);
+    const cartCombos = useSelector(state => state.cartCombos);
+    const totalPizza = cart.ids.reduce((total, itemId)=>{return round(total + cart.entities[itemId].total)}, 0);
+    const totalExtra = cartExtras.ids.reduce((total, itemId) => {return round(total + cartExtras.entities[itemId].total)}, 0);
+    const totalCombo = cartCombos.ids.reduce((total, itemId) => {return round(total + cartCombos.entities[itemId].total)}, 0);
+    const [totalValue, SetTotalValue] = useState(totalPizza + totalExtra + totalCombo);
+    const handleCartChange = (_id)=>{
+        SetTotalValue(prev => round(prev - cart.entities[_id].total));
+        dispatch(itemRemoved(_id));
+    }
+    const handleComboChange = (_id, remove ,add, delta, newData)=>{
+        if(remove){
+            SetTotalValue(prev => round(prev - delta));
+            dispatch(comboRemoved(_id));
+        }else{
+            if(add){
+                SetTotalValue(prev => round(prev + delta));
+            }else{
+                SetTotalValue(prev => round(prev - delta));
+            }
+            
+            dispatch(comboUpdated({
+                id: _id,
+                data: newData
+            }))
+            
+        }
+    }   
+    const handleExtraChange = (_id, remove ,add, delta, newData)=>{
+        if(remove){
+            SetTotalValue(prev => round(prev - delta));
+            dispatch(extraRemoved(_id));
+        }else{
+            if(add){
+                SetTotalValue(prev => round(prev + delta));
+            }else{
+                SetTotalValue(prev => round(prev - delta));
+            }
+            
+            dispatch(extraUpdated({
+                id: _id,
+                data: newData
+            }))
+            
+        }
+    }   
     return(
-        <div style={{
-            backgroundColor: 'rgba(252, 237, 227, 0.3)',
-            display: 'flex',
-            position: 'relative'
-        }}>
-            <MenuBar/>
             <Box style={{
                 width: '100%',
                 }}>
-                <Searchbar/>
-                <PizzaCart style={{zIndex: 0}}/>
+                <Cart style={{zIndex: 0}} handleCartChange = {handleCartChange} 
+                handleComboChange={handleComboChange}
+                handleExtraChange={handleExtraChange}
+                />
                 <Box
                 sx={{
                     display: 'flex',
                     justifyContent: 'space-evenly',
-                    alignItems: 'center'
+                    alignItems: 'center', marginBottom: '100px'
                 }}
                 >
                     <Typography variant="h6"
@@ -34,9 +80,10 @@ export const CartPage = ()=>{
                         color: '#07143B',
                         textAlign: 'start'
                     }}
-                    >Total: $100.00
+                    >Total: $ {totalValue}
                     </Typography>
                     <Button variant="contained" 
+                    disabled = {totalValue < 0.01}
                     onClick = {()=>{SetPay(true)}}
                     sx={{
                         zIndex: 10,
@@ -163,7 +210,7 @@ export const CartPage = ()=>{
                         color: '#07143B',
                         textAlign: 'start',
                     }}
-                    >Total Pay: $101.00
+                    >Total Pay: $ {totalValue + 1.00}
                 </Typography>
                 <Button variant="contained" 
                     onClick={()=>{SetPay(false)}}
@@ -188,8 +235,6 @@ export const CartPage = ()=>{
             </Stack>
             </Fade>
             </Modal>
-                <Footer/>
             </Box>
-        </div>
     )
 }

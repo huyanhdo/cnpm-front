@@ -1,11 +1,15 @@
-import { Box, Card, Container, Divider , IconButton, Rating, Stack, Typography} from "@mui/material";
+import { Box, Divider , IconButton, Rating, Stack, Typography} from "@mui/material";
 import React, { useState } from "react";
 import KeyboardArrowRightRoundedIcon from '@mui/icons-material/KeyboardArrowRightRounded';
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
+import { useNavigate } from "react-router";
+import { useSelector } from "react-redux";
 export const Category = (props)=>{
+    const navigate = useNavigate();
     const image = props.image;
     const name = props.name;
+    const category = props.category;
     const [hov, setHov] = useState(false);
     const switchHov = ()=>{
         setHov(prev => !prev);
@@ -23,7 +27,8 @@ export const Category = (props)=>{
             boxShadow: '0 2px 5px rgba(0, 0, 0, 0.5)',
             minWidth: '112px',
             minHeight: '236px',
-            borderRadius: '24px'
+            borderRadius: '24px',
+            m: {md: 0, sm: 1, xs: 1}
         }}
         >
             <img
@@ -54,7 +59,9 @@ export const Category = (props)=>{
             }}
             />
             <IconButton
-            
+            onClick = {()=>{
+                navigate('/menu/' + category); 
+            }}
             sx={{
                 backgroundColor: hov? 'white': 'rgba(234, 106, 18, 0.7)',
                 '&:active, &:hover':{
@@ -71,21 +78,6 @@ export const Category = (props)=>{
         </Box>
     )
 }
-const categories = [
-    {image: './spaghetti.png', name: 'Spaghetti'},
-    {image: './vegetable.png', name: 'Vegetable'},
-    {image: './mushroom.png', name: 'Mushroom'},
-    {image: './sweet.png', name: 'Sweet'},
-    {image: './spaghetti.png', name: 'Spaghetti'},
-    {image: './vegetable.png', name: 'Vegetable'},
-    {image: './mushroom.png', name: 'Mushroom'}
-]
-const pizzas = [
-    {image: './spaghetti.png', name: 'Spaghetti', rate: 3, price: 7.29},
-    {image: './vegetable.png', name: 'Vegetable', rate: 3, price: 5.49},
-    {image: './mushroom.png', name: 'Mushroom', rate: 3, price: 7.49},
-    {image: './sweet.png', name: 'Sweet', rate: 3, price: 6.49},
-]
 export const ViewAll = ()=>{
     return(
         <Stack
@@ -127,6 +119,8 @@ export const ViewAll = ()=>{
     )
 }
 export const PizzaCard = (props)=>{
+    const navigate = useNavigate();
+    const link = props.link;
     const image = props.image;
     const name = props.name;
     const price = props.price;
@@ -144,6 +138,7 @@ export const PizzaCard = (props)=>{
         <Box
         onMouseEnter={switchHov}
         onMouseLeave = {switchHov}
+        onClick={()=>{navigate(link)}}
         sx={{
             display: 'flex',
             flexDirection: 'column',
@@ -156,6 +151,7 @@ export const PizzaCard = (props)=>{
             borderRadius: '24px',
             p: 3,
             boxSizing: 'border-box',
+            marginRight: {md: 0, sm: 2, xs: 2}
         }}
         >
             <img
@@ -225,52 +221,61 @@ export const PizzaCard = (props)=>{
     )
 }
 export const Categories = ()=>{
+    const categories = useSelector(state => state.categories);
+    const pizzas = useSelector(state => state.pizzas);
     return(
-    <Box>
-    <Box
-    sx={{
-        display: 'flex',
-        
-        justifyContent: 'space-between',
-        p: 5
-    }}
-    >
+    <Box sx = {{
+        width: {md: '70%', sm: '100%', xs : '100%'}
+    }}>
         <Typography variant="h6"
                     sx={{
                         fontFamily: 'Playfair Display',
                         fontWeight: 700,
-                        fontSize: '30px',
+                        fontSize: {md: '30px', sm: '20px', xs: '16px'},
                         lineHeight: '52px',
                         color: '#07143B',
-                        textAlign: 'start'
+                        textAlign: 'start', 
+                        m: 3
                     }}
                     >Menu categories
         </Typography>
-        <ViewAll/>
-    </Box>
     <Box
     sx={{
         display: 'flex',
-        justifyContent: 'space-evenly',
+        justifyContent: {md: 'space-evenly', sm: 'flex-start', xs: 'flex-start'},
         flexWrap: 'wrap',
     }}
     >
         {
-            categories.map(category =>{
-                return <Category image={category.image} name={category.name}/>
+            categories.ids.map(id =>{
+                return <Category image={categories.entities[id].image} name={categories.entities[id].name} category={id}/>
             })
         }
     </Box>
+    <Typography variant="h6"
+                    sx={{
+                        fontFamily: 'Playfair Display',
+                        fontWeight: 700,
+                        fontSize: {md: '30px', sm: '20px', xs: '16px'},
+                        lineHeight: '52px',
+                        color: '#07143B',
+                        textAlign: 'start',
+                        m:3
+                    }}
+                    >Newest 
+        </Typography>
     <Box
     sx={{
         display: 'flex',
-        justifyContent: 'space-evenly',
-        flexWrap: 'wrap'
+        justifyContent: {md: 'space-evenly', sm: 'flex-start', xs: 'space-evenly'},
+        flexWrap: 'wrap',
     }}
     >
         {
-            pizzas.map(pizza =>{
-                return <PizzaCard image={pizza.image} name={pizza.name} rate={pizza.rate} price={pizza.price}/>
+            pizzas.ids.map((id, index) => {
+                if(index < 4)
+                return <PizzaCard image={pizzas.entities[id].image} name={pizzas.entities[id].name} rate={pizzas.entities[id].rate} 
+                price={pizzas.entities[id].price[0]} link={`/product/${id}`}/>
             })
         }
     </Box>

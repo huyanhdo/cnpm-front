@@ -1,6 +1,8 @@
 import { Box, Divider, IconButton, Stack, Typography, Card, Button, List } from '@mui/material';
-import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import React from 'react';
+import { useNavigate } from 'react-router';
+import { useSelector } from 'react-redux';
 const CartItem = (props)=>{
     const name = props.name;
     const image = props.image;
@@ -11,8 +13,11 @@ const CartItem = (props)=>{
     sx={{
         display: 'flex',
         width: '100%',
-        transform: 'translateX(-20px)',
-        marginTop: '5%'
+        backgroundColor: '#FFF5EE',
+        borderRadius: '100px 0 50px 100px',
+        margin: '20px 0',
+        maxHeight: '90px',
+        alignItems: 'center'
     }}
     >
         <img
@@ -21,27 +26,19 @@ const CartItem = (props)=>{
             style={{
             borderRadius: '50%',
             boxShadow: '10px 0px 10px rgb(0,0,0, 0.1)',
-            position: 'relative',
             width: '100px',
             height: '100px',
-            left: '50px'
+            zIndex: 100
             }}
         />
-        <Box
+        <Stack
         sx={{
-            display: 'flex',
-            backgroundColor: '#FFF5EE',
-            borderRadius: '100px',
+
             width: '100%',
-            alignItems: 'center'
+            zIndex: 0,
+            marginLeft: '5%'
         }}
         >
-            <Box sx={{flexGrow: 3}}/>
-            <Stack
-            sx={{
-                flexGrow:3,
-            }}
-            >
                 <Typography variant="subtitle1"
                     sx={{
                         fontFamily: 'Poppins',
@@ -54,6 +51,13 @@ const CartItem = (props)=>{
                     }}
                     >{name}
                 </Typography>
+                
+            <Box
+            sx={{
+                display: 'flex',
+                alignItems: 'center',
+            }}
+            >
                 <Typography variant="subtitle1"
                     sx={{
                         fontFamily: 'Poppins',
@@ -66,62 +70,39 @@ const CartItem = (props)=>{
                     }}
                     ><strong style={{color: 'red'}}>x{' '}</strong>{number}
                 </Typography>
-            </Stack>
-            <Box sx={{flexGrow: 2}}/>
-            <Stack
-            sx={{
-                flexGrow:1
-            }}
-            >
-                <IconButton
-                sx={{
-                    width: 40,
-                    height: 40
-                }}
-                >
-                    <DeleteForeverRoundedIcon
-                    sx={{
-                        color: 'red'
-                    }}
-                    />
-                </IconButton>
                 <Typography variant="subtitle1"
                     sx={{
                         fontFamily: 'Poppins',
                         fontWeight: 600,
-                        fontSize: '13px',
+                        fontSize: '16px',
                         lineHeight: '175%',
                         color: 'black',
                         textAlign: 'start',
-                        marginBottom: '10px'
+                        marginBottom: '10px',
+                        marginLeft: '60%'
                     }}
                     >$ {price}
                 </Typography>
-            </Stack>
-        </Box>
+            </Box>
+        </Stack>
     </Box>
     )
 }
-const cart = [
-    {image: './spaghetti.png', name: 'Spaghetti', number: 1, price: 7.29},
-    {image: './vegetable.png', name: 'Vegetable', number: 1, price: 5.49},
-    
-    {image: './mushroom.png', name: 'Mushroom', number: 1, price: 7.49},
-    {image: './sweet.png', name: 'Sweet', number: 1, price: 6.49},
-    
-    {image: './spaghetti.png', name: 'Spaghetti', number: 1, price: 7.29},
-    
-    {image: './vegetable.png', name: 'Vegetable', number: 1, price: 5.49},
-    {image: './mushroom.png', name: 'Mushroom', number: 1, price: 7.49},
-    {image: './sweet.png', name: 'Sweet', number: 1, price: 6.49},
-    
-]
 export const Cart = ()=>{
+    const cart = useSelector(state => state.cart);
+    const cartExtras = useSelector(state => state.cartExtras);
+    const cartCombos = useSelector(state => state.cartCombos);
+    const pizzas = useSelector(state => state.pizzas.entities);
+    const extras = useSelector(state => state.extras.entities);
+    const combos = useSelector(state => state.combos.entities);
+    const navigate = useNavigate();
     return(
         <Card
         sx={{
             borderRadius: '24px',
             height: '100%',
+            width: {md: '30%', sm: '100%', xs: '100%'},
+            margin: '50px 0'
         }}
         >
             <Typography variant="h6"
@@ -143,13 +124,40 @@ export const Cart = ()=>{
                 alignSelf: 'center'
             }}/>
             <List sx={{width: '100%', height: '90%', overflow: 'auto', 
-            maxHeight: '600px'
+            maxHeight: '600px',  padding: '0 20px'
             }}>
             {
-                cart.map(cartItem =>{
+                cart.ids.map(id =>{
                     return(
-                        <CartItem image={cartItem.image} name={cartItem.name}
-                        number={cartItem.number} price={cartItem.price}
+                        <CartItem 
+                        image={pizzas[cart.entities[id].pizzaId].image} 
+                        name={pizzas[cart.entities[id].pizzaId].name}
+                        number={cart.entities[id].number} 
+                        price={cart.entities[id].total}
+                        />
+                    )
+                })
+            }
+            {
+                cartExtras.ids.map(id =>{
+                    return(
+                        <CartItem 
+                        image={extras[id].image} 
+                        name={extras[id].name}
+                        number={cartExtras.entities[id].number} 
+                        price={cartExtras.entities[id].total}
+                        />
+                    )
+                })
+            }
+            {
+                cartCombos.ids.map(id =>{
+                    return(
+                        <CartItem 
+                        image={combos[id].image} 
+                        name={combos[id].title}
+                        number={cartCombos.entities[id].number} 
+                        price={cartCombos.entities[id].total}
                         />
                     )
                 })
@@ -160,6 +168,7 @@ export const Cart = ()=>{
                 alignSelf: 'center'
             }}/>
             <Button variant="contained" 
+                    onClick={()=>{navigate('/cart')}}
                     sx={{
                         backgroundColor: '#EA6A12',
                         borderRadius: '100px',

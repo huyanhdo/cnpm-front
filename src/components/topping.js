@@ -8,7 +8,7 @@ export const ToppingCard = (props) =>{
     const handleAdd = props.handleAdd;
     const price = props.price;
     const _id = props._id;
-    const [added, setAdded] = useState(false);
+    const [added, setAdded] = useState(props.added);
     return (
         <Box sx={{
             display: 'flex',

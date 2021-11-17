@@ -3,7 +3,9 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import EmailIcon from '@mui/icons-material/Email';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { FormControl, InputAdornment, TextField, styled, IconButton, Avatar, AppBar, Toolbar, Box, Stack } from "@mui/material";
+
 import React from "react";
+import { Link } from 'react-router-dom';
 export const Searchbar = ()=>{
     const CssTextField = styled(TextField)({
         '& .MuiOutlinedInput-root': {
@@ -24,7 +26,7 @@ export const Searchbar = ()=>{
             sx={{
                 backgroundColor:'white',
                 boxShadow: '0px 10px 30px rgba(234, 106, 18, 0.05)',
-                zIndex: 90,
+                zIndex: 105,
             }}
         >
             <Toolbar
@@ -68,6 +70,7 @@ export const Searchbar = ()=>{
                     }
                 }}/>
                 </IconButton>
+                <Link to="/cart">
                 <IconButton>
                 <ShoppingCartIcon
                 sx={{
@@ -76,6 +79,8 @@ export const Searchbar = ()=>{
                     }
                 }}/>
                 </IconButton>
+                </Link>
+                
                 
                 <Avatar
                 sx={{

@@ -7,37 +7,49 @@ import  AddRoundedIcon  from "@mui/icons-material/AddRounded";
 import RemoveRoundedIcon from '@mui/icons-material/RemoveRounded';
 import { ToppingCard } from "./topping";
 import { Comment } from "./comment";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useParams, useLocation, useNavigate } from "react-router";
+import { itemAdded, itemUpdated } from "../store/cartSlice";
 const sizes = ['S', 'M', 'L'];
 const soles = ['Soft', 'Crispy'];
-const toppings = [
-    {image: '/trend1.png', name: 'Topping 1', price: 1.01},
-    {image: '/trend2.png', name: 'Topping 2', price: 1.11},
-    {image: '/trend3.png', name: 'Topping 3', price: 0.21},
-    {image: '/trend4.png', name: 'Topping 4', price: 0.3},
-    {image: '/trend5.png', name: 'Topping 5', price: 1.05},
-    {image: '/trend6.png', name: 'Topping 6', price: 1.01},
-];
-const comments = [
-    {name: 'Customer 1', share: true, rate: 5, content: "body2. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur, neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti? Eum quasi quidem quibusdam. body2. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur, neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti? Eum quasi quidem quibusdam."},
-    {name: 'Customer 2', share: true, rate: 4, content: "body2. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur, neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti? Eum quasi quidem quibusdam."},
-    {name: 'Customer 3', share: false, rate: 2, content: "body2. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur, neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti? Eum quasi quidem quibusdam."},
-    {name: 'Customer 4', share: false, rate: 3, content: "body2. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur, neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti? Eum quasi quidem quibusdam."},
-    {name: 'Customer 5', share: true, rate: 5, content: "body2. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur, neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti? Eum quasi quidem quibusdam."},
-    {name: 'Customer 6', share: true, rate: 4, content: "body2. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur, neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti? Eum quasi quidem quibusdam."},
-]
 const round = (num)=> Math.round(num * 100) / 100;
-export const SinglePizza = (props)=>{
-    const [size, setSize] = useState(0);
-    const [sole, setSole] = useState(0);
-    const [num, setNum] = useState(1);
-    const [total, setTotal] = useState(props.price[0]);
+export const SinglePizza = ()=>{
+    const navigate = useNavigate();
+    const location = useLocation();
+    const dispatch = useDispatch();
+    const {productId} = useParams();
+    const pizza = useSelector(state => state.pizzas.entities[productId]);
+    const allToppings = useSelector(state => state.toppings.entities);
+    const toppings = pizza.toppings;
+    const comments = pizza.comments;
+    const [size, setSize] = useState(location.state? location.state.size: 0);
+    const [sole, setSole] = useState(location.state? location.state.sole: 0);
+    const [num, setNum] = useState(location.state? location.state.number: 1);
+    const [total, setTotal] = useState(location.state? round(location.state.total / location.state.number) : pizza.price[0]);
     const [cmt, setCmt] = useState(false);
+    const [tops, setTops] = useState(location.state? location.state.toppings: []);
+    const [done, setDone] = useState(false);
     const handleAdd = (_id, add)=>{
-        setTotal(prev => add ? round(prev + toppings[_id].price) :  round(prev - toppings[_id].price));
+        setTotal(prev => add ? round(prev + allToppings[_id].price) : round(prev - allToppings[_id].price));
+        if(add) {
+            
+            setTops(prev => {
+                prev.push(_id);
+            return prev;
+            });
+        }
+        else {
+            setTops(prev => {
+                const index = prev.indexOf(_id);
+                prev.splice(index, 1);
+                return prev;
+                });
+        }
     }
     const sizeChanged = (o, n)=>{
         setSize(n);
-        setTotal(prev => round(prev - props.price[o] + props.price[n]));
+        setTotal(prev => round(prev - pizza.price[o] + pizza.price[n]));
     }
     return(
         <Box
@@ -47,7 +59,7 @@ export const SinglePizza = (props)=>{
             boxShadow: '0 2px 5px rgba(0, 0, 0, 0.5)',
             padding: '20px 0px',
             alignItems: 'center',
-            m:3
+            m:3,marginBottom: '150px'
         }}
         >
         <Box
@@ -63,23 +75,30 @@ export const SinglePizza = (props)=>{
         }}
         >
             <img
-            src={props.image}
-            alt={props.name}
+            src={pizza.image}
+            alt={pizza.name}
             style={{
-            borderRadius: '50%',
+            width: '300px',
+            height: '300px',
+            borderRadius: '50%'
             }}
             />
-            <Stack spacing={2}>
+            <Stack spacing={2}
+            sx={{
+                marginLeft: {md: '100px', sm: 0, xs: 0},
+                marginTop: {md: 0, sm: '50px', xs: '50px'}
+            }}>
                 <Typography variant="h6"
                     sx={{
-                        fontFamily: 'Playfair Display',
+                        fontFamily: 'Fairplay Display',
                         fontWeight: 700,
                         fontSize: '30px',
                         lineHeight: '52px',
                         color: '#07143B',
-                        textAlign: 'start'
+                        textAlign: 'start',
+                        
                     }}
-                    >{props.name}
+                    >{pizza.name}
                 </Typography>
                 <Typography
                     style={{
@@ -94,7 +113,7 @@ export const SinglePizza = (props)=>{
                         maxHeight: '65px',
                         overflow: 'hidden'
                     }}
-                    >{props.description}
+                    >{pizza.description}
                 </Typography>
                 <Divider sx = {{maxWidth: '50%'}}/>
                 <div
@@ -106,9 +125,9 @@ export const SinglePizza = (props)=>{
                         color:'#EA6A12',
                         textAlign: 'start'
                     }}
-                    >$ {props.price[size]}
+                    >$ {pizza.price[size]}
                 </div>
-                <Rating value={props.rate} readOnly
+                <Rating value={pizza.rate} readOnly
                 sx={{
                     color: '#EA6A12',
                 }}
@@ -219,16 +238,148 @@ export const SinglePizza = (props)=>{
         }}
         >
             {
-            toppings.map((topping, index) =>{
+            toppings.map((toppingId) =>{
+                const topping = allToppings[toppingId];
                 return (<ToppingCard 
                 name={topping.name} image = {topping.image}
-                    price = {topping.price} _id = {index} 
-                    handleAdd = {handleAdd}
+                    price = {topping.price} _id = {toppingId} 
+                    handleAdd = {handleAdd} added = {location.state ? location.state.toppings.find(t => t === toppingId) : false}
                 />
                 )
             })
             }
         </Box>
+        <Divider variant="middle" sx ={{marginBottom: 3}}/>
+        <Box sx={{
+            m: 1,
+            display: 'flex',
+            justifyContent: 'space-around'
+        }}>
+            <Stack spacing={2} direction="row">
+            <Typography variant="h6"
+                    sx={{
+                        fontFamily: 'Playfair Display',
+                        fontWeight: 700,
+                        fontSize: '30px',
+                        lineHeight: '52px',
+                        color: '#07143B',
+                        textAlign: 'center',
+                    }}
+                    >Number: 
+            </Typography>
+            <Stack direction="row" spacing={5}
+            sx={{
+                alignItems: 'center',
+                backgroundColor: 'rgba(252, 237, 227, 0.3)',
+                borderRadius: '100px'
+            }}
+            >
+                <IconButton
+                sx={{
+                    width: '40px',
+                    height: '40px',
+                    '&:hover, &:active':{
+                        color: 'white'
+                    }
+                }}
+                >
+                    <RemoveRoundedIcon
+                    onClick = {()=>{setNum(prev => (prev === 1)? 1: prev - 1)}}
+                    sx={{
+                        color: 'rgba(234, 106, 18, 0.7)',
+                        width: '40px',
+                        height: '40px'
+                    }}
+                    />
+                </IconButton>
+                <Typography variant="subtitle1"
+                    sx={{
+                        fontFamily: 'Poppins',
+                        fontWeight: 600,
+                        fontSize: '16px',
+                        lineHeight: '175%',
+                        color: 'black',
+                        textAlign: 'start',
+                        marginBottom: '10px'
+                    }}
+                    >{num}
+                </Typography>
+                <IconButton
+                onClick = {()=>{setNum(prev => (prev === 10)? 10: prev + 1)}}
+                sx={{
+                    width: '40px',
+                    height: '40px',
+                    '&:hover, &:active':{
+                        color: 'white'
+                    }
+                }}
+                >
+                    <AddRoundedIcon
+                    sx={{
+                        color: 'rgba(234, 106, 18, 0.7)',
+                        width: '40px',
+                        height: '40px'
+                    }}
+                    />
+                </IconButton>
+            </Stack>
+            </Stack>
+            <Typography variant="h6"
+                    sx={{
+                        fontFamily: 'Playfair Display',
+                        fontWeight: 700,
+                        fontSize: '30px',
+                        lineHeight: '52px',
+                        color: '#07143B',
+                        textAlign: 'center',
+                    }}
+                    >Total: $ {round(total * num)}
+            </Typography>
+        </Box>
+        <Button variant="contained" 
+                    onClick = {()=>{
+                        if(location.state){
+                            dispatch(itemUpdated({
+                                id: location.state.id,
+                                data: {
+                                    pizzaId: productId,
+                                    size: sizes[size],
+                                    sole: soles[sole],
+                                    toppings: tops,
+                                    total: round(total * num),
+                                    number: num
+                                }
+                            }));
+                        }else{
+                            dispatch(itemAdded({
+                                pizzaId: productId,
+                                size: sizes[size],
+                                sole: soles[sole],
+                                toppings: tops,
+                                total: round(total * num),
+                                number: num
+                            }));
+                        }
+                        setDone(true);
+                        
+                    }}
+                    sx={{
+                        backgroundColor: '#EA6A12',
+                        borderRadius: '100px',
+                        //maxWidth: '150px',
+                        fontFamily: 'Poppins',
+                        fontWeight: 'normal',
+                        fontSize: '15px',
+                        lineHeight: '175%',
+                        color: 'white',
+                        '&:hover, &:active':{
+                            backgroundColor: '#f57c00'
+                        },
+                        marginTop: 3
+                    }}
+                    >
+                        {location.state ? "Update Cart" : "Add to Cart"}
+        </Button>
         <Divider variant="middle" sx={{m: 5}}/>
         <Box sx={{display: 'flex', justifyContent: 'space-between', padding: '20px 50px'}}>
         <Typography variant="h6"
@@ -377,6 +528,7 @@ export const SinglePizza = (props)=>{
             </Fade>
         </Modal>
         </Box>
+            
             <Divider variant="middle"/>
             <Box sx={{margin: '0 20px'}}>
             <List sx={{width: '100%', height: '90%', overflow: 'auto', 
@@ -408,100 +560,66 @@ export const SinglePizza = (props)=>{
             }
             </List>
             </Box>
-            <Divider variant="middle"/>
-        <Box sx={{
-            m: 1,
-            display: 'flex',
-            justifyContent: 'space-around'
-        }}>
-            <Stack spacing={2} direction="row">
-            <Typography variant="h6"
-                    sx={{
-                        fontFamily: 'Playfair Display',
-                        fontWeight: 700,
-                        fontSize: '30px',
-                        lineHeight: '52px',
-                        color: '#07143B',
-                        textAlign: 'center',
-                    }}
-                    >Number: 
-            </Typography>
-            <Stack direction="row" spacing={5}
+        <Divider variant="middle" sx={{m: 5}}/>
+        <Modal open={done} >
+            <Fade in={done} timeout={500}>
+            <Stack
+            spacing={3}
             sx={{
-                alignItems: 'center',
-                backgroundColor: 'rgba(252, 237, 227, 0.3)',
-                borderRadius: '100px'
+                backgroundColor: 'white',
+                borderRadius: '24px',
+                width: '500px',
+                p: 5,
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                alignItems: 'center'
             }}
             >
-                <IconButton
-                sx={{
-                    width: '40px',
-                    height: '40px',
-                    '&:hover, &:active':{
-                        color: 'white'
-                    }
-                }}
-                >
-                    <RemoveRoundedIcon
-                    onClick = {()=>{setNum(prev => (prev === 1)? 1: prev - 1)}}
-                    sx={{
-                        color: 'rgba(234, 106, 18, 0.7)',
-                        width: '40px',
-                        height: '40px'
-                    }}
-                    />
-                </IconButton>
-                <Typography variant="subtitle1"
-                    sx={{
-                        fontFamily: 'Poppins',
-                        fontWeight: 600,
-                        fontSize: '16px',
-                        lineHeight: '175%',
-                        color: 'black',
-                        textAlign: 'start',
-                        marginBottom: '10px'
-                    }}
-                    >{num}
-                </Typography>
-                <IconButton
-                onClick = {()=>{setNum(prev => (prev === 10)? 10: prev + 1)}}
-                sx={{
-                    width: '40px',
-                    height: '40px',
-                    '&:hover, &:active':{
-                        color: 'white'
-                    }
-                }}
-                >
-                    <AddRoundedIcon
-                    sx={{
-                        color: 'rgba(234, 106, 18, 0.7)',
-                        width: '40px',
-                        height: '40px'
-                    }}
-                    />
-                </IconButton>
-            </Stack>
-            </Stack>
-            <Typography variant="h6"
+                <Typography variant="h6"
                     sx={{
                         fontFamily: 'Playfair Display',
                         fontWeight: 700,
-                        fontSize: '30px',
+                        fontSize: '20px',
                         lineHeight: '52px',
                         color: '#07143B',
                         textAlign: 'center',
                     }}
-                    >Total: $ {round(total * num)}
-            </Typography>
-        </Box>
-        <Divider variant="middle" sx={{m: 5}}/>
-        
-        <Button variant="contained" 
+                    >Your Cart has been updated successfully!!
+                </Typography>
+                <Stack direction="row" spacing={5}>
+                <Button variant="contained" 
+                    onClick = {()=>{
+                        setDone(false);
+                    }}
                     sx={{
                         backgroundColor: '#EA6A12',
                         borderRadius: '100px',
                         //maxWidth: '150px',
+                        fontFamily: 'Poppins',
+                        fontWeight: 'normal',
+                        fontSize: '15px',
+                        lineHeight: '175%',
+                        color: 'white',
+                        height: '45px',
+                        '&:hover, &:active':{
+                            backgroundColor: '#f57c00'
+                        },
+                        marginBottom: 2
+                    }}
+                    >
+                        Done
+                </Button>
+                <Button variant="contained" 
+                    onClick = {()=>{
+                        navigate('/cart');
+                    }}
+                    sx={{
+                        backgroundColor: '#EA6A12',
+                        borderRadius: '100px',
+                        //maxWidth: '150px',
+                        height: '45px',
                         fontFamily: 'Poppins',
                         fontWeight: 'normal',
                         fontSize: '15px',
@@ -513,8 +631,13 @@ export const SinglePizza = (props)=>{
                         marginBottom: 2
                     }}
                     >
-                        Add to Cart
-            </Button>
+                        Go to cart
+                </Button>
+                </Stack>
+                
+            </Stack>
+            </Fade>
+        </Modal>
         </Box>
         
     )

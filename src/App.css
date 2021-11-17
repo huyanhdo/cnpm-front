@@ -27,7 +27,33 @@
 .App-link {
   color: #61dafb;
 }
+.text-strong{
+  font-family: 'Playfair Display', serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 40px;
+  line-height: 130%;
+  letter-spacing: 0.02em;
+  font-feature-settings: 'pnum' on, 'lnum' on;
+}
+.text-small{
+  font-family: 'Poppins', sans-serif;
+font-style: normal;
+font-weight: 600;
+font-size: 16px;
+line-height: 175%;
+/* identical to box height, or 28px */
 
+letter-spacing: 0.02em;
+
+/* Text/body text-959895 */
+
+color: #959895;
+}
+.MuiPaginationItem-root{
+  color: '#EA6A12';
+  font-family: 'Poppins';
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

@@ -8,7 +8,7 @@ export const ImageDecorator = ()=>{
             position: 'absolute',
             bottom: '0',
             right: '-10px',
-            zIndex: 0
+            zIndex: 4
         }}
         />
     )

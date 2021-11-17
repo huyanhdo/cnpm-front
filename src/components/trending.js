@@ -1,7 +1,6 @@
 import AddCircleRounded from '@mui/icons-material/AddCircleRounded';
 import { Divider, IconButton, Stack, Typography, Box } from '@mui/material';
 import React, {useState} from 'react';
-import { ViewAll } from './categories';
 export const Trending = (props)=>{
     const [hov, setHov] = useState(false);
     const switchHov = ()=>{
@@ -134,10 +133,16 @@ const trendings = [
     {image: './trend4.png', name: 'Italian Salad', time: 'week', calories: 50, persons: 1, price: 7.49},
     {image: './trend5.png', name: 'Italian Salad', time: 'day', calories: 70, persons: 2, price: 7.49},
     {image: './trend6.png', name: 'Italian Salad', time: 'month', calories: 80, persons: 3, price: 7.49},
+    {image: './trend1.png', name: 'Italian Salad', time: 'week', calories: 100, persons: 4, price: 7.49},
+    {image: './trend2.png', name: 'Italian Salad', time: 'day', calories: 50, persons: 1, price: 7.49},
 ]
 export const TrendingList = ()=>{
     return(
-        <Box>
+        <Box
+        sx={{
+            width: '100%'
+        }}
+        >
         <Box
         sx={{
         display: 'flex',
@@ -149,14 +154,13 @@ export const TrendingList = ()=>{
                     sx={{
                         fontFamily: 'Playfair Display',
                         fontWeight: 700,
-                        fontSize: '30px',
+                        fontSize: {md: '30px', sm: '20px', xs: '16px'},
                         lineHeight: '52px',
                         color: '#07143B',
                         textAlign: 'start'
                     }}
                     >Trending Orders
         </Typography>
-        <ViewAll/>
         </Box>
         <Box
         sx={{

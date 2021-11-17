@@ -2,8 +2,15 @@ import React, { useState } from "react";
 import {Box, Divider, IconButton, Stack, Typography, Card, List, ListItem, Button, Chip} from "@mui/material";
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import RedoIcon from '@mui/icons-material/Redo';
+import { useSelector} from "react-redux";
+import { useNavigate } from "react-router";
+import { ComboCard } from "./combo";
+import AddRounded from "@mui/icons-material/AddRounded";
+import { RemoveRounded } from "@mui/icons-material";
+const round = (num)=> Math.round(num * 100) / 100;
 export const PizzaCartItem = (props)=>{
+    const _id = props.pizza._id;
+    const pizzaId = props.pizza.pizzaId;
     const name = props.pizza.name;
     const image = props.pizza.image;
     const total = props.pizza.total;
@@ -11,10 +18,11 @@ export const PizzaCartItem = (props)=>{
     const size = props.pizza.size;
     const sole = props.pizza.sole;
     const toppings = props.pizza.toppings;
-    const [removed, SetRemoved] = useState(false);
-    const switchRemove = ()=>{
-        SetRemoved(prev => !prev);
-
+    const handleCartChange = props.handleCartChange;
+    const allToppings = useSelector(state => state.toppings.entities);
+    const navigate = useNavigate();
+    const remove = ()=>{
+        handleCartChange(_id);
     }
     return(
         <Box sx={{
@@ -23,10 +31,16 @@ export const PizzaCartItem = (props)=>{
             width: '100%',
             //maxHeight: '200px'
             boxShadow: '1px 1px 5px rgb(0,0,0,0.2)',
-            backgroundColor: removed ? 'rgb(255, 0, 0, 0.1)' :'white',
-            borderRadius: '200px 0px 150px 200px',
-            p: 1
+            backgroundColor:'white',
+            borderRadius: {md: '200px 0px 150px 200px', sm: '10px', xs: '10px'},
+            p: 1,
+            minWidth: '300px'
         }}>
+            <Box
+            sx={{
+                display: {md: 'block', sm: 'none', xs: 'none'}
+            }}
+            >
             <img
             src={image}
             alt={name}
@@ -39,13 +53,12 @@ export const PizzaCartItem = (props)=>{
                 //transform: 'translateX(80px)',
             }}
             />
+            </Box>
             <Stack
             sx={{
                 display: 'flex',
                 width: '90%',
-                maxHeight: '200px',
                 boxSizing: 'border-box',
-                //transform: 'translateX(-80px)',
                 zIndex: 1,
                 padding: {md: '5px 50px 5px 50px', sm: '5px 10px 5px 20px'},
             }}>
@@ -60,7 +73,7 @@ export const PizzaCartItem = (props)=>{
                     sx={{
                         fontFamily: 'Playfair Display',
                         fontWeight: 700,
-                        fontSize: '25px',
+                        fontSize: {md: '25px', sm: '20px', xs: '15px'},
                         lineHeight: '52px',
                         color: '#07143B',
                         textAlign: 'start'
@@ -73,42 +86,59 @@ export const PizzaCartItem = (props)=>{
                         marginRight: '20px',
                         fontFamily: 'Playfair Display',
                         fontWeight: 700,
-                        fontSize: '25px',
+                        fontSize: {md: '25px', sm: '20px', xs: '15px'},
                         lineHeight: '52px',
                         color: '#07143B',
-                        textAlign: 'start'
+                        textAlign: 'start',
+                        display: {md: 'block', sm: 'none', xs: 'none'}
                     }}
                     >Total: $ {total}
                     </Typography>
                         <IconButton
+                        onClick={() =>{
+                            console.log('pizzaID :' + pizzaId);
+                            navigate("/product/" + pizzaId, 
+                            {state: {
+                                id: _id,
+                                size: size === 'S'? 0: size === 'M'? 1: 2,
+                                sole: sole === 'Soft'? 0: 1,
+                                number: number,
+                                total: total,
+                                toppings: toppings
+                            }}
+                            )
+                        }}
                         sx={{
-                            width: '40px',
-                            height: '40px',
+                            width: {md: '40px', sm: '30px', xs: '20px'},
+                            height: {md: '40px', sm: '30px', xs: '20px'},
                             backgroundColor: 'white',
-
                             boxShadow: '1px 1px 5px rgb(0,0,0,0.2)',
                             '&:hover, &:active':{
                                 backgroundColor: 'white'
                             }
                         }}
                         >
-                            <ModeEditIcon/>
+                            <ModeEditIcon sx={{
+                                width: {md: '30px', sm: '20px', xs: '15px'},
+                                height: {md: '30px', sm: '20px', xs: '15px'},
+                            }}/>
                         </IconButton>
                         <IconButton
                         sx={{
-                            width: '40px',
-                            height: '40px',
+                            width: {md: '40px', sm: '30px', xs: '20px'},
+                            height: {md: '40px', sm: '30px', xs: '20px'},
                             backgroundColor: 'white',
                             boxShadow: '1px 1px 5px rgb(0,0,0,0.2)',
                             '&:hover, &:active':{
                                 backgroundColor: 'white'
                             }
                         }}
-                        onClick={switchRemove}
+                        onClick={remove}
                         >
-                            {
-                                removed ? <RedoIcon/> :<DeleteIcon/>
-                            }
+                            <DeleteIcon sx={{
+                                width: {md: '30px', sm: '20px', xs: '15px'},
+                                height: {md: '30px', sm: '20px', xs: '15px'},
+                            }}/>
                             
                         </IconButton>
                     </Stack>
@@ -121,7 +151,7 @@ export const PizzaCartItem = (props)=>{
                     sx={{
                         fontFamily: 'Poppins',
                         fontWeight: 600,
-                        fontSize: '16px',
+                        fontSize: {md: '16px', sm: '14px', xs: '13px'},
                         lineHeight: '175%',
                         color: 'black',
                         textAlign: 'start',
@@ -133,7 +163,7 @@ export const PizzaCartItem = (props)=>{
                     sx={{
                         fontFamily: 'Poppins',
                         fontWeight: 600,
-                        fontSize: '16px',
+                        fontSize: {md: '16px', sm: '14px', xs: '13px'},
                         lineHeight: '175%',
                         color: 'black',
                         textAlign: 'start',
@@ -145,7 +175,7 @@ export const PizzaCartItem = (props)=>{
                     sx={{
                         fontFamily: 'Poppins',
                         fontWeight: 600,
-                        fontSize: '16px',
+                        fontSize: {md: '16px', sm: '14px', xs: '13px'},
                         lineHeight: '175%',
                         color: 'black',
                         textAlign: 'start',
@@ -154,6 +184,19 @@ export const PizzaCartItem = (props)=>{
                     >Number: {number}
                     </Typography>
                 </Stack>
+                <Typography variant="h6"
+                    sx={{
+                        marginRight: '20px',
+                        fontFamily: 'Playfair Display',
+                        fontWeight: 700,
+                        fontSize: {md: '25px', sm: '20px', xs: '15px'},
+                        lineHeight: '52px',
+                        color: '#07143B',
+                        textAlign: 'start',
+                        display: {md: 'none', sm: 'block', xs: 'block'}
+                    }}
+                    >Total: $ {total}
+                    </Typography>
                 <Divider sx={{width: '50%'}}/>
                 <Box
                 sx={{
@@ -164,8 +207,8 @@ export const PizzaCartItem = (props)=>{
                 }}>
 
                     {
-                        toppings.length > 0 ? toppings.map((topping)=>{
-                            return <Chip label={topping} sx={{
+                        toppings.length > 0 ? toppings.map((toppingId)=>{
+                            return <Chip label={allToppings[toppingId].name} sx={{
                                 margin: '5px 5px 5px 0',
                                 fontFamily: 'Poppins'
                             }}/>
@@ -179,38 +222,216 @@ export const PizzaCartItem = (props)=>{
         </Box>
     )
 }
-const pizzas = [
-    
-    {image: 'trend1.png', name: 'Pizza 1', size: 'S', sole: 'Soft', total: 5.49, number: 2,
-    toppings: ['topping 1', 'topping 2', 'topping 3']
-    },
-    {image: 'trend2.png', name: 'Pizza 2', size: 'M', sole: 'Soft', total: 6.49, number: 2,
-    toppings: ['topping 4', 'topping 5', 'topping 6']
-    },
-    {image: 'trend3.png', name: 'Pizza 3', size: 'L', sole: 'Crispy', total: 10.49, number: 3,
-    toppings: ['topping 1', 'topping 2', 'topping 3', 'topping 4', 'topping 5', 'topping 6']
-    },
-    
-    {image: 'trend4.png', name: 'Pizza 4', size: 'S', sole: 'Soft', total: 15.49, number: 5,
-    toppings: ['topping 1', 'topping 2', 'topping 7']
-    },
-    {image: 'trend5.png', name: 'Pizza 5', size: 'M', sole: 'Soft', total: 5.49, number: 2,
-    toppings: ['topping 1', 'topping 8', 'topping 9']
-    },
-    {image: 'trend6.png', name: 'Pizza 6', size: 'L', sole: 'Crispy', total: 7.49, number: 3,
-    toppings: []
-    },
-    {image: 'trend1.png', name: 'Pizza 1', size: 'S', sole: 'Soft', total: 5.49, number: 2,
-    toppings: ['topping 1', 'topping 2', 'topping 3']
-    },
-    {image: 'trend2.png', name: 'Pizza 2', size: 'M', sole: 'Soft', total: 6.49, number: 2,
-    toppings: ['topping 4', 'topping 5', 'topping 6']
-    },
-    {image: 'trend3.png', name: 'Pizza 3', size: 'L', sole: 'Crispy', total: 10.49, number: 3,
-    toppings: ['topping 1', 'topping 2', 'topping 3', 'topping 4', 'topping 5', 'topping 6']
-    },
-]
-export const PizzaCart = ()=>{
+export const ExtraCartItem = (props)=>{
+    const name = props.extra.name;
+    const image = props.extra.image;
+    const price = props.extra.price;
+    const extraId = props.extraId;
+    const handleClick = props.handleClick;
+    const [num, SetNum] = useState(props.number ? props.number : 1);
+    return(
+        <Box sx={{
+            display: 'flex',
+            alignItems: 'center',
+            width: '100%',
+            //maxHeight: '200px'
+            boxShadow: '1px 1px 5px rgb(0,0,0,0.2)',
+            backgroundColor:'white',
+            borderRadius: {md: '200px 0px 150px 200px', sm: '10px', xs: '10px'},
+            p: 1,
+            minWidth: '300px',
+            marginTop: '20px'
+        }}>
+            <Box
+            sx={{
+                display: {md: 'block', sm: 'none', xs: 'none'}
+            }}
+            >
+            <img
+            src={image}
+            alt={name}
+            style={{
+                borderRadius: '200px',
+                width: '150px',
+                height: '150px',
+                boxShadow: '5px 0px 20px rgba(0, 0, 0, 0.1)',
+                zIndex: 2,
+                //transform: 'translateX(80px)',
+            }}
+            />
+            </Box>
+            <Stack
+            sx={{
+                display: 'flex',
+                width: '90%',
+                boxSizing: 'border-box',
+                zIndex: 1,
+                padding: {md: '5px 50px 5px 50px', sm: '5px 10px 5px 20px'},
+            }}>
+                <Box
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center'
+                }}
+                >
+                    <Typography variant="h6"
+                    sx={{
+                        fontFamily: 'Playfair Display',
+                        fontWeight: 700,
+                        fontSize: {md: '25px', sm: '20px', xs: '15px'},
+                        lineHeight: '52px',
+                        color: '#07143B',
+                        textAlign: 'start'
+                    }}
+                    >{name}
+                    </Typography>
+                    <Stack direction="row" spacing={2}>
+                    <Typography variant="h6"
+                    sx={{
+                        marginRight: '20px',
+                        fontFamily: 'Playfair Display',
+                        fontWeight: 700,
+                        fontSize: {md: '25px', sm: '20px', xs: '15px'},
+                        lineHeight: '52px',
+                        color: '#07143B',
+                        textAlign: 'start',
+                        display: {md: 'block', sm: 'none', xs: 'none'}
+                    }}
+                    >Total: $ {round(num * price)}
+                    </Typography>
+                        <IconButton
+                        sx={{
+                            width: {md: '40px', sm: '30px', xs: '20px'},
+                            height: {md: '40px', sm: '30px', xs: '20px'},
+                            backgroundColor: 'white',
+                            boxShadow: '1px 1px 5px rgb(0,0,0,0.2)',
+                            '&:hover, &:active':{
+                                backgroundColor: 'white'
+                            }
+                        }}
+                        onClick={() =>{
+                            handleClick(extraId, true, false, num*price);
+                        }}
+                        >
+                            <DeleteIcon sx={{
+                                width: {md: '30px', sm: '20px', xs: '15px'},
+                                height: {md: '30px', sm: '20px', xs: '15px'},
+                            }}/>
+                            
+                        </IconButton>
+                    </Stack>
+                </Box>
+                <Stack spacing={2} direction="row">
+            <Typography variant="h6"
+                    sx={{
+                        fontFamily: 'Poppins',
+                        fontWeight: 700,
+                        fontSize: {md: '20px', sm: '16px', xs: '15px'},
+                        lineHeight: '52px',
+                        color: '#07143B',
+                        textAlign: 'center',
+                    }}
+                    >Number: 
+            </Typography>
+            <Stack direction="row" spacing={5}
+            sx={{
+                alignItems: 'center',
+                backgroundColor: 'rgba(252, 237, 227, 0.3)',
+                borderRadius: '100px'
+            }}
+            >
+                <IconButton
+                onClick = {()=>{
+                    const newNum = (num === 1)? 1: num - 1;
+                    if(num > 1)
+                    handleClick(extraId, false, false, price, {
+                        number: newNum,
+                        total: round(newNum * price)
+                    });
+                    SetNum(newNum);
+                }}
+                sx={{
+                    width: '40px',
+                    height: '40px',
+                    '&:hover, &:active':{
+                        color: 'white'
+                    }
+                }}
+                >
+                    <RemoveRounded
+                    
+                    sx={{
+                        color: 'rgba(234, 106, 18, 0.7)',
+                        width: '40px',
+                        height: '40px'
+                    }}
+                    />
+                </IconButton>
+                <Typography variant="subtitle1"
+                    sx={{
+                        fontFamily: 'Poppins',
+                        fontWeight: 600,
+                        fontSize: '16px',
+                        lineHeight: '175%',
+                        color: 'black',
+                        textAlign: 'start',
+                        marginBottom: '10px'
+                    }}
+                    >{num}
+                </Typography>
+                <IconButton
+                onClick = {()=>{
+                    const newNum = (num === 10) ? 10: num + 1;
+                    if(num < 10)
+                    handleClick(extraId, false, true, price, {
+                        number: newNum,
+                        total: round(newNum * price)
+                    });
+                    SetNum(newNum);
+                }}
+                sx={{
+                    width: '40px',
+                    height: '40px',
+                    '&:hover, &:active':{
+                        color: 'white'
+                    }
+                }}
+                >
+                    <AddRounded
+                    sx={{
+                        color: 'rgba(234, 106, 18, 0.7)',
+                        width: '40px',
+                        height: '40px'
+                    }}
+                    />
+                </IconButton>
+            </Stack>
+            </Stack>
+                <Typography variant="h6"
+                    sx={{
+                        marginRight: '20px',
+                        fontFamily: 'Playfair Display',
+                        fontWeight: 700,
+                        fontSize: {md: '25px', sm: '20px', xs: '15px'},
+                        lineHeight: '52px',
+                        color: '#07143B',
+                        textAlign: 'start',
+                        display: {md: 'none', sm: 'block', xs: 'block'}
+                    }}
+                    >Total: $ {round(price * num)}
+                    </Typography>
+            </Stack>
+        </Box>
+    )
+}
+export const Cart = (props)=>{
+    const cart = useSelector(state => state.cart);
+    const cartExtras = useSelector(state => state.cartExtras);
+    const cartCombos = useSelector(state => state.cartCombos);
+    const allPizzas = useSelector(state => state.pizzas.entities);
+    const allCombos = useSelector(state => state.combos.entities);
+    const allExtras = useSelector(state => state.extras.entities);
     return(
         <Card
         sx={{
@@ -239,11 +460,15 @@ export const PizzaCart = ()=>{
             maxHeight: '1000px', backgroundColor: 'rgba(252, 237, 227, 0.3)', 
             }}>
             {
-                pizzas.length > 0 ? 
-                pizzas.map(pizza =>{
+                cart.ids.length > 0 ? 
+                cart.ids.map((itemId) =>{
                     return(
                             <ListItem>
-                                <PizzaCartItem pizza = {pizza}/>
+                                <PizzaCartItem pizza = {{...cart.entities[itemId], 
+                                    name: allPizzas[cart.entities[itemId].pizzaId].name,
+                                    image : allPizzas[cart.entities[itemId].pizzaId].image, 
+                                    _id: itemId
+                                }} handleCartChange = {props.handleCartChange}/>
                             </ListItem>
                     )
                 })
@@ -263,26 +488,97 @@ export const PizzaCart = ()=>{
             </Typography>
             }
             </List>
-            <Divider/>
-            <Button variant="contained" 
-                    disabled = {pizzas.length === 0}
+            <Divider sx={{marginBottom: 4}}/>
+            <Typography variant="h6"
                     sx={{
-                        backgroundColor: '#EA6A12',
-                        borderRadius: '100px',
+                        alignSelf: 'start',
+                        fontFamily: 'Playfair Display',
+                        fontWeight: 700,
+                        fontSize: '30px',
+                        lineHeight: '52px',
+                        color: '#07143B',
+                        textAlign: 'start',
+                        margin: '20px'
+                    }} 
+                >Others
+            </Typography>
+            <Divider/>
+            <List sx={{width: '100%', height: '90%', overflow: 'auto', 
+            maxHeight: '1000px', backgroundColor: 'rgba(252, 237, 227, 0.3)', p: {md: 3, sm: '5px', xs: '2px'}
+            }}>
+            {
+                cartExtras.ids.length > 0 ? 
+                cartExtras.ids.map((itemId) =>{
+                    return(
+                            <ListItem>
+                                <ExtraCartItem extra = {allExtras[itemId]} number={cartExtras.entities[itemId].number}
+                                handleClick = {props.handleExtraChange} extraId={itemId}
+                                />
+                            </ListItem>
+                    )
+                })
+                : 
+                <Typography variant="h6"
+                    sx={{
+                        alignSelf: 'start',
                         fontFamily: 'Poppins',
-                        fontWeight: 'normal',
-                        fontSize: '13px',
-                        lineHeight: '175%',
-                        maxWidth: '150px',
-                        color: 'white',
-                        margin: '10px 0',
-                        '&:hover, &:active':{
-                            backgroundColor: '#f57c00'
-                        }
+                        fontWeight: 700,
+                        fontSize: '30px',
+                        lineHeight: '52px',
+                        color: '#07143B',
+                        textAlign: 'center',
+                        marginTop: '50px'
                     }}
-            >
-                Delete All
-            </Button>
+                >You have not ordered any extra food.
+            </Typography>
+            }
+            </List>
+            <Divider sx={{marginBottom: 4}}/>
+            <Typography variant="h6"
+                    sx={{
+                        alignSelf: 'start',
+                        fontFamily: 'Playfair Display',
+                        fontWeight: 700,
+                        fontSize: '30px',
+                        lineHeight: '52px',
+                        color: '#07143B',
+                        textAlign: 'start',
+                        margin: '20px'
+                    }}
+                >Combos
+            </Typography>
+            <Divider/>
+            <List sx={{width: '100%', height: '90%', overflow: 'auto', 
+            maxHeight: '1000px', backgroundColor: 'rgba(252, 237, 227, 0.3)', p: {md: 3, sm: '5px', xs: '2px'}
+            }}>
+                {
+                cartCombos.ids.length > 0 ? 
+                cartCombos.ids.map((itemId) =>{
+                    return(
+                            <ListItem>
+                                <ComboCard add={false} combo={allCombos[itemId]} number = {cartCombos.entities[itemId].number}
+                                handleClick = {props.handleComboChange} comboId={itemId}
+                                />
+                            </ListItem>
+                    )
+                })
+                : 
+                <Typography variant="h6"
+                    sx={{
+                        alignSelf: 'start',
+                        fontFamily: 'Poppins',
+                        fontWeight: 700,
+                        fontSize: '30px',
+                        lineHeight: '52px',
+                        color: '#07143B',
+                        textAlign: 'center',
+                        marginTop: '50px'
+                    }}
+                >You have not ordered any combo.
+            </Typography>
+            }
+            </List>
+            <Divider sx={{marginBottom: 4}}/>
         </Card>
     )
 }

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Avatar, Badge, Box, Typography, Divider, Stack, IconButton, List, ListItem, ListItemButton, Collapse, AppBar } from '@mui/material';
 import DashboardRoundedIcon from '@mui/icons-material/DashboardRounded';
-import VerifiedUserRoundedIcon from '@mui/icons-material/VerifiedUserRounded';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 import ContactSupportRoundedIcon from '@mui/icons-material/ContactSupportRounded';
@@ -9,6 +8,8 @@ import { styled } from '@mui/material/styles';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
+import {useNavigate} from 'react-router';
+import {useSelector} from 'react-redux';
 export const CustomIconButton = styled(IconButton)({
     width: 45,
     height: 45,
@@ -53,8 +54,10 @@ export const CustomListItem = styled(ListItem)({
     },
 })
 export const MenuBar = ()=>{
+    const navigate = useNavigate();
     const [expand, SetExpand] = useState(false);
     const [focus, SetFocus] = useState('');
+    const categories = useSelector(state => state.categories);
     const switchExpand = ()=>{
         SetExpand(prev => !prev);
     }
@@ -66,7 +69,7 @@ export const MenuBar = ()=>{
         alignSelf: 'stretch',
         backgroundColor: 'white',
         boxShadow: "0px 10px 30px rgba(234, 106, 18, 0.05)",
-        zIndex: 100,
+        zIndex: 200,
         display: 'flex'
     }}
     onMouseLeave = {() =>{switchExpand(); SetFocus('')}}
@@ -87,7 +90,7 @@ export const MenuBar = ()=>{
             marginBottom: '10px'
         }}>
         <Badge
-        badgeContent={<Avatar src="./sweet.png"
+        badgeContent={<Avatar src="/sweet.png"
         sx={{
             width: 22,
             height: 22,
@@ -123,16 +126,7 @@ export const MenuBar = ()=>{
                 }}
             >
                 <CustomListItem>
-                    <ListItemButton className='button' onClick={()=>{SetFocus('')}}>
-                    <DashboardRoundedIcon className='icon'/>
-                    <Typography className='typo'>
-                        Dashboard
-                    </Typography>
-                    </ListItemButton>
-                    
-                </CustomListItem>
-                <CustomListItem>
-                    <ListItemButton className='button' onClick={()=>{SetFocus('')}}>
+                    <ListItemButton className='button' onClick={()=>{navigate('/')}}>
                     <HomeRoundedIcon className='icon'/>
                     <Typography className='typo'>
                         Home
@@ -140,39 +134,43 @@ export const MenuBar = ()=>{
                     </ListItemButton>
                 </CustomListItem>
                 <CustomListItem>
-                    <ListItemButton className='button' onClick={()=>{SetFocus(
-                        prev => {return prev==='auth'? '': 'auth'}
-                    )}}>
-                    <VerifiedUserRoundedIcon className='icon'/>
-                    <Typography className='typo'>
-                        Authentication
+                    <ListItemButton className='button' onClick={()=>{SetFocus(prev => {return prev==='menu'? '': 'menu'})}}>
+                    <DashboardRoundedIcon className='icon'/>
+                    <Typography className='typo' component="pre">
+                        Menu {'      '} 
                     </Typography>
-                    {focus==='auth'?<ExpandLessIcon/>: <ExpandMoreIcon/>}
+                    {focus==='menu'?<ExpandLessIcon/>: <ExpandMoreIcon/>}
                     </ListItemButton>
                 </CustomListItem>
-
-                    <Collapse in={focus==='auth'} unmountOnExit>
+                <Collapse in={focus==='menu'} unmountOnExit>
+                    
                         <List>
-                            <CustomListItem sx={{
-                                pl: 4
-                            }}>
-                                <ListItemButton className='button'>
-                                <FiberManualRecordIcon className='icon'/>
-                                <Typography className='typo'>
-                                    Menu Item
-                                </Typography>
-                                </ListItemButton>
-                            </CustomListItem>
-                            <CustomListItem sx={{
-                                pl: 4
-                            }}>
-                                <ListItemButton className='button'>
-                                <FiberManualRecordIcon className='icon'/>
-                                <Typography className='typo'>
-                                    Menu Item
-                                </Typography>
-                                </ListItemButton>
-                            </CustomListItem>
+                        {
+                        categories.ids.map(id => {
+                            return(
+                                <CustomListItem sx={{
+                                    pl: 4
+                                }}>
+                                    <ListItemButton className='button' onClick = {()=>{navigate('/menu/' + id)}}>
+                                    <FiberManualRecordIcon className='icon'/>
+                                    <Typography className='typo'>
+                                        {categories.entities[id].name}
+                                    </Typography>
+                                    </ListItemButton>
+                                </CustomListItem>
+                            )
+                        })
+                        }
+                        <CustomListItem sx={{
+                                    pl: 4
+                                }}>
+                                    <ListItemButton className='button' onClick = {()=>{navigate('/combo')}}>
+                                    <FiberManualRecordIcon className='icon'/>
+                                    <Typography className='typo'>
+                                        Combo
+                                    </Typography>
+                                    </ListItemButton>
+                                </CustomListItem>
                         </List>
                     </Collapse>
                 <CustomListItem>
@@ -181,35 +179,10 @@ export const MenuBar = ()=>{
                     )}}>
                     <AccountCircleRoundedIcon className='icon'/>
                     <Typography className='typo'>
-                        User <pre style={{display: 'inline'}}>{'        '}</pre>
+                        Admin
                     </Typography>
-                    {focus==='user'?<ExpandLessIcon/>: <ExpandMoreIcon/>}
                     </ListItemButton>
                 </CustomListItem>
-                <Collapse in={focus==='user'} unmountOnExit>
-                        <List>
-                            <CustomListItem sx={{
-                                pl: 4
-                            }}>
-                                <ListItemButton className='button'>
-                                <FiberManualRecordIcon className='icon'/>
-                                <Typography className='typo'>
-                                    Menu Item
-                                </Typography>
-                                </ListItemButton>
-                            </CustomListItem>
-                            <CustomListItem sx={{
-                                pl: 4
-                            }}>
-                                <ListItemButton className='button'>
-                                <FiberManualRecordIcon className='icon'/>
-                                <Typography className='typo'>
-                                    Menu Item
-                                </Typography>
-                                </ListItemButton>
-                            </CustomListItem>
-                        </List>
-                    </Collapse>
                 <CustomListItem>
                     <ListItemButton className='button' onClick={()=>{SetFocus('')}}>
                     <ContactSupportRoundedIcon className='icon'/>
@@ -228,15 +201,13 @@ export const MenuBar = ()=>{
         minWidth:'80px',
         boxShadow: 'none',
         backgroundColor: 'white'
-        }}
-        
-        >
+        }}>
         <Box sx={{
             marginTop: '10px',
             marginBottom: '10px'
         }}>
         <Badge
-        badgeContent={<Avatar src="./sweet.png"
+        badgeContent={<Avatar src="/sweet.png"
         sx={{
             width: 22,
             height: 22,
@@ -273,13 +244,10 @@ export const MenuBar = ()=>{
             }}
         >
             <CustomIconButton>
-            <DashboardRoundedIcon className='icon'/>
-            </CustomIconButton>
-            <CustomIconButton>
             <HomeRoundedIcon className='icon'/>
             </CustomIconButton>
             <CustomIconButton>
-            <VerifiedUserRoundedIcon className='icon'/>
+            <DashboardRoundedIcon className='icon'/>
             </CustomIconButton>
             <CustomIconButton>
             <AccountCircleRoundedIcon className='icon'/>

@@ -20,8 +20,8 @@ export const Footer = ()=>{
     return(
         <Box 
         sx={{
+            position: 'absolute',
             bottom: 0,
-            right: 0,
             backgroundColor: 'white',
             display: 'flex',
             justifyContent: 'space-between',
@@ -29,7 +29,9 @@ export const Footer = ()=>{
             marginTop: '100px',
             minHeight: '50px',
             padding: '0 10px',
-            zIndex: -1
+            width: '100%',
+            //boxSizing: 'border-box',
+            zIndex: 2
         }}
         >
             <Stack direction='row' spacing={2}>
@@ -41,7 +43,8 @@ export const Footer = ()=>{
                 fontFamily: 'Poppins',
                 fontSize: '13px',
                 lineHeight: '175%',
-                letterSpacing: '0.02em'
+                letterSpacing: '0.02em',
+                marginRight: '5%'
             }}
             >© 2021 Aprycot, Made with ❤ by IQONIC Design.</Typography>
         </Box>
