@@ -10,7 +10,7 @@ import cartComboReducer from './cartComboSlice';
 import {combineReducers} from 'redux';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-//storage.removeItem('persist:root');
+storage.removeItem('persist:root');
 const persistConfig = {
     key: 'root',
     storage,

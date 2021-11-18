@@ -7,11 +7,11 @@ const cartComboSlice = createSlice({
         itemAdded(state, action){
             const comboId = action.payload.comboId;
             const existingId = state.ids.find(id => id === comboId);
-            if(existingId){
+            if(existingId !== undefined){
                 state.entities[comboId].number += action.payload.number;
                 state.entities[comboId].total += action.payload.total;
             }else{
-                state.ids = [...state.ids, comboId];
+                state.ids.push(comboId);
                 state.entities[comboId] = {number: action.payload.number, total: action.payload.total}
             }
         },

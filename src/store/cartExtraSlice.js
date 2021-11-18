@@ -7,11 +7,11 @@ const cartExtraSlice = createSlice({
         itemAdded(state, action){
             const extraId = action.payload.extraId;
             const existingId = state.ids.find(id => id === extraId);
-            if(existingId){
+            if(existingId !== undefined){
                 state.entities[extraId].number += action.payload.number;
                 state.entities[extraId].total += action.payload.total;
             }else{
-                state.ids = [...state.ids, extraId];
+                state.ids.push(extraId);
                 state.entities[extraId] = {number: action.payload.number, total: action.payload.total}
             }
         },
