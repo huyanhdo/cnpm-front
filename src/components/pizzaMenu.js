@@ -40,8 +40,16 @@ export const PizzaMenu = ()=>{
     const totalPage = Math.ceil(ids.length / max);
     const pageList = [];
     for(let i = 1;i <= totalPage;i++)pageList.push(i);
+    const [filteredIds, setFilteredIds] = useState(ids);
     const handleChange = (event, newValue)=>{
         setFilter(newValue);
+        if(newValue === 0){
+            setFilteredIds(ids => ids.sort((id1, id2)=> (products[id1].price - products[id2].price)))
+        }else if(newValue === 1){
+            setFilteredIds(ids => ids.sort((id1, id2)=> (products[id1].rate - products[id2].rate)))
+        }else{
+            setFilteredIds(ids => ids.sort((id1, id2)=> (products[id1].name < products[id2].name) ? -1 : 1))
+        }
     }
     return(
         <Box>
@@ -94,8 +102,7 @@ export const PizzaMenu = ()=>{
             }}
             >
             {
-                ids
-                .sort((id1, id2) => products[id2].rate - products[id1].rate)
+                filteredIds
                 .map((id, index) =>{
                     return (index >= (page - 1)*max && index < page * max) ?
                         <Box sx={{marginLeft: '20px'}}>

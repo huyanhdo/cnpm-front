@@ -53,6 +53,7 @@ export const ComboPizzaItem = (props) =>{
                 zIndex: 2
             }}
             />
+            <Stack direction="row">
             <Typography variant="h6"
                     sx={{
                         fontFamily: 'Poppins',
@@ -63,8 +64,22 @@ export const ComboPizzaItem = (props) =>{
                         textAlign: 'start',
                         marginLeft: {md: '20px', sm: '5px', xs: '2px'}
                     }}
-                >{pizza.name} (See more)
+                >{pizza.name}
             </Typography>
+            <Typography variant="h6"
+                    sx={{
+                        fontFamily: 'Poppins',
+                        fontWeight: 700,
+                        fontSize: {md: '15px'},
+                        lineHeight: '52px',
+                        color: '#07143B',
+                        textAlign: 'start',
+                        marginLeft: {md: '20px'},
+                        display: {md: 'block', sm: 'none', xs: 'none'}
+                    }}
+                >(See more)
+            </Typography>
+            </Stack>
             <Box sx={{
                 borderRadius: '50px',
                 width: '45px', height: '45px',
@@ -175,7 +190,7 @@ export const ComboExtraItem = (props) =>{
                     sx={{
                         fontFamily: 'Poppins',
                         fontWeight: 700,
-                        fontSize: {md: '15px', sm: '15px', xs: '13px'},
+                        fontSize: {md: '15px', sm: '13px', xs: '12px'},
                         lineHeight: '52px',
                         color: '#07143B',
                         textAlign: 'start',
@@ -249,7 +264,6 @@ export const ComboCard = (props) =>{
             />
             </Box>
                 <Box sx={{width: '100%', marginLeft:'5%', marginRight: '5%'}}>
-                <Box sx={{display: 'flex', justifyContent: 'space-between', width: '100%'}}>
                 <Typography variant="h6"
                     sx={{
                         fontFamily: 'Playfair Display',
@@ -261,20 +275,6 @@ export const ComboCard = (props) =>{
                     }}
                 >{combo.title}
                 </Typography>
-                <Typography variant="h6"
-                    sx={{
-                        alignSelf: 'center',
-                        marginRight: {md: '30%', sm: '10%', xs: '1%'},
-                        fontFamily: 'Playfair Display',
-                        fontWeight: 700,
-                        fontSize: {md: '30px', sm: '25px', xs: '20px'},
-                        lineHeight: '52px',
-                        color: '#07143B',
-                        textAlign: 'start',
-                    }}
-                    >Price: $ {combo.price}
-                </Typography>
-                </Box>
                 <Box sx={{display: 'flex', justifyContent: 'space-between', width: '100%'}}>
                 <Typography variant="h6"
                     sx={{
@@ -286,6 +286,19 @@ export const ComboCard = (props) =>{
                         textAlign: 'start',
                     }}
                 >Time: {combo.time}
+                </Typography>
+                <Typography variant="h6"
+                    sx={{
+                        alignSelf: 'center',
+                        fontFamily: 'Playfair Display',
+                        fontWeight: 700,
+                        fontSize: {md: '30px', sm: '25px', xs: '20px'},
+                        lineHeight: '52px',
+                        color: '#07143B',
+                        textAlign: 'start',
+                        display: {md: 'block', sm: 'none', xs: 'none'}
+                    }}
+                    >Price: $ {combo.price}
                 </Typography>
                 <Stack direction="row" spacing={{md: 3, sm: 1, xs: 0}}
             sx={{
@@ -321,6 +334,8 @@ export const ComboCard = (props) =>{
                 }
                 
                 </IconButton>
+            {
+            !add?
             <IconButton 
             sx={{
                 width: {md: '60px', sm: '40px', xs: '30px'},
@@ -331,7 +346,9 @@ export const ComboCard = (props) =>{
                 {expand ? 
                 <ExpandLess sx={{width: {md: '60px', sm: '40px', xs: '30px'}, height: {md: '60px', sm: '40px', xs: '30px'},}}/> : 
                 <ExpandMore sx={{width: {md: '60px', sm: '40px', xs: '30px'}, height: {md: '60px', sm: '40px', xs: '30px'},}}/>}
-            </IconButton>        
+            </IconButton>  
+            : false
+            }     
                 </Stack>
                 </Box>
                 <Typography variant="h6"
@@ -348,7 +365,7 @@ export const ComboCard = (props) =>{
                 </Box>
             </Box>
             <Divider/>
-            <Collapse in={expand} unmountOnExit>
+            <Collapse in={add ? true : expand} unmountOnExit>
                 <Box sx={{
                     display: 'flex',
                     flexWrap: 'wrap',
@@ -476,6 +493,147 @@ export const ComboCard = (props) =>{
         </Box>
     )
 }
+export const ComboMenuItem = (props) =>{
+    const combo = props.combo;
+    const [expand, SetExpand] = useState(false);
+    const [hov, setHov] = useState(false);
+    const switchHov = ()=>{
+        setHov(prev => !prev);
+    }
+    return(
+        <Box
+        onMouseEnter={switchHov}
+        onMouseLeave = {switchHov}
+        sx={{
+            display: 'flex',
+            alignItems: 'center',
+            backgroundColor: hov ?'rgba(234, 106, 18, 0.7)': 'rgba(255, 255, 255, 0.4)',
+            maxWidth: '274px',
+            maxHeight: '237px',
+            borderRadius: '24px',
+            p: 3,
+            boxSizing: 'border-box',
+            marginRight: '2.5%',
+            marginLeft: '2.5%',
+            boxShadow: '1px 1px 5px rgba(0,0,0, 0.5)'
+        }}
+        >
+            <Stack spacing={1} sx={{minWidth: '150px'}}>
+            <Typography variant="subtitle1"
+                    sx={{
+                        
+                        fontFamily: 'Poppins',
+                        fontWeight: 400,
+                        fontSize: '13px',
+                        lineHeight: '22.75px',
+                        color: hov? 'white':'#EA6A12',
+                        textAlign: 'start'
+                    }}
+                    >❤️ {combo.content1}
+            </Typography>
+            <Typography variant="subtitle1"
+                    sx={{
+                        fontFamily: 'Poppins',
+                        fontWeight: 600,
+                        fontSize: '16px',
+                        lineHeight: '175%',
+                        color: hov? 'white': 'black',
+                        textAlign: 'start',
+                        marginBottom: '10px'
+                    }}
+                    >{combo.title}
+            </Typography>
+            <Typography variant="subtitle1"
+                    sx={{
+                        fontFamily: 'Poppins',
+                        fontWeight: 400,
+                        fontSize: '13px',
+                        lineHeight: '22.75px',
+                        color: hov? 'white': '#959895',
+                        textAlign: 'start',
+                        marginBottom: '20px'
+                    }}
+                    >{combo.time}   
+            </Typography>
+            <Divider variant="light"  sx={{
+                width: '50%',
+                color: hov?'white': 'rgb(0,0,0,0.5)'
+            }}/>
+            <Typography variant="subtitle1"
+                    sx={{
+                        fontFamily: 'Poppins',
+                        fontWeight: 400,
+                        fontSize: '13px',
+                        lineHeight: '22.75px',
+                        textAlign: 'start',
+                        color: hov? 'white': '#959895',
+                        marginBottom: '20px'
+                    }}
+                    >{combo.persons} persons                    
+            </Typography>
+            <Stack
+            direction='row'
+            spacing={1}
+            sx={{
+                marginTop: '20px'
+            }}
+            >
+                <Typography variant="subtitle1"
+                    sx={{
+                        fontFamily: 'Poppins',
+                        fontWeight: 600,
+                        fontSize: '13px',
+                        lineHeight: '175%',
+                        color: hov? 'white': '#EA6A12',
+                        textAlign: 'start'
+                    }}
+                    >$ {combo.price}
+                </Typography>
+                <IconButton
+                sx={{
+                width: '24px',
+                height: '24px'
+                }}
+                onClick={() =>{SetExpand(true)}}
+                >
+                <AddCircleRounded
+                    sx={{
+                        color: hov ? 'white':'rgba(234, 106, 18, 0.7)',
+                    }}
+                />
+                </IconButton>
+            </Stack>
+            </Stack>
+            
+            <img
+            src={combo.image}
+            alt={combo.title}
+            style={{
+            borderRadius: '50%',
+            //boxShadow: '-10px 0px 30px rgba(0, 0, 0, 0.1)',
+            alignSelf: 'center',
+            //transform: 'translateX(5%)',
+            width: '75%',
+            }}
+            />
+        <Modal open={expand} onClose={() => {SetExpand(false)}}>
+            <Fade in={expand} timeout={500}>
+            <Box
+            sx={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                minWidth: {md: '70%', sm: '90%', xs: '95%'}
+            }}
+            >
+            <ComboCard add={true} combo={combo} comboId={props.comboId} handleClick={props.handleClick}/>
+            </Box>
+            </Fade>
+        </Modal>
+        </Box>
+    )
+}
 export const ComboList = ()=>{
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -491,6 +649,7 @@ export const ComboList = ()=>{
     const [filter, setFilter] = useState(0);
     const ids = useSelector(state => state.combos.ids);
     const combos = useSelector(state => state.combos.entities);
+    const [filteredIds, setFilteredIds] = useState(ids);
     const max = 2;
     const [page, setPage] = useState(1);
     const totalPage = Math.ceil(ids.length / max);
@@ -498,6 +657,13 @@ export const ComboList = ()=>{
     for(let i = 1;i <= totalPage;i++)pageList.push(i);
     const handleChange = (event, newValue)=>{
         setFilter(newValue);
+        if(newValue === 0){
+            setFilteredIds(ids => ids.sort((id1, id2)=> (combos[id1].price - combos[id2].price)))
+        }else if(newValue === 1){
+            setFilteredIds(ids => ids.sort((id1, id2)=> (combos[id1].persons - combos[id2].persons)))
+        }else{
+            setFilteredIds(ids => ids.sort((id1, id2)=> (combos[id1].time < combos[id2].time) ? -1 : 1))
+        }
     }
     return(
         <Box sx={{width: '100%', marginBottom: '100px'}}>
@@ -542,7 +708,7 @@ export const ComboList = ()=>{
         </Box>
         {
             pageList.map(p => {return(
-            <Fade in={page===p} mountOnEnter unmountOnExit timeout={page===p ? 1000: 0}>
+            <Grow in={page===p} mountOnEnter unmountOnExit timeout={page===p ? 1000: 0}>
             <Box
             sx={{
                 display: 'flex',
@@ -550,18 +716,17 @@ export const ComboList = ()=>{
             }}
             >
             {
-                ids
-                //.sort((id1, id2) => products[id2].rate - products[id1].rate)
+                filteredIds
                 .map((id, index) =>{
                     return (index >= (page - 1)*max && index < page * max) ?
-                    <Box sx={{margin: '0 20px', width: '100%'}}>
-                        <ComboCard add={true} combo = {combos[id]} comboId={id} handleClick = {handleClick}/>
+                    <Box sx={{margin: '20px 50px'}}>
+                        <ComboMenuItem  combo = {combos[id]} comboId={id} handleClick={handleClick}/>
                     </Box>
                     : false
                 })
             }
             </Box>
-                </Fade>   
+                </Grow>   
             )})
         }
         <Modal open={done} >
