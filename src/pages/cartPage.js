@@ -15,7 +15,7 @@ export const CartPage = ()=>{
     const totalPizza = cart.ids.reduce((total, itemId)=>{return round(total + cart.entities[itemId].total)}, 0);
     const totalExtra = cartExtras.ids.reduce((total, itemId) => {return round(total + cartExtras.entities[itemId].total)}, 0);
     const totalCombo = cartCombos.ids.reduce((total, itemId) => {return round(total + cartCombos.entities[itemId].total)}, 0);
-    const [totalValue, SetTotalValue] = useState(totalPizza + totalExtra + totalCombo);
+    const [totalValue, SetTotalValue] = useState(round(totalPizza + totalExtra + totalCombo));
     const handleCartChange = (_id)=>{
         SetTotalValue(prev => round(prev - cart.entities[_id].total));
         dispatch(itemRemoved(_id));

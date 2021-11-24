@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { PizzaCard } from "./categories";
-import {Box, Tab, Tabs, Typography, styled, Collapse, Pagination, Fade, Grow} from '@mui/material';
+import {Box, Tab, Typography, styled, Pagination, Grow} from '@mui/material';
 import { useSelector } from "react-redux";
 import { useParams } from "react-router";
 export const CustomTab = styled(Tab)({
@@ -14,7 +14,6 @@ export const CustomPagination = styled(Pagination)({
         backgroundColor: 'rgb(234, 106, 18, 0.5)',
     },
     '& .Mui-selected': {
-        color: 'white',
         backgroundColor: 'rgb(234, 106, 18, 0.5)',
 
     }
@@ -33,26 +32,13 @@ export const PizzaMenu = ()=>{
             return (state.extras.entities[id].category == category)
         })
     });
-    const filters = ['Filter 1', 'Filter 2', 'Filter 3'];
-    const [filter, setFilter] = useState(0);
     const max = 2;
     const [page, setPage] = useState(1);
     const totalPage = Math.ceil(ids.length / max);
     const pageList = [];
     for(let i = 1;i <= totalPage;i++)pageList.push(i);
-    const [filteredIds, setFilteredIds] = useState(ids);
-    const handleChange = (event, newValue)=>{
-        setFilter(newValue);
-        if(newValue === 0){
-            setFilteredIds(ids => ids.sort((id1, id2)=> (products[id1].price - products[id2].price)))
-        }else if(newValue === 1){
-            setFilteredIds(ids => ids.sort((id1, id2)=> (products[id1].rate - products[id2].rate)))
-        }else{
-            setFilteredIds(ids => ids.sort((id1, id2)=> (products[id1].name < products[id2].name) ? -1 : 1))
-        }
-    }
     return(
-        <Box>
+        <Box sx={{p: 5, marginBottom: '100px', width: '100%'}}>
         <Typography variant="h6"
                     sx={{
                         fontFamily: 'Playfair Display',
@@ -65,33 +51,6 @@ export const PizzaMenu = ()=>{
                     }}
                     >Pizzas
         </Typography>
-        <Box sx={{
-            width: '100%',
-            p: 3,
-            display: 'flex',
-            flexWrap: 'wrap-reverse',
-            justifyContent: 'space-between'
-        }}>
-            <Tabs value={filter} onChange={handleChange}
-            textColor='inherit'
-            TabIndicatorProps={{
-                style:{
-                    backgroundColor: '#EA6A12',
-                }
-            }}
-            >
-                {
-                    filters.map(f =>{
-                        return(
-                            <CustomTab label={f} ></CustomTab>
-                        )
-                    })
-                }
-            </Tabs>
-            <CustomPagination variant="outlined" shape="rounded" count={totalPage}
-            onChange={(event, value) => {setPage(value)}} size="large" page={page}
-            />
-        </Box>
         {
             pageList.map(p => {return(
             <Grow in={page===p} mountOnEnter unmountOnExit timeout={page===p ? 1000: 0}>
@@ -102,7 +61,7 @@ export const PizzaMenu = ()=>{
             }}
             >
             {
-                filteredIds
+                ids
                 .map((id, index) =>{
                     return (index >= (page - 1)*max && index < page * max) ?
                         <Box sx={{marginLeft: '20px'}}>
@@ -118,6 +77,11 @@ export const PizzaMenu = ()=>{
                 </Grow>   
             )})
         }
+        <Box sx={{marginTop: '100px', alignItems: 'center', width: '100%', marginLeft: '40%'}}>
+        <CustomPagination variant="outlined" shape="rounded" count={totalPage}
+            onChange={(event, value) => {setPage(value)}} size="large" page={page}
+        />
+        </Box>
         </Box>
     )
 }

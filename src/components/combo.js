@@ -9,7 +9,6 @@ import { useNavigate } from 'react-router';
 import { itemAdded } from '../store/cartComboSlice';
 import { CustomPagination } from './pizzaMenu';
 const round = (num)=> Math.round(num * 100) / 100;
-const filters = ['Filter 1', 'Filter 2', 'Filter 3']
 export const ComboPizzaItem = (props) =>{
     const item = props.item;
     const [expand, SetExpand] = useState(false);
@@ -594,7 +593,7 @@ export const ComboMenuItem = (props) =>{
                 width: '24px',
                 height: '24px'
                 }}
-                onClick={() =>{SetExpand(true)}}
+                onClick={() =>{SetExpand(true); switchHov()}}
                 >
                 <AddCircleRounded
                     sx={{
@@ -604,7 +603,6 @@ export const ComboMenuItem = (props) =>{
                 </IconButton>
             </Stack>
             </Stack>
-            
             <img
             src={combo.image}
             alt={combo.title}
@@ -646,27 +644,15 @@ export const ComboList = ()=>{
         setDone(true);
     }
     const [done, setDone] = useState(false);
-    const [filter, setFilter] = useState(0);
     const ids = useSelector(state => state.combos.ids);
     const combos = useSelector(state => state.combos.entities);
-    const [filteredIds, setFilteredIds] = useState(ids);
     const max = 2;
     const [page, setPage] = useState(1);
     const totalPage = Math.ceil(ids.length / max);
     const pageList = [];
     for(let i = 1;i <= totalPage;i++)pageList.push(i);
-    const handleChange = (event, newValue)=>{
-        setFilter(newValue);
-        if(newValue === 0){
-            setFilteredIds(ids => ids.sort((id1, id2)=> (combos[id1].price - combos[id2].price)))
-        }else if(newValue === 1){
-            setFilteredIds(ids => ids.sort((id1, id2)=> (combos[id1].persons - combos[id2].persons)))
-        }else{
-            setFilteredIds(ids => ids.sort((id1, id2)=> (combos[id1].time < combos[id2].time) ? -1 : 1))
-        }
-    }
     return(
-        <Box sx={{width: '100%', marginBottom: '100px'}}>
+        <Box sx={{p: 3, width: '100%', marginBottom: '100px'}}>
             <Typography variant="h6"
                     sx={{
                         fontFamily: 'Playfair Display',
@@ -679,33 +665,6 @@ export const ComboList = ()=>{
                     }}
                     >Combos
             </Typography>
-            <Box sx={{
-            width: '100%',
-            p: 3,
-            display: 'flex',
-            flexWrap: 'wrap-reverse',
-            justifyContent: 'space-between'
-        }}>
-            <Tabs value={filter} onChange={handleChange}
-            textColor='inherit'
-            TabIndicatorProps={{
-                style:{
-                    backgroundColor: '#EA6A12',
-                }
-            }}
-            >
-                {
-                    filters.map(f =>{
-                        return(
-                            <CustomTab label={f} ></CustomTab>
-                        )
-                    })
-                }
-            </Tabs>
-            <CustomPagination variant="outlined" shape="rounded" count={totalPage} page = {page}
-            onChange={(event, value) => {setPage(value)}} size="large"
-            />
-        </Box>
         {
             pageList.map(p => {return(
             <Grow in={page===p} mountOnEnter unmountOnExit timeout={page===p ? 1000: 0}>
@@ -716,7 +675,7 @@ export const ComboList = ()=>{
             }}
             >
             {
-                filteredIds
+                ids
                 .map((id, index) =>{
                     return (index >= (page - 1)*max && index < page * max) ?
                     <Box sx={{margin: '20px 50px'}}>
@@ -806,6 +765,11 @@ export const ComboList = ()=>{
             </Stack>
             </Fade>
         </Modal>
+        <Box sx={{marginTop: '100px', alignItems: 'center', width: '100%', marginLeft: '40%'}}>
+        <CustomPagination variant="outlined" shape="rounded" count={totalPage}
+            onChange={(event, value) => {setPage(value)}} size="large" page={page}
+        />
+        </Box>
         </Box>
     )
 }

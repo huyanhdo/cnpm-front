@@ -253,6 +253,7 @@ export const SinglePizza = ()=>{
         <Box sx={{
             m: 1,
             display: 'flex',
+            flexWrap: 'wrap',
             justifyContent: 'space-around'
         }}>
             <Stack spacing={2} direction="row">
@@ -425,7 +426,7 @@ export const SinglePizza = ()=>{
                 transform: 'translate(-50%, -50%)',
                 p: 4,
                 boxShadow: 24,
-                width: '400px'
+                width: {md: '50%', sm: '80%', xs: '90%'}
             }}
             >
                 <Typography variant="h6"
