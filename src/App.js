@@ -1,12 +1,3 @@
-<<<<<<< HEAD
-import {Button} from '@mui/material'
-import Header from './component/Header';
-import Home from './pages/Home';
-function App() {
-  return(
-    <div><Home/></div>
-  )
-=======
 import './App.css';
 import { MenuBar } from './components/sidebar';
 import { CartPage } from './pages/cartPage';
@@ -59,6 +50,5 @@ function App() {
     </body>
     </html>
   );
->>>>>>> Home-Page-Clone
 }
 export default App;
