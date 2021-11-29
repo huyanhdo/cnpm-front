@@ -1,0 +1,64 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+.text-strong{
+  font-family: 'Playfair Display', serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 40px;
+  line-height: 130%;
+  letter-spacing: 0.02em;
+  font-feature-settings: 'pnum' on, 'lnum' on;
+}
+.text-small{
+  font-family: 'Poppins', sans-serif;
+font-style: normal;
+font-weight: 600;
+font-size: 16px;
+line-height: 175%;
+/* identical to box height, or 28px */
+
+letter-spacing: 0.02em;
+
+/* Text/body text-959895 */
+
+color: #959895;
+}
+.MuiPaginationItem-root{
+  color: '#EA6A12';
+  font-family: 'Poppins';
+}
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
