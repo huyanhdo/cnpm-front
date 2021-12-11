@@ -10,6 +10,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import {useNavigate} from 'react-router';
 import {useSelector} from 'react-redux';
+import { useAuth } from '../context/AuthContext';
 export const CustomIconButton = styled(IconButton)({
     width: 45,
     height: 45,
@@ -57,6 +58,7 @@ export const MenuBar = ()=>{
     const navigate = useNavigate();
     const [expand, SetExpand] = useState(false);
     const [focus, SetFocus] = useState('');
+    const {currentUser} = useAuth();
     const categories = useSelector(state => state.categories);
     const switchExpand = ()=>{
         SetExpand(prev => !prev);
@@ -133,6 +135,16 @@ export const MenuBar = ()=>{
                     </Typography>
                     </ListItemButton>
                 </CustomListItem>
+                {currentUser &&<CustomListItem>
+                    <ListItemButton className='button' onClick={()=>{SetFocus(
+                        prev => {return prev==='user'? '': 'user'}
+                    )}}>
+                    <AccountCircleRoundedIcon className='icon'/>
+                    <Typography className='typo'>
+                        Admin
+                    </Typography>
+                    </ListItemButton>
+                </CustomListItem>}
                 <CustomListItem>
                     <ListItemButton className='button' onClick={()=>{SetFocus(prev => {return prev==='menu'? '': 'menu'})}}>
                     <DashboardRoundedIcon className='icon'/>
@@ -173,16 +185,7 @@ export const MenuBar = ()=>{
                                 </CustomListItem>
                         </List>
                     </Collapse>
-                <CustomListItem>
-                    <ListItemButton className='button' onClick={()=>{SetFocus(
-                        prev => {return prev==='user'? '': 'user'}
-                    )}}>
-                    <AccountCircleRoundedIcon className='icon'/>
-                    <Typography className='typo'>
-                        Admin
-                    </Typography>
-                    </ListItemButton>
-                </CustomListItem>
+                
                 <CustomListItem>
                     <ListItemButton className='button' onClick={()=>{SetFocus('')}}>
                     <ContactSupportRoundedIcon className='icon'/>
@@ -246,11 +249,12 @@ export const MenuBar = ()=>{
             <CustomIconButton>
             <HomeRoundedIcon className='icon'/>
             </CustomIconButton>
+            {currentUser &&
+            <CustomIconButton>
+             <AccountCircleRoundedIcon className='icon'/>
+            </CustomIconButton>}
             <CustomIconButton>
             <DashboardRoundedIcon className='icon'/>
-            </CustomIconButton>
-            <CustomIconButton>
-            <AccountCircleRoundedIcon className='icon'/>
             </CustomIconButton>
             <CustomIconButton>
             <ContactSupportRoundedIcon className='icon'/>
@@ -258,6 +262,7 @@ export const MenuBar = ()=>{
         </Stack>
     </AppBar>
     </Collapse>
+
     </Box>
     )
 }

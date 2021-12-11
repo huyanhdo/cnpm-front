@@ -2,9 +2,10 @@ import SearchIcon from '@mui/icons-material/Search';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import EmailIcon from '@mui/icons-material/Email';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { FormControl, InputAdornment, TextField, styled, IconButton, Avatar, AppBar, Toolbar, Box, Stack } from "@mui/material";
-
+import { FormControl, InputAdornment, TextField, styled, IconButton, Avatar, AppBar, Toolbar, Box, Stack,Button } from "@mui/material";
+import { useAuth } from '../context/AuthContext';
 import React from "react";
+import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 export const Searchbar = ()=>{
     const CssTextField = styled(TextField)({
@@ -20,6 +21,10 @@ export const Searchbar = ()=>{
         //marginTop: 15,
         marginLeft: 20
     });
+    const {logout} = useAuth();
+    const {currentUser} = useAuth();
+    const navigate = useNavigate();
+    const handlelogout= ()=>{logout();navigate('/') }
     return(
         <AppBar
             position='sticky'
@@ -53,7 +58,7 @@ export const Searchbar = ()=>{
             </FormControl>
             <Box sx={{ flexGrow: 10 }} />
             <Stack sx={{flexGrow: 2}} spacing={2} direction="row">
-                <IconButton>
+                <IconButton onClick={handlelogout} >
                 <NotificationsIcon
                 sx={{
                     '&:hover':{
@@ -81,13 +86,29 @@ export const Searchbar = ()=>{
                 </IconButton>
                 </Link>
                 
-                
+                { currentUser ?
                 <Avatar
+                    
                 sx={{
                     '&:hover':{
                         color: '#EA6A12'
                     }
                 }}/>
+                :
+    
+                    <Button
+                        onClick={()=>{navigate('/signin')}}
+                        sx={{
+                            borderRadius:'25px',
+                            color:'black',
+                            textDecorationLine:'none',
+                            '&:hover':{
+                            backgroundColor:'#EA6A12',
+                            color:'white',
+                            }
+                        }}>Sign in</Button>
+             
+                }
             </Stack>
             </Toolbar>
         </AppBar>
