@@ -1,13 +1,20 @@
-import React from "react";
+import React,{useEffect} from "react";
 import {Grid,Box,Hidden} from '@mui/material';
 import pic1 from '../assets/img/pic1.png';
-import SignInForm from "./SignIn/SignInForm";
+import SignInForm from "../components/SignIn/SignInForm";
+import { useAuth } from "../context/AuthContext";
 
-const SignIn = ()=>{
+const SignIn = ( )=>{
+    const {currentUser} = useAuth();
+    const {logout} = useAuth();
 
+    useEffect(() => {
+        if(currentUser) logout();
+    }, [])
+    
     return (
         <Box sx={{height:'100%', width:'100%'}}>
- 
+   
         <Grid container 
             sx={{height:'100%', width:'100%'}}
             spacing ={0}

@@ -7,17 +7,15 @@ import { SinglePage } from './pages/singlePage';
 import {Box} from '@mui/material';
 import { Searchbar } from './components/searchbar';
 import { Footer } from './components/footer';
-import {BrowserRouter , Routes, Route} from 'react-router-dom';
+import {BrowserRouter , Routes, Route,Navigate} from 'react-router-dom';
 import { ComboPage } from './pages/comboPage';
 import SignIn from './pages/SignIn';
 import AuthContextProvider from './context/AuthContext';
 import { SingleExtraPage } from './pages/singleExtraPage';
-
-
 function App() {
-  
   return (
       <body>
+     
         <div className="App">
         <div style={{
             backgroundColor: 'rgba(252, 237, 227, 0.3)',
@@ -34,7 +32,7 @@ function App() {
             <Searchbar/>
             
               <Routes>
-                <Route exact path='/signin' element={<SignIn/>}/>
+                <Route exact path='/signin' element ={<SignIn/>}/>
                 <Route path="/" element={<Home/>}/>
                 <Route path="/cart" element={<CartPage/>}/>
                 <Route path = "/menu/:category" element={<PizzaPage/>}/>
