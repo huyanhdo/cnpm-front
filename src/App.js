@@ -10,7 +10,22 @@ import { Footer } from './components/footer';
 import { BrowserRouter , Routes, Route} from 'react-router-dom';
 import { ComboPage } from './pages/comboPage';
 import { SingleExtraPage } from './pages/singleExtraPage';
+import { fetchAllDesserts } from "./store/categories/dessertSlice";
+import { fetchAllDrinks } from "./store/categories/drinkSlice";
+import { fetchAllVegetables } from "./store/categories/vegetableSlice";
+import { fetchAllKids } from "./store/categories/kidSlice";
+import { fetchAllPizzas} from "./store/pizzaSlice";
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 function App() {
+  const dispatch = useDispatch()
+  useEffect(()=>{
+    dispatch(fetchAllPizzas())
+    dispatch(fetchAllVegetables())
+    dispatch(fetchAllDesserts())
+    dispatch(fetchAllDrinks())
+    dispatch(fetchAllKids())
+  })
   return (
     <html>
       <head>
@@ -38,8 +53,8 @@ function App() {
                 <Route path="/" element={<Home/>}/>
                 <Route path="/cart" element={<CartPage/>}/>
                 <Route path = "/menu/:category" element={<PizzaPage/>}/>
-                <Route path="product/:productId" element={<SinglePage/>}/>
-                <Route path="extra/:productId" element={<SingleExtraPage/>}/>
+                <Route path="/pizza/:productId" element={<SinglePage/>}/>
+                <Route path="/:category/:productId" element={<SingleExtraPage/>}/>
                 <Route path="/combo" element={<ComboPage/>}/>
               </Routes>
             <Footer/>

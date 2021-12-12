@@ -1,5 +1,4 @@
-import { Box, Divider, IconButton, Stack, Typography, Card, Button, List } from '@mui/material';
-import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import { Box, Divider, Stack, Typography, Card, Button, List } from '@mui/material';
 import React from 'react';
 import { useNavigate } from 'react-router';
 import { useSelector } from 'react-redux';
@@ -88,12 +87,29 @@ const CartItem = (props)=>{
     </Box>
     )
 }
+
 export const Cart = ()=>{
+    const categories = {
+        'dessert':{
+            selector: useSelector(state => state.desserts),
+        },
+        'drink':{
+            selector: useSelector(state => state.drinks),
+        },
+        'vegetable':{
+            selector: useSelector(state => state.vegetables),
+        },
+        'kid':{
+            selector: useSelector(state => state.kids),
+        },
+        'appetizer':{
+            selector: state => state.appetizers,
+        }
+    }
     const cart = useSelector(state => state.cart);
     const cartExtras = useSelector(state => state.cartExtras);
     const cartCombos = useSelector(state => state.cartCombos);
     const pizzas = useSelector(state => state.pizzas.entities);
-    const extras = useSelector(state => state.extras.entities);
     const combos = useSelector(state => state.combos.entities);
     const navigate = useNavigate();
     return(
@@ -140,10 +156,12 @@ export const Cart = ()=>{
             }
             {
                 cartExtras.ids.map(id =>{
+                    const category = cartExtras.entities[id].category
+                    const extra = categories[category].selector
                     return(
                         <CartItem 
-                        image={extras[id].image} 
-                        name={extras[id].name}
+                        image={extra.image_url} 
+                        name={extra.title}
                         number={cartExtras.entities[id].number} 
                         price={cartExtras.entities[id].total}
                         />

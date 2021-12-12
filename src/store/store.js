@@ -3,14 +3,16 @@ import pizzaReducer from "./pizzaSlice";
 import toppingReducer from "./toppingSlice";
 import cartReducer from "./cartSlice";
 import comboReducer from "./comboSlice";
-import categoryReducer from "./categorySlice";
-import extraReducer from './extraSlice';
+import dessertSlice from "./categories/dessertSlice";
+import drinkSlice from "./categories/drinkSlice";
+import kidSlice from "./categories/kidSlice";
+import vegetableSlice from "./categories/vegetableSlice";
 import cartExtraReducer from './cartExtraSlice';
 import cartComboReducer from './cartComboSlice';
 import {combineReducers} from 'redux';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-//storage.removeItem('persist:root');
+storage.removeItem('persist:root');
 const persistConfig = {
     key: 'root',
     storage,
@@ -22,8 +24,10 @@ const rootReducer = combineReducers({
     cartExtras: cartExtraReducer,
     cartCombos: cartComboReducer,
     combos: comboReducer,
-    categories: categoryReducer,
-    extras: extraReducer,
+    desserts: dessertSlice,
+    drinks: drinkSlice,
+    kids: kidSlice,
+    vegetables: vegetableSlice
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

@@ -53,11 +53,13 @@ export const CustomListItem = styled(ListItem)({
         color: 'white'
     },
 })
+const categories = [
+    'pizza', 'dessert', 'appetizer', 'vegetable', 'kid', 'drink'
+]
 export const MenuBar = ()=>{
     const navigate = useNavigate();
     const [expand, SetExpand] = useState(false);
     const [focus, SetFocus] = useState('');
-    const categories = useSelector(state => state.categories);
     const switchExpand = ()=>{
         SetExpand(prev => !prev);
     }
@@ -146,15 +148,15 @@ export const MenuBar = ()=>{
                     
                         <List>
                         {
-                        categories.ids.map(id => {
+                        categories.map(category => {
                             return(
                                 <CustomListItem sx={{
                                     pl: 4
                                 }}>
-                                    <ListItemButton className='button' onClick = {()=>{navigate('/menu/' + id)}}>
+                                    <ListItemButton className='button' onClick = {()=>{navigate('/menu/' + category)}}>
                                     <FiberManualRecordIcon className='icon'/>
                                     <Typography className='typo'>
-                                        {categories.entities[id].name}
+                                        {category}
                                     </Typography>
                                     </ListItemButton>
                                 </CustomListItem>

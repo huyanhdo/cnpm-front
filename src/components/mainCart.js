@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {Box, Divider, IconButton, Stack, Typography, Card, List, ListItem, Button, Chip} from "@mui/material";
+import {Box, Divider, IconButton, Stack, Typography, Card, List, ListItem, Chip} from "@mui/material";
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useSelector} from "react-redux";
@@ -18,8 +18,8 @@ export const PizzaCartItem = (props)=>{
     const size = props.pizza.size;
     const sole = props.pizza.sole;
     const toppings = props.pizza.toppings;
+    const allToppings = props.pizza.allToppings;
     const handleCartChange = props.handleCartChange;
-    const allToppings = useSelector(state => state.toppings.entities);
     const navigate = useNavigate();
     const remove = ()=>{
         handleCartChange(_id);
@@ -97,11 +97,11 @@ export const PizzaCartItem = (props)=>{
                         <IconButton
                         onClick={() =>{
                             console.log('pizzaID :' + pizzaId);
-                            navigate("/product/" + pizzaId, 
+                            navigate("/pizza/" + pizzaId, 
                             {state: {
                                 id: _id,
-                                size: size === 'S'? 0: size === 'M'? 1: 2,
-                                sole: sole === 'Soft'? 0: 1,
+                                size: size,
+                                sole: sole,
                                 number: number,
                                 total: total,
                                 toppings: toppings
@@ -208,7 +208,7 @@ export const PizzaCartItem = (props)=>{
 
                     {
                         toppings.length > 0 ? toppings.map((toppingId)=>{
-                            return <Chip label={allToppings[toppingId].name} sx={{
+                            return <Chip label={allToppings[toppingId].topping_name} sx={{
                                 margin: '5px 5px 5px 0',
                                 fontFamily: 'Poppins'
                             }}/>
@@ -223,8 +223,8 @@ export const PizzaCartItem = (props)=>{
     )
 }
 export const ExtraCartItem = (props)=>{
-    const name = props.extra.name;
-    const image = props.extra.image;
+    const name = props.extra.title;
+    const image = props.extra.image_url;
     const price = props.extra.price;
     const extraId = props.extraId;
     const handleClick = props.handleClick;
@@ -425,13 +425,30 @@ export const ExtraCartItem = (props)=>{
         </Box>
     )
 }
+
 export const Cart = (props)=>{
+    const categories = {
+        'dessert':{
+            selector: useSelector(state => state.desserts),
+        },
+        'drink':{
+            selector: useSelector(state => state.drinks),
+        },
+        'vegetable':{
+            selector: useSelector(state => state.vegetables),
+        },
+        'kid':{
+            selector: useSelector(state => state.kids),
+        },
+        'appetizer':{
+            
+        }
+    }
     const cart = useSelector(state => state.cart);
     const cartExtras = useSelector(state => state.cartExtras);
     const cartCombos = useSelector(state => state.cartCombos);
     const allPizzas = useSelector(state => state.pizzas.entities);
     const allCombos = useSelector(state => state.combos.entities);
-    const allExtras = useSelector(state => state.extras.entities);
     return(
         <Card
         sx={{
@@ -465,8 +482,9 @@ export const Cart = (props)=>{
                     return(
                             <ListItem>
                                 <PizzaCartItem pizza = {{...cart.entities[itemId], 
-                                    name: allPizzas[cart.entities[itemId].pizzaId].name,
-                                    image : allPizzas[cart.entities[itemId].pizzaId].image, 
+                                    name: allPizzas[cart.entities[itemId].pizzaId].title,
+                                    image : allPizzas[cart.entities[itemId].pizzaId].image_url,
+                                    allToppings : allPizzas[cart.entities[itemId].pizzaId].topping,
                                     _id: itemId
                                 }} handleCartChange = {props.handleCartChange}/>
                             </ListItem>
@@ -509,9 +527,13 @@ export const Cart = (props)=>{
             {
                 cartExtras.ids.length > 0 ? 
                 cartExtras.ids.map((itemId) =>{
+                    const cartItem = cartExtras.entities[itemId]
+                    const extra = categories[cartItem.category].selector.entities[itemId]
                     return(
                             <ListItem>
-                                <ExtraCartItem extra = {allExtras[itemId]} number={cartExtras.entities[itemId].number}
+                                <ExtraCartItem extra = {
+                                    extra
+                                } number={cartItem.number}
                                 handleClick = {props.handleExtraChange} extraId={itemId}
                                 />
                             </ListItem>

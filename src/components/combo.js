@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import {ExpandLess, ExpandMore, AddRounded, RemoveRounded} from '@mui/icons-material';
 import AddCircleRounded from '@mui/icons-material/AddCircleRounded';
 import DeleteIcon from '@mui/icons-material/Delete';
-import {CustomTab} from './pizzaMenu';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { itemAdded } from '../store/cartComboSlice';
