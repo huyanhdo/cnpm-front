@@ -3,7 +3,7 @@ import {Box, Divider, IconButton, Stack, Typography, Card, List, ListItem, Butto
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useSelector} from "react-redux";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { ComboCard } from "./combo";
 import AddRounded from "@mui/icons-material/AddRounded";
 import { RemoveRounded } from "@mui/icons-material";

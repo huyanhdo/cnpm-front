@@ -6,7 +6,7 @@ import RemoveRoundedIcon from '@mui/icons-material/RemoveRounded';
 import { Comment } from "./comment";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { useParams, useNavigate } from "react-router";
+import { useParams, useNavigate } from "react-router-dom";
 import { itemAdded } from "../store/cartExtraSlice";
 const round = (num)=> Math.round(num * 100) / 100;
 export const SingleExtra = ()=>{

@@ -1,7 +1,7 @@
 import './App.css';
 import { MenuBar } from './components/sidebar';
 import { CartPage } from './pages/cartPage';
-import { Home } from './pages/home';
+import { Home } from './pages/Home';
 import { PizzaPage } from './pages/pizza';
 import { SinglePage } from './pages/singlePage';
 import {Box} from '@mui/material';
@@ -10,6 +10,7 @@ import { Footer } from './components/footer';
 import { BrowserRouter , Routes, Route} from 'react-router-dom';
 import { ComboPage } from './pages/comboPage';
 import { SingleExtraPage } from './pages/singleExtraPage';
+import OrderReport from './pages/OrderReport';
 function App() {
   return (
     <html>
@@ -34,14 +35,15 @@ function App() {
           }}>
             <Searchbar/>
             
-              <Routes>
+              {/* <Routes>
                 <Route path="/" element={<Home/>}/>
                 <Route path="/cart" element={<CartPage/>}/>
                 <Route path = "/menu/:category" element={<PizzaPage/>}/>
                 <Route path="product/:productId" element={<SinglePage/>}/>
                 <Route path="extra/:productId" element={<SingleExtraPage/>}/>
                 <Route path="/combo" element={<ComboPage/>}/>
-              </Routes>
+              </Routes> */}
+              <OrderReport/>
             <Footer/>
           </Box>
           </BrowserRouter>

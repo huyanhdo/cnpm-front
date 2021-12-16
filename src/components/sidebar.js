@@ -8,7 +8,7 @@ import { styled } from '@mui/material/styles';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
-import {useNavigate} from 'react-router';
+import {useNavigate} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 export const CustomIconButton = styled(IconButton)({
     width: 45,
