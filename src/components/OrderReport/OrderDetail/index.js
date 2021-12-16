@@ -18,7 +18,16 @@ function OrderDetail(props) {
     const detail = detailItem.detail;
     const detailKeys = Object.keys(detail)
     const [menu, setMenu] = useState({});
-    
+    const day = new Date();
+    console.log(detailItem.time);
+    day.setTime(detailItem.time)
+    console.log(day);
+    let date = day.getDate();
+    let month = day.getMonth();
+    let year = day.getFullYear();
+    let hour = day.getHours();
+    let minute = day.getMinutes();
+
     useEffect(()=>{
         async function fetchMenu() {
             const menuURL = 'https://pizzahust-d7124-default-rtdb.asia-southeast1.firebasedatabase.app/menu.json';
@@ -220,6 +229,24 @@ function OrderDetail(props) {
                         marginLeft:'50px'
                     }}><p>{detailItem.address}</p></Box>
                 </Box>
+                <Box sx={{
+                    marginTop:'20px',   
+                    
+                    textAlign:'start',
+                    display:'flex',
+                    
+                    
+                }}>
+                    <Box sx={{
+                        width:'100px'
+                    }}><h4 style={{
+                        fontSize:'20px'
+                    }}> Thời gian </h4></Box>
+                    <Box sx={{
+                        marginLeft:'50px'
+                    }}><p>{`${hour}:${minute} Ngày ${date}/${month}/${year}`}</p></Box>
+                </Box>
+
                 <Box sx={{
                     marginTop:'20px',   
                     
