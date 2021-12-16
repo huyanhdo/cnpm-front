@@ -10,7 +10,7 @@ td {
 .Preparing,
 .Pending,
 .Shipping{
-    background-color: #24d4f3;
+    background-color: black;
     color: rgb(242, 242, 247);
 }
 .Order:focus{

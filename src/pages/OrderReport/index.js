@@ -58,7 +58,7 @@ function OrderReport() {
             <Box sx={{width:'750px',
             padding :'0 0 20px 0',
             
-            backgroundColor:'#ffa64d',
+            backgroundColor:'#ffe6cc',
             borderRadius:'8px',
             minHeight:'750px',
             display:'flex',
@@ -112,9 +112,9 @@ function OrderReport() {
                                                     var key = Object.keys(OrderLists[order].detail);
                                                     var menu = '';
                                                     key.forEach((item)=>{
-                                                        menu += item + ','
+                                                        menu += item + ', '
                                                     })
-                                                    menu = menu.slice(0, menu.length-1)
+                                                    menu = menu.slice(0, menu.length-2)
                                                 
                                         return(
                             <tr className="Order"
@@ -160,7 +160,7 @@ function OrderReport() {
             <Box>
                
             {OrderLists[detailItem] && <Box sx={{
-                backgroundColor:'#ffa64d',
+                backgroundColor:'#ffe6cc',
                 width:'600px',
                 minHeight:'750px',
                 borderRadius:'8px'
