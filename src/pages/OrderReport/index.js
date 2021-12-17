@@ -120,6 +120,7 @@ function OrderReport() {
                             <tr className="Order"
                                 tabIndex="0"            
                                  style ={{ cursor:'pointer',
+                                 borderBottom:' 1px solid white'
                                 }}
                                  onClick={()=>{setDetailItem(order); setStatus(OrderLists[order].status)}} >
                                 <td style={{paddingLeft:'20px'}}>{OrderLists[order].customer}</td>
