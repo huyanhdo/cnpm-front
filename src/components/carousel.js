@@ -8,6 +8,7 @@ export const ComboCarousel = function(){
     const [index, setIndex] = useState(0);
     const ids = useSelector(state => state.combos.ids);
     const combos = useSelector(state => state.combos.entities);
+    const fetchingStatus = useSelector(state => state.combos.fetchingStatus);
     const navigate = useNavigate();
     const handleSelect = (selectedIndex, e)=>{
         setIndex(selectedIndex);
@@ -15,7 +16,8 @@ export const ComboCarousel = function(){
     const handleSlid = (slidIndex, direction)=>{
         setIndex(slidIndex);
     }
-    return(
+    return fetchingStatus === 'SUCCESS' &&(
+        
         <Box>
 
         <Box 
@@ -30,41 +32,21 @@ export const ComboCarousel = function(){
         style={{
             height: '100%',
             width: '72%',
-
         }}
         >
             {
                 ids.map(id =>{
                     return(
                         <Carousel.Item interval={3000}>
-                            <img src={combos[id].banner} className="d-block w-100 h-100" alt="img" style={{borderRadius: "24px"}}
-                            onClick = {()=>{navigate('/combo')}}
+                            <img src={combos[id].banner} className="d-block w-100" alt="img" 
+                            style={{
+                                borderRadius: "24px",
+                                height: '350px',
+                                objectFit: 'cover'
+                            }}
+                            onClick = {()=>{navigate('/combo/'+id)}}
                             />
-                            <Carousel.Caption className="text-start">
-                            <Typography variant="h3"
-                    sx={{
-                        fontFamily: 'Playfair Display',
-                        fontWeight: 700,
-                        fontSize: '40px',
-                        lineHeight: '52px',
-                        color: '#07143B',
-                        marginBottom: '10px'
-                    }}
-                    >{combos[id].title}
-                    </Typography>
-                    <Typography variant="body1"
-                    sx={{
-                        fontFamily: 'Poppins',
-                        fontWeight: 400,
-                        fontSize: '15px',
-                        lineHeight: '22.75px',
-                        color: '#07143B',
-                        marginBottom: '20px'
-                    }}
-                    >{combos[id].description}             
-                    </Typography>
-                </Carousel.Caption>
-            </Carousel.Item>
+                        </Carousel.Item>
                     )
                 })
             }
@@ -117,7 +99,7 @@ export const ComboCarousel = function(){
                         color: '#07143B',
                         marginBottom: '10px'
                     }}
-                    >{combos[id].content1}
+                    >{combos[id].off}% Off
                     </Typography>
                     <Typography variant="body1"
                     sx={{
@@ -128,7 +110,7 @@ export const ComboCarousel = function(){
                         color: '#EA6A12',
                         marginBottom: '20px'
                     }}
-                    >{combos[id].content2}             
+                    >{combos[id].description}            
                     </Typography>
                 </Box>
             </Carousel.Item>
@@ -189,7 +171,7 @@ export const ComboCarousel = function(){
                         color: '#07143B',
                         marginBottom: '10px'
                     }}
-                    >{combos[id].content1}
+                    >{combos[id].off}% Off
                     </Typography>
                     <Typography variant="body1"
                     sx={{
@@ -200,7 +182,7 @@ export const ComboCarousel = function(){
                         color: '#EA6A12',
                         marginBottom: '20px'
                     }}
-                    >{combos[id].content2}             
+                    >{combos[id].description}             
                     </Typography>
                 </Box>
             </Carousel.Item>

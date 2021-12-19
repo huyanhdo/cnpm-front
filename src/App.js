@@ -17,6 +17,10 @@ import { fetchAllKids } from "./store/categories/kidSlice";
 import { fetchAllPizzas} from "./store/pizzaSlice";
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { fetchAllAppetizers } from './store/categories/appetizerSlice';
+import { fetchAllCombos } from './store/comboSlice';
+import { SingleComboPage } from './pages/singleComboPage';
+import { OrderPage } from './pages/orderPage';
 function App() {
   const dispatch = useDispatch()
   useEffect(()=>{
@@ -25,6 +29,8 @@ function App() {
     dispatch(fetchAllDesserts())
     dispatch(fetchAllDrinks())
     dispatch(fetchAllKids())
+    dispatch(fetchAllAppetizers())
+    dispatch(fetchAllCombos())
   })
   return (
     <html>
@@ -56,6 +62,8 @@ function App() {
                 <Route path="/pizza/:productId" element={<SinglePage/>}/>
                 <Route path="/:category/:productId" element={<SingleExtraPage/>}/>
                 <Route path="/combo" element={<ComboPage/>}/>
+                <Route path="/combo/:comboId" element = {<SingleComboPage/>}/>
+                <Route path="/order" element={<OrderPage/>}/>
               </Routes>
             <Footer/>
           </Box>

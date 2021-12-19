@@ -18,6 +18,10 @@ const pizzaSlice = createSlice({
     name: 'pizzas',
     initialState: initialState,
     reducers: {
+        updatePizza(state, action){
+            const id = action.payload.id;
+            state.entities[id] = action.payload.item;
+        }
     },
     extraReducers(builders){
         builders
@@ -35,3 +39,4 @@ const pizzaSlice = createSlice({
     }
 })
 export default pizzaSlice.reducer;
+export const {updatePizza} = pizzaSlice.actions;

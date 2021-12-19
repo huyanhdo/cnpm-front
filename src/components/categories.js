@@ -26,7 +26,8 @@ export const Category = (props)=>{
             minWidth: '112px',
             minHeight: '236px',
             borderRadius: '24px',
-            m: {md: 0, sm: 1, xs: 1}
+            marginRight: {md: '20px', sm: '10px', xs: '10px'},
+            marginBottom: '10px'
         }}
         >
             <img
@@ -120,7 +121,11 @@ export const PizzaCard = (props)=>{
     const navigate = useNavigate();
     const link = props.link;
     const image = props.image;
-    const name = props.name;
+    let name = props.name;
+    if(name.length > 20){
+        name = name.substring(0, 15);
+        name += '...';
+    }
     const price = props.price;
     const rate = props.rate;
     const [hov, setHov] = useState(false);
@@ -242,15 +247,16 @@ export const Categories = ()=>{
                         lineHeight: '52px',
                         color: '#07143B',
                         textAlign: 'start', 
-                        m: 3
+                        m: 3,
+                        
                     }}
                     >Menu categories
         </Typography>
     <Box
     sx={{
         display: 'flex',
-        justifyContent: {md: 'space-evenly', sm: 'flex-start', xs: 'flex-start'},
         flexWrap: 'wrap',
+        paddingLeft: '5%'
     }}
     >
         {
@@ -265,6 +271,8 @@ export const Categories = ()=>{
 }
 export const Newest = () =>{
     const pizzas = useSelector(state => state.pizzas);
+    let sortedIds = [...pizzas.ids];
+    sortedIds.sort((id1, id2)=> pizzas.entities[id2].rating - pizzas.entities[id1].rating)
     return (
         <Box sx = {{
             width: '100%'
@@ -279,7 +287,7 @@ export const Newest = () =>{
                         textAlign: 'start',
                         m:3
                     }}
-                    >Newest 
+                    >Best Rating Pizzas
         </Typography>
     <Box
     sx={{
@@ -289,7 +297,7 @@ export const Newest = () =>{
     }}
     >
         {
-            pizzas.ids.map((id, index) => {
+            sortedIds.map((id, index) => {
                 if(index < 4)
                 return <PizzaCard image={pizzas.entities[id].image_url} name={pizzas.entities[id].title} rate={pizzas.entities[id].rating} 
                 price={pizzas.entities[id].price} link={`/pizza/${id}`}/>

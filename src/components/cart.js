@@ -1,4 +1,5 @@
 import { Box, Divider, Stack, Typography, Card, Button, List } from '@mui/material';
+import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
 import React from 'react';
 import { useNavigate } from 'react-router';
 import { useSelector } from 'react-redux';
@@ -27,7 +28,8 @@ const CartItem = (props)=>{
             boxShadow: '10px 0px 10px rgb(0,0,0, 0.1)',
             width: '100px',
             height: '100px',
-            zIndex: 100
+            zIndex: 100,
+            objectFit:'cover'
             }}
         />
         <Stack
@@ -35,7 +37,7 @@ const CartItem = (props)=>{
 
             width: '100%',
             zIndex: 0,
-            marginLeft: '5%'
+            marginLeft: '10px'
         }}
         >
                 <Typography variant="subtitle1"
@@ -55,6 +57,9 @@ const CartItem = (props)=>{
             sx={{
                 display: 'flex',
                 alignItems: 'center',
+                width: '100%',
+                justifyContent: 'space-between',
+                paddingRight: '10px'
             }}
             >
                 <Typography variant="subtitle1"
@@ -78,7 +83,6 @@ const CartItem = (props)=>{
                         color: 'black',
                         textAlign: 'start',
                         marginBottom: '10px',
-                        marginLeft: '60%'
                     }}
                     >$ {price}
                 </Typography>
@@ -91,19 +95,19 @@ const CartItem = (props)=>{
 export const Cart = ()=>{
     const categories = {
         'dessert':{
-            selector: useSelector(state => state.desserts),
+            selector: useSelector(state => state.desserts.entities),
         },
         'drink':{
-            selector: useSelector(state => state.drinks),
+            selector: useSelector(state => state.drinks.entities),
         },
         'vegetable':{
-            selector: useSelector(state => state.vegetables),
+            selector: useSelector(state => state.vegetables.entities),
         },
         'kid':{
-            selector: useSelector(state => state.kids),
+            selector: useSelector(state => state.kids.entities),
         },
         'appetizer':{
-            selector: state => state.appetizers,
+            selector: useSelector(state => state.appetizers.entities),
         }
     }
     const cart = useSelector(state => state.cart);
@@ -112,6 +116,15 @@ export const Cart = ()=>{
     const pizzas = useSelector(state => state.pizzas.entities);
     const combos = useSelector(state => state.combos.entities);
     const navigate = useNavigate();
+    const emptyCart = () =>{
+        if (cart.ids.length > 0) return false;
+        if (cartCombos.ids.length > 0) return false;
+        const cates = Object.keys(categories)
+        for(let i = 0; i< cates.length ;i++){
+            if(cartExtras[cates[i]].ids.length > 0) return false;
+        }
+        return true;
+    }
     return(
         <Card
         sx={{
@@ -135,56 +148,80 @@ export const Cart = ()=>{
                 >My Cart
             </Typography>
             
-            <Divider variant="middle" sx={{
-                width: '80%',
-                alignSelf: 'center'
-            }}/>
+            <Divider variant="middle"/>
             <List sx={{width: '100%', height: '90%', overflow: 'auto', 
-            maxHeight: '600px',  padding: '0 20px'
+            maxHeight: '600px',  padding: '0 20px',
+            minHeight: {md: '150px', sm: '50px', xs: '50px'}
             }}>
+            
             {
                 cart.ids.map(id =>{
                     return(
                         <CartItem 
-                        image={pizzas[cart.entities[id].pizzaId].image} 
-                        name={pizzas[cart.entities[id].pizzaId].name}
+                        image={pizzas[cart.entities[id].pizzaId].image_url} 
+                        name={pizzas[cart.entities[id].pizzaId].title}
                         number={cart.entities[id].number} 
                         price={cart.entities[id].total}
                         />
                     )
                 })
             }
-            {
-                cartExtras.ids.map(id =>{
-                    const category = cartExtras.entities[id].category
-                    const extra = categories[category].selector
+                        {
+            Object.keys(categories).map(category => 
+            cartExtras[category].ids.length > 0 &&
+            
+                cartExtras[category].ids.map((itemId) =>{
+                    
                     return(
                         <CartItem 
-                        image={extra.image_url} 
-                        name={extra.title}
-                        number={cartExtras.entities[id].number} 
-                        price={cartExtras.entities[id].total}
+                            image = {categories[category].selector[itemId].image_url}
+                            name = {categories[category].selector[itemId].title}
+                            number = {cartExtras[category].entities[itemId].number}
+                            price = {cartExtras[category].entities[itemId].total}
                         />
                     )
                 })
-            }
+            )}
             {
                 cartCombos.ids.map(id =>{
+                    const comboId = cartCombos.entities[id].comboId;
                     return(
                         <CartItem 
-                        image={combos[id].image} 
-                        name={combos[id].title}
+                        image={combos[comboId].image} 
+                        name={combos[comboId].title}
                         number={cartCombos.entities[id].number} 
                         price={cartCombos.entities[id].total}
                         />
                     )
                 })
             }
+            {
+                emptyCart()
+                &&
+                <Box sx = {{
+                    marginTop: '30px'
+                }}>
+                <RemoveShoppingCartIcon sx={{
+                    width: '50px', height: '50px'
+                }}/>
+                <Typography variant="h6"
+                    sx={{
+                        alignSelf: 'start',
+                        fontFamily: 'Poppins',
+                        fontWeight: 700,
+                        fontSize: '16px',
+                        lineHeight: '52px',
+                        color: '#07143B',
+                        textAlign: 'center',
+                        
+                    }}
+                >Your cart is empty.
+                </Typography>
+                </Box>
+                
+            }
             </List>
-            <Divider variant="middle" sx={{
-                width: '80%',
-                alignSelf: 'center'
-            }}/>
+            <Divider variant="middle" />
             <Button variant="contained" 
                     onClick={()=>{navigate('/cart')}}
                     sx={{

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {Box, Divider, IconButton, Stack, Typography, Rating, Button, List, ListItem, Modal, TextField, Checkbox, Fade} from '@mui/material';
+import {Box, Divider, IconButton, Stack, Typography, Rating, Button, List, ListItem, Modal, TextField, Checkbox, Fade, Snackbar} from '@mui/material';
 import KeyboardArrowLeftRoundedIcon from '@mui/icons-material/KeyboardArrowLeftRounded';
 import KeyboardArrowRightRoundedIcon from '@mui/icons-material/KeyboardArrowRightRounded';
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
@@ -12,6 +12,7 @@ import { useDispatch } from "react-redux";
 import { useParams, useLocation, useNavigate } from "react-router";
 import { itemAdded, itemUpdated } from "../store/cartSlice";
 import { CustomPagination } from "./pizzaMenu";
+import { updatePizza } from "../store/pizzaSlice";
 const axios = require('axios')
 const round = (num)=> Math.round(num * 100) / 100;
 export const SinglePizza = ()=>{
@@ -29,12 +30,14 @@ export const SinglePizza = ()=>{
     const [num, setNum] = useState(location.state? location.state.number: 1);
     const [total, setTotal] = useState(location.state? round(location.state.total / location.state.number) : pizza.price);
     const [cmt, setCmt] = useState(false);
-    const [tops, setTops] = useState(location.state? location.state.toppings: []);
+    const [tops, setTops] = useState(location.state? location.state.toppings: {});
     const [done, setDone] = useState(false);
     //comment
     const [yourName, setYourName] = useState('')
     const [yourCmt, setYourCmt] = useState('')
     const [yourRate, setYourRate] = useState(0)
+    const [posted, setPosted] = useState(false);
+    const [message, setMess] = useState('');
     const max = 2
     const totalPage = Math.ceil(comments.length / max);
     const pageList = [];
@@ -57,12 +60,18 @@ export const SinglePizza = ()=>{
             newPizza = Object.assign(newPizza, pizza)
             newPizza.comment = [...newPizza.comment, newCmt]
             newPizza.rating = (pizza.rating * comments.length + yourRate)/ (comments.length + 1)
-                console.log(newPizza)
-                await axios.put(
+            const result = await axios.put(
                     'https://pizzahust-d7124-default-rtdb.asia-southeast1.firebasedatabase.app/menu/menu_main_courses/' + productId + '/.json',
                     newPizza)
+            if(result.status === 200){
+                dispatch(updatePizza({id: productId, item: newPizza}))
+                setMess('Your comment has been posted successfully')
+                setPosted(true)
+            }
             closeCmt()
         }catch(err){
+            setMess('Sorry, Failed to post your comment')
+            setPosted(true)
             console.log(err)
         }
     }
@@ -71,14 +80,13 @@ export const SinglePizza = ()=>{
         if(add) {
             
             setTops(prev => {
-                prev.push(_id);
-            return prev;
+                prev[_id] = true;
+                return prev;
             });
         }
         else {
             setTops(prev => {
-                const index = prev.indexOf(_id);
-                prev.splice(index, 1);
+                prev[_id] = false;
                 return prev;
                 });
         }
@@ -188,7 +196,7 @@ export const SinglePizza = ()=>{
                     >Size: 
                 </Typography>
                 <IconButton 
-                onClick={() => sizeChanged(size, (size - 1) % sizes.length)}
+                onClick={() => sizeChanged(size, size > 0 ? size - 1 : 0)}
                 >
                     <KeyboardArrowLeftRoundedIcon/>
                 </IconButton>
@@ -204,7 +212,7 @@ export const SinglePizza = ()=>{
                     >{sizes[size].type_detail}
                 </Typography>
                 <IconButton 
-                onClick={() => sizeChanged(size, (size + 1) % sizes.length)}
+                onClick={() => sizeChanged(size, (size + 1) < sizes.length ? size + 1 : size)}
                 >
                     <KeyboardArrowRightRoundedIcon/>
                 </IconButton>
@@ -269,17 +277,18 @@ export const SinglePizza = ()=>{
         <Box
         sx={{
             display: 'flex',
-            justifyContent: 'space-evenly',
             flexWrap: 'wrap',
-            m: 1
+            m: 5,
         }}
         >
             {
             toppings.map((topping, toppingId) =>{
                 return (<ToppingCard 
-                name={topping.topping_name} image = {topping.topping_image}
-                    price = {topping.topping_price} _id = {toppingId} 
-                    handleAdd = {handleAdd} added = {location.state ? location.state.toppings.find(t => t === toppingId) : false}
+                    name={topping.topping_name} 
+                    price = {topping.topping_price} 
+                    _id = {toppingId} 
+                    handleAdd = {handleAdd} 
+                    added = {tops[toppingId]}
                 />
                 )
             })
@@ -577,7 +586,7 @@ export const SinglePizza = ()=>{
             <List sx={{width: '100%', height: '90%', backgroundColor: 'rgba(252, 237, 227, 0.3)', alignSelf: 'center'
             }}>
             {
-                comments.length > 0 ? 
+                comments && comments.length > 0 ? 
                 comments.map((comment, index) =>
                     (index >= (page - 1)*max && index < page * max) ?
                             <ListItem>
@@ -684,6 +693,12 @@ export const SinglePizza = ()=>{
             </Stack>
             </Fade>
         </Modal>
+        <Snackbar
+        open={posted}
+        onClose={() => {setPosted(false)}}
+        message={message}
+        autoHideDuration={6000}
+        />
         </Box>
         
     )

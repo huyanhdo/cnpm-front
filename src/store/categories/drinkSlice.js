@@ -17,7 +17,10 @@ const drinkSlice = createSlice({
     name: 'drinks',
     initialState: initialState,
     reducers: {
-        
+        updateDrink(state, action){
+            const id = action.payload.id;
+            state.entities[id] = action.payload.item;
+        }
     },
     extraReducers(builders){
         builders
@@ -35,3 +38,4 @@ const drinkSlice = createSlice({
     }
 })
 export default drinkSlice.reducer;
+export const {updateDrink} = drinkSlice.actions;

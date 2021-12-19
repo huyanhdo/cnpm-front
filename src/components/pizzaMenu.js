@@ -3,7 +3,6 @@ import { PizzaCard } from "./categories";
 import { Box, Typography, styled, Pagination, Grow, CircularProgress} from '@mui/material';
 import { useSelector } from "react-redux";
 import { useParams } from "react-router";
-
 export const CustomPagination = styled(Pagination)({
     "& .MuiPaginationItem-root": {
         fontFamily: 'Poppins'
@@ -15,7 +14,6 @@ export const CustomPagination = styled(Pagination)({
         backgroundColor: 'rgb(234, 106, 18, 0.5)',
     }
 })
-
 export const PizzaMenu = ()=>{
     const categories = {
         'pizza':{
@@ -53,7 +51,7 @@ export const PizzaMenu = ()=>{
     const fetchingStatus = categories[category].selector.fetchingStatus
     const products = categories[category].selector.entities
     const ids = categories[category].selector.ids
-    const max = 2;
+    const max = 5;
     const [page, setPage] = useState(1);
     const totalPage = Math.ceil(ids.length / max);
     const pageList = [];

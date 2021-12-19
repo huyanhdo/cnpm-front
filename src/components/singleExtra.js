@@ -1,5 +1,5 @@
 import React, {useState } from "react";
-import {Box, Divider, IconButton, Stack, Typography, Rating, Button, List, ListItem, Modal, TextField, Checkbox, Fade} from '@mui/material';
+import {Box, Divider, IconButton, Stack, Typography, Rating, Button, List, ListItem, Modal, TextField, Checkbox, Fade, Snackbar} from '@mui/material';
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
 import  AddRoundedIcon  from "@mui/icons-material/AddRounded";
 import RemoveRoundedIcon from '@mui/icons-material/RemoveRounded';
@@ -9,6 +9,11 @@ import { useDispatch } from "react-redux";
 import { useParams, useNavigate } from "react-router";
 import { itemAdded } from "../store/cartExtraSlice";
 import { CustomPagination } from "./pizzaMenu";
+import { updateDessert } from "../store/categories/dessertSlice";
+import { updateDrink } from "../store/categories/drinkSlice";
+import { updateVegetable } from "../store/categories/vegetableSlice";
+import { updateKid } from "../store/categories/kidSlice";
+import { updateAppetizer } from "../store/categories/appetizerSlice";
 
 const axios = require('axios')
 const round = (num)=> Math.round(num * 100) / 100;
@@ -19,22 +24,28 @@ export const SingleExtra = ()=>{
     const categories = {
         'dessert':{
             selector: useSelector(state => state.desserts),
-            link: 'https://pizzahust-d7124-default-rtdb.asia-southeast1.firebasedatabase.app/menu/menu_dessert/'
+            link: 'https://pizzahust-d7124-default-rtdb.asia-southeast1.firebasedatabase.app/menu/menu_dessert/',
+            update: updateDessert
         },
         'drink':{
             selector: useSelector(state => state.drinks),
-            link: 'https://pizzahust-d7124-default-rtdb.asia-southeast1.firebasedatabase.app/menu/menu_drink/'
+            link: 'https://pizzahust-d7124-default-rtdb.asia-southeast1.firebasedatabase.app/menu/menu_drink/',
+            update: updateDrink
         },
         'vegetable':{
             selector: useSelector(state => state.vegetables),
-            link: 'https://pizzahust-d7124-default-rtdb.asia-southeast1.firebasedatabase.app/menu/menu_kid/'
+            link: 'https://pizzahust-d7124-default-rtdb.asia-southeast1.firebasedatabase.app/menu/menu_vegetarian/',
+            update: updateVegetable
         },
         'kid':{
             selector: useSelector(state => state.kids),
-            link: 'https://pizzahust-d7124-default-rtdb.asia-southeast1.firebasedatabase.app/menu/menu_vegetarian/'
+            link: 'https://pizzahust-d7124-default-rtdb.asia-southeast1.firebasedatabase.app/menu/menu_kid/',
+            update: updateKid
         },
         'appetizer':{
             selector: useSelector(state => state.appetizers),
+            link: 'https://pizzahust-d7124-default-rtdb.asia-southeast1.firebasedatabase.app/menu/menu_appetizer/',
+            update: updateAppetizer
         }
     }
     const {category , productId} = useParams();
@@ -47,6 +58,8 @@ export const SingleExtra = ()=>{
     const [yourName, setYourName] = useState('')
     const [yourCmt, setYourCmt] = useState('')
     const [yourRate, setYourRate] = useState(0)
+    const [posted, setPosted] = useState(false);
+    const [message, setMess] = useState('')
     const max = 2
     const totalPage = Math.ceil(comments.length / max);
     const pageList = [];
@@ -69,13 +82,19 @@ const postComment = async () =>{
         newExtra = Object.assign(newExtra, extra)
         newExtra.comment = [...newExtra.comment, newCmt]
         newExtra.rating = (extra.rating * comments.length + yourRate)/ (comments.length + 1)
-            console.log(newExtra)
-            await axios.put(
+            const result = await axios.put(
                 categories[category].link + productId + '/.json',
                 newExtra)
+            if(result.status === 200){
+                dispatch(categories[category].update({id: productId, item: newExtra}))
+                setMess('Your comment has been posted successfully')
+                setPosted(true)
+            }
         closeCmt()
     }catch(err){
         console.log(err)
+        setMess('Sorry, Failed to post your comment')
+        setPosted(true)
     }
 }
 
@@ -441,7 +460,7 @@ const postComment = async () =>{
             maxHeight: '500px', backgroundColor: 'rgba(252, 237, 227, 0.3)', alignSelf: 'center'
             }}>
             {
-                comments.length > 0 ? 
+                comments && comments.length > 0 ? 
                 comments.map((comment, index) =>
                     (index >= (page - 1)*max && index < page * max) ?
                             <ListItem>
@@ -548,6 +567,12 @@ const postComment = async () =>{
             </Stack>
             </Fade>
         </Modal>
+        <Snackbar
+        open={posted}
+        onClose={() => {setPosted(false)}}
+        message={message}
+        autoHideDuration={6000}
+        />
         </Box>
         
     )

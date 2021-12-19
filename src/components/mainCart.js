@@ -1,28 +1,20 @@
 import React, { useState } from "react";
-import {Box, Divider, IconButton, Stack, Typography, Card, List, ListItem, Chip} from "@mui/material";
+import {Box, Divider, IconButton, Stack, Typography, Card, List, ListItem, Chip, Collapse} from "@mui/material";
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useSelector} from "react-redux";
 import { useNavigate } from "react-router";
-import { ComboCard } from "./combo";
 import AddRounded from "@mui/icons-material/AddRounded";
-import { RemoveRounded } from "@mui/icons-material";
+import { ExpandLess, ExpandMore, RemoveRounded } from "@mui/icons-material";
 const round = (num)=> Math.round(num * 100) / 100;
 export const PizzaCartItem = (props)=>{
-    const _id = props.pizza._id;
-    const pizzaId = props.pizza.pizzaId;
-    const name = props.pizza.name;
-    const image = props.pizza.image;
-    const total = props.pizza.total;
-    const number = props.pizza.number;
-    const size = props.pizza.size;
-    const sole = props.pizza.sole;
-    const toppings = props.pizza.toppings;
-    const allToppings = props.pizza.allToppings;
+    const cartInfo = props.cartInfo
+    const cartId = props.cartId
+    const pizza = props.pizza
     const handleCartChange = props.handleCartChange;
     const navigate = useNavigate();
     const remove = ()=>{
-        handleCartChange(_id);
+        handleCartChange(cartId);
     }
     return(
         <Box sx={{
@@ -42,15 +34,15 @@ export const PizzaCartItem = (props)=>{
             }}
             >
             <img
-            src={image}
-            alt={name}
+            src={pizza.image_url}
+            alt={pizza.title}
             style={{
                 borderRadius: '200px',
                 width: '150px',
                 height: '150px',
                 boxShadow: '5px 0px 20px rgba(0, 0, 0, 0.1)',
                 zIndex: 2,
-                //transform: 'translateX(80px)',
+                objectFit: 'cover'
             }}
             />
             </Box>
@@ -78,7 +70,7 @@ export const PizzaCartItem = (props)=>{
                         color: '#07143B',
                         textAlign: 'start'
                     }}
-                    >{name}
+                    >{pizza.title}
                     </Typography>
                     <Stack direction="row" spacing={2}>
                     <Typography variant="h6"
@@ -92,19 +84,18 @@ export const PizzaCartItem = (props)=>{
                         textAlign: 'start',
                         display: {md: 'block', sm: 'none', xs: 'none'}
                     }}
-                    >Total: $ {total}
+                    >Total: $ {cartInfo.total}
                     </Typography>
                         <IconButton
                         onClick={() =>{
-                            console.log('pizzaID :' + pizzaId);
-                            navigate("/pizza/" + pizzaId, 
+                            navigate("/pizza/" + cartInfo.pizzaId, 
                             {state: {
-                                id: _id,
-                                size: size,
-                                sole: sole,
-                                number: number,
-                                total: total,
-                                toppings: toppings
+                                id: cartId,
+                                size: cartInfo.size,
+                                sole: cartInfo.sole,
+                                number: cartInfo.number,
+                                total: cartInfo.total,
+                                toppings: cartInfo.toppings
                             }}
                             )
                         }}
@@ -157,7 +148,7 @@ export const PizzaCartItem = (props)=>{
                         textAlign: 'start',
                         marginBottom: '10px'
                     }}
-                    >Size: {size}
+                    >Size: {pizza.size[cartInfo.size].type_detail}
                     </Typography>
                     <Typography variant="subtitle1"
                     sx={{
@@ -169,7 +160,7 @@ export const PizzaCartItem = (props)=>{
                         textAlign: 'start',
                         marginBottom: '10px'
                     }}
-                    >Sole: {sole}
+                    >Sole: {pizza.type[cartInfo.sole]}
                     </Typography>
                     <Typography variant="subtitle1"
                     sx={{
@@ -181,7 +172,7 @@ export const PizzaCartItem = (props)=>{
                         textAlign: 'start',
                         marginBottom: '10px'
                     }}
-                    >Number: {number}
+                    >Number: {cartInfo.number}
                     </Typography>
                 </Stack>
                 <Typography variant="h6"
@@ -195,7 +186,7 @@ export const PizzaCartItem = (props)=>{
                         textAlign: 'start',
                         display: {md: 'none', sm: 'block', xs: 'block'}
                     }}
-                    >Total: $ {total}
+                    >Total: $ {cartInfo.total}
                     </Typography>
                 <Divider sx={{width: '50%'}}/>
                 <Box
@@ -207,15 +198,17 @@ export const PizzaCartItem = (props)=>{
                 }}>
 
                     {
-                        toppings.length > 0 ? toppings.map((toppingId)=>{
-                            return <Chip label={allToppings[toppingId].topping_name} sx={{
+                        pizza.topping.map((topping, toppingId)=>{
+                            return cartInfo.toppings[toppingId] && 
+                            <Chip label={topping.topping_name} sx={{
                                 margin: '5px 5px 5px 0',
                                 fontFamily: 'Poppins'
                             }}/>
-                        }): <Chip label='No Topping' sx={{
-                            margin: '5px 5px 5px 0',
-                            fontFamily: 'Poppins'
-                        }}/>
+                        })
+                        // : <Chip label='No Topping' sx={{
+                        //     margin: '5px 5px 5px 0',
+                        //     fontFamily: 'Poppins'
+                        // }}/>
                     }
                 </Box>
             </Stack>
@@ -228,6 +221,7 @@ export const ExtraCartItem = (props)=>{
     const price = props.extra.price;
     const extraId = props.extraId;
     const handleClick = props.handleClick;
+    const category = props.category;
     const [num, SetNum] = useState(props.number ? props.number : 1);
     return(
         <Box sx={{
@@ -255,8 +249,7 @@ export const ExtraCartItem = (props)=>{
                 width: '150px',
                 height: '150px',
                 boxShadow: '5px 0px 20px rgba(0, 0, 0, 0.1)',
-                zIndex: 2,
-                //transform: 'translateX(80px)',
+                objectFit: 'cover'
             }}
             />
             </Box>
@@ -311,7 +304,7 @@ export const ExtraCartItem = (props)=>{
                             }
                         }}
                         onClick={() =>{
-                            handleClick(extraId, true, false, num*price);
+                            handleClick(category, extraId, true, false, num*price);
                         }}
                         >
                             <DeleteIcon sx={{
@@ -345,7 +338,7 @@ export const ExtraCartItem = (props)=>{
                 onClick = {()=>{
                     const newNum = (num === 1)? 1: num - 1;
                     if(num > 1)
-                    handleClick(extraId, false, false, price, {
+                    handleClick(category, extraId, false, false, price, {
                         number: newNum,
                         total: round(newNum * price)
                     });
@@ -384,7 +377,7 @@ export const ExtraCartItem = (props)=>{
                 onClick = {()=>{
                     const newNum = (num === 10) ? 10: num + 1;
                     if(num < 10)
-                    handleClick(extraId, false, true, price, {
+                    handleClick(category, extraId, false, true, price, {
                         number: newNum,
                         total: round(newNum * price)
                     });
@@ -425,7 +418,306 @@ export const ExtraCartItem = (props)=>{
         </Box>
     )
 }
+export const ComboMiniItem = (props) =>{
+    const image = props.image;
+    const title = props.title;
+    return(
+        <Box
+        sx={{
+            borderRadius: '25px',
+            backgroundColor : 'rgba(252, 237, 227, 0.3)',
+            height: '50px',
+            display: 'flex',
+            alignItems: 'center',
+            width: '30%',
+            margin: '10px'
+        }}
+        >
+            <img
+            src={image}
+            alt={title}
+            style={{
+                borderRadius: '50px',
+                width: '60px',
+                height: '60px',
+                objectFit: 'cover'
+            }}
+            />
+            <Typography variant="subtitle1"
+                    sx={{
+                        fontFamily: 'Poppins',
+                        fontWeight: 600,
+                        fontSize: {md: '16px', sm: '14px', xs: '13px'},
+                        lineHeight: '175%',
+                        color: 'black',
+                        textAlign: 'start',
+                        marginLeft: '10%'
+                    }}
+                    >{title}
+            </Typography>
+        </Box>
+    )
+}
+export const ComboCartItem = (props)=>{
+    const cartId = props.cartId;
+    const cartInfo = props.cartInfo;
+    const combo = useSelector(state => state.combos.entities[cartInfo.comboId])
+    const handleComboChange = props.handleComboChange
+    const [expand, setExpand] = useState(false);
+    const categories = {
+        'pizza':{
+            number: combo.pizza, slot: cartInfo.pizzaSlot, selector: useSelector(state => state.pizzas.entities)
+        },
+        'kid':{
+            number: combo.kid, slot: cartInfo.kidSlot, selector: useSelector(state => state.kids.entities)
+        },
+        'vegetable':{
+            number: combo.vegetable, slot: cartInfo.vegetableSlot, selector: useSelector(state => state.vegetables.entities)
+        },
+        'appetizer':{
+            number: combo.appetizer, slot: cartInfo.appetizerSlot, selector: useSelector(state => state.appetizers.entities)
+        },
+        'dessert':{
+            number: combo.dessert, slot: cartInfo.dessertSlot, selector: useSelector(state => state.desserts.entities)
+        },
+        'drink':{
+            number: combo.drink, slot: cartInfo.drinkSlot, selector: useSelector(state => state.drinks.entities)
+        },
+    }
+    const navigate = useNavigate()
+    return (
+        <Box sx={{
+            width: '100%',
+            boxShadow: '1px 1px 5px rgb(0,0,0,0.2)',
+            backgroundColor:'white',
+            borderRadius: '10px',
+            minWidth: '300px'
+        }}>
+            <Box sx= {{
+                display: 'flex',
+                width: '100%',
+                p: 1,alignItems: 'center',
+            }}>
+            <Box
+            sx={{
+                display: {md: 'block', sm: 'none', xs: 'none'}
+            }}
+            >
+            <img
+            src={combo.image}
+            alt={combo.title}
+            style={{
+                borderRadius: '10px',
+                width: '150px',
+                height: '150px',
+                //boxShadow: '5px 0px 20px rgba(0, 0, 0, 0.1)',
+                zIndex: 2,
+                objectFit: 'cover'
+            }}
+            />
+            
+            </Box>
+            <Stack
+            sx={{
+                width: '90%',
+                boxSizing: 'border-box',
+                zIndex: 1,
+                padding: {md: '5px 50px 5px 50px', sm: '5px 10px 5px 20px'},
+            }}>
+                <Box
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center'
+                }}
+                >
+                    <Typography variant="h6"
+                    sx={{
+                        fontFamily: 'Playfair Display',
+                        fontWeight: 700,
+                        fontSize: {md: '25px', sm: '20px', xs: '15px'},
+                        lineHeight: '52px',
+                        color: '#07143B',
+                        textAlign: 'start'
+                    }}
+                    >{combo.title}
+                    </Typography>
+                    <Stack direction="row" spacing={2}>
+                    <Typography variant="h6"
+                    sx={{
+                        marginRight: '20px',
+                        fontFamily: 'Playfair Display',
+                        fontWeight: 700,
+                        fontSize: {md: '25px', sm: '20px', xs: '15px'},
+                        lineHeight: '52px',
+                        color: '#07143B',
+                        textAlign: 'start',
+                        display: {md: 'block', sm: 'none', xs: 'none'}
+                    }}
+                    >Total: $ {cartInfo.total}
+                    </Typography>
+                        <IconButton
+                        onClick={() =>{
+                            navigate("/combo/" + cartInfo.comboId, 
+                            {state: {
+                                cartId: cartId,
+                                cartInfo: cartInfo
+                            }})
+                        }}
+                        sx={{
+                            width: {md: '40px', sm: '30px', xs: '20px'},
+                            height: {md: '40px', sm: '30px', xs: '20px'},
+                            backgroundColor: 'white',
+                            boxShadow: '1px 1px 5px rgb(0,0,0,0.2)',
+                            '&:hover, &:active':{
+                                backgroundColor: 'white'
+                            }
+                        }}
+                        >
+                            <ModeEditIcon sx={{
+                                width: {md: '30px', sm: '20px', xs: '15px'},
+                                height: {md: '30px', sm: '20px', xs: '15px'},
+                            }}/>
+                        </IconButton>
+                        <IconButton
+                        sx={{
+                            width: {md: '40px', sm: '30px', xs: '20px'},
+                            height: {md: '40px', sm: '30px', xs: '20px'},
+                            backgroundColor: 'white',
+                            boxShadow: '1px 1px 5px rgb(0,0,0,0.2)',
+                            '&:hover, &:active':{
+                                backgroundColor: 'white'
+                            }
+                        }}
+                        onClick={() =>{
+                            handleComboChange(cartId)
+                        }}
+                        >
+                            <DeleteIcon sx={{
+                                width: {md: '30px', sm: '20px', xs: '15px'},
+                                height: {md: '30px', sm: '20px', xs: '15px'},
+                            }}/>
+                            
+                        </IconButton>
+                        <IconButton
+                        sx={{
+                            width: {md: '40px', sm: '30px', xs: '20px'},
+                            height: {md: '40px', sm: '30px', xs: '20px'},
+                            backgroundColor: 'white',
+                            boxShadow: '1px 1px 5px rgb(0,0,0,0.2)',
+                            '&:hover, &:active':{
+                                backgroundColor: 'white'
+                            }
+                        }}
+                        onClick={() =>{setExpand(prev => !prev)}}
+                        >
+                            {
+                            !expand ?
+                            <ExpandMore sx={{
+                                width: {md: '30px', sm: '20px', xs: '15px'},
+                                height: {md: '30px', sm: '20px', xs: '15px'},
+                            }}/>
+                            : <ExpandLess sx={{
+                                width: {md: '30px', sm: '20px', xs: '15px'},
+                                height: {md: '30px', sm: '20px', xs: '15px'},
+                            }}/>
+                            }
+                        </IconButton>
+                    </Stack>
+                </Box>
+                <Stack
+                direction="row"
+                spacing={3}
+                >
+                    <Typography variant="subtitle1"
+                    sx={{
+                        fontFamily: 'Poppins',
+                        fontWeight: 600,
+                        fontSize: {md: '16px', sm: '14px', xs: '13px'},
+                        lineHeight: '175%',
+                        color: 'black',
+                        textAlign: 'start',
+                        marginBottom: '10px'
+                    }}
+                    >{combo.off}% Off
+                    </Typography>
+                    <Typography variant="subtitle1"
+                    sx={{
+                        fontFamily: 'Poppins',
+                        fontWeight: 600,
+                        fontSize: {md: '16px', sm: '14px', xs: '13px'},
+                        lineHeight: '175%',
+                        color: 'black',
+                        textAlign: 'start',
+                        marginBottom: '10px'
+                    }}
+                    >Number: {cartInfo.number}
+                    </Typography>
+                </Stack>
+                <Typography variant="h6"
+                    sx={{
+                        marginRight: '20px',
+                        fontFamily: 'Playfair Display',
+                        fontWeight: 700,
+                        fontSize: {md: '25px', sm: '20px', xs: '15px'},
+                        lineHeight: '52px',
+                        color: '#07143B',
+                        textAlign: 'start',
+                        display: {md: 'none', sm: 'block', xs: 'block'}
+                    }}
+                    >Total: $ {cartInfo.total}
+                </Typography>
+                
+            </Stack>
+            </Box>
+            
+            <Collapse
+                in={expand}
+                >
+                    <Divider sx ={{
+                    margin: '0 20px'
+                    }}/>
+                    <Box
+                    sx={{
+                    //backgroundColor : 'rgba(252, 237, 227, 0.3)',
+                    width: '100%',
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    justifyContent: 'space-between',
+                    p: 3
+                    }}
+                    >
+                        {
+                            Object.values(categories).map(category =>{
+                                if(!category.number) return false
+                                const range = []
+                                for(let i = 0; i < category.number;i++)range.push(i)
+                                return range.map(i =>{
+                                    const productId = category.slot[i].productId
+                                    return <ComboMiniItem 
+                                    image = {category.selector[productId].image_url}
+                                    title = {category.selector[productId].title}/>
+                                })
+                            })
+                        }
+                    </Box>
+            </Collapse>
+        </Box>
+    )
+}
+export const EmptyCart = () =>{
+    return(
+        <Box
+        sx={{width: '100%'}}
+        >
+            <img
+            src= 'pizza1.png'
+            alt='empty cart'
+            />
+        </Box>
 
+    )
+}
 export const Cart = (props)=>{
     const categories = {
         'dessert':{
@@ -441,23 +733,40 @@ export const Cart = (props)=>{
             selector: useSelector(state => state.kids),
         },
         'appetizer':{
-            
+            selector: useSelector(state => state.appetizers),
         }
     }
     const cart = useSelector(state => state.cart);
     const cartExtras = useSelector(state => state.cartExtras);
     const cartCombos = useSelector(state => state.cartCombos);
     const allPizzas = useSelector(state => state.pizzas.entities);
-    const allCombos = useSelector(state => state.combos.entities);
-    return(
+    
+    return (
         <Card
         sx={{
-            borderRadius: '24px',
             m: 3,
-            paddingLeft: 5,
-            paddingRight: 5
+            paddingLeft: '50px', paddingRight:'50px',
+            borderRadius: '20px'
         }}
         >
+            <Typography variant="h6"
+                    sx={{
+                        fontFamily: 'Playfair Display',
+                        fontWeight: 700,
+                        fontSize: '50px',
+                        lineHeight: '52px',
+                        color: '#07143B',
+                        textAlign: 'center',
+                        width: '100%',
+                        marginTop: '50px',
+                        marginBottom: '50px'
+                    }}
+                >Your Cart
+            </Typography>
+            <Divider variant="middle"/>
+            {
+            cart.ids.length > 0 &&
+            <Box sx = {{width: '100%'}}>
             <Typography variant="h6"
                     sx={{
                         alignSelf: 'start',
@@ -471,42 +780,31 @@ export const Cart = (props)=>{
                     }}
                 >Pizzas
             </Typography>
-            
-            <Divider/>
-            <List sx={{width: '100%', height: '90%', overflow: 'auto', 
-            maxHeight: '1000px', backgroundColor: 'rgba(252, 237, 227, 0.3)', 
+            <List sx={{
+                backgroundColor: 'rgba(252, 237, 227, 0.3)',
+                borderRadius: '10px', p: 3
             }}>
-            {
-                cart.ids.length > 0 ? 
+            { 
                 cart.ids.map((itemId) =>{
                     return(
                             <ListItem>
-                                <PizzaCartItem pizza = {{...cart.entities[itemId], 
-                                    name: allPizzas[cart.entities[itemId].pizzaId].title,
-                                    image : allPizzas[cart.entities[itemId].pizzaId].image_url,
-                                    allToppings : allPizzas[cart.entities[itemId].pizzaId].topping,
-                                    _id: itemId
-                                }} handleCartChange = {props.handleCartChange}/>
+                                <PizzaCartItem 
+                                cartInfo = {cart.entities[itemId]}
+                                pizza = {allPizzas[cart.entities[itemId].pizzaId]}
+                                cartId = {itemId}
+                                handleCartChange = {props.handleCartChange}
+                                />
                             </ListItem>
                     )
                 })
-                : 
-                <Typography variant="h6"
-                    sx={{
-                        alignSelf: 'start',
-                        fontFamily: 'Poppins',
-                        fontWeight: 700,
-                        fontSize: '30px',
-                        lineHeight: '52px',
-                        color: '#07143B',
-                        textAlign: 'center',
-                        marginTop: '50px'
-                    }}
-                >You have not ordered any pizza.
-            </Typography>
             }
             </List>
-            <Divider sx={{marginBottom: 4}}/>
+            </Box>
+            }
+            {
+            Object.keys(categories).map(category => 
+            cartExtras[category].ids.length > 0 &&
+            <Box sx={{width: '100%'}}>
             <Typography variant="h6"
                     sx={{
                         alignSelf: 'start',
@@ -518,44 +816,35 @@ export const Cart = (props)=>{
                         textAlign: 'start',
                         margin: '20px'
                     }} 
-                >Others
+                >{category.replace(/^\w/, (c) => c.toUpperCase())}s
             </Typography>
-            <Divider/>
-            <List sx={{width: '100%', height: '90%', overflow: 'auto', 
-            maxHeight: '1000px', backgroundColor: 'rgba(252, 237, 227, 0.3)', p: {md: 3, sm: '5px', xs: '2px'}
+            <List sx={{
+                backgroundColor: 'rgba(252, 237, 227, 0.3)',
+                borderRadius: '10px', p: 3
             }}>
             {
-                cartExtras.ids.length > 0 ? 
-                cartExtras.ids.map((itemId) =>{
-                    const cartItem = cartExtras.entities[itemId]
+                cartExtras[category].ids.map((itemId) =>{
+                    const cartItem = cartExtras[category].entities[itemId]
                     const extra = categories[cartItem.category].selector.entities[itemId]
                     return(
                             <ListItem>
-                                <ExtraCartItem extra = {
-                                    extra
-                                } number={cartItem.number}
-                                handleClick = {props.handleExtraChange} extraId={itemId}
+                                <ExtraCartItem 
+                                category = {category}
+                                extra = {extra} 
+                                number={cartItem.number}
+                                handleClick = {props.handleExtraChange} 
+                                extraId={itemId}
                                 />
                             </ListItem>
                     )
                 })
-                : 
-                <Typography variant="h6"
-                    sx={{
-                        alignSelf: 'start',
-                        fontFamily: 'Poppins',
-                        fontWeight: 700,
-                        fontSize: '30px',
-                        lineHeight: '52px',
-                        color: '#07143B',
-                        textAlign: 'center',
-                        marginTop: '50px'
-                    }}
-                >You have not ordered any extra food.
-            </Typography>
             }
             </List>
-            <Divider sx={{marginBottom: 4}}/>
+            </Box>
+            )}
+            {
+            cartCombos.ids.length > 0 &&
+            <Box sx={{width: '100%'}}>
             <Typography variant="h6"
                     sx={{
                         alignSelf: 'start',
@@ -569,38 +858,28 @@ export const Cart = (props)=>{
                     }}
                 >Combos
             </Typography>
-            <Divider/>
-            <List sx={{width: '100%', height: '90%', overflow: 'auto', 
-            maxHeight: '1000px', backgroundColor: 'rgba(252, 237, 227, 0.3)', p: {md: 3, sm: '5px', xs: '2px'}
+            <List sx={{
+                backgroundColor: 'rgba(252, 237, 227, 0.3)',
+                borderRadius: '10px',
+                p: 3
             }}>
                 {
-                cartCombos.ids.length > 0 ? 
-                cartCombos.ids.map((itemId) =>{
+                cartCombos.ids.map((cartId) =>{
                     return(
                             <ListItem>
-                                <ComboCard add={false} combo={allCombos[itemId]} number = {cartCombos.entities[itemId].number}
-                                handleClick = {props.handleComboChange} comboId={itemId}
-                                />
+                                <ComboCartItem cartId = {cartId} cartInfo = {cartCombos.entities[cartId]} handleComboChange = {props.handleComboChange}/>
                             </ListItem>
                     )
                 })
-                : 
-                <Typography variant="h6"
-                    sx={{
-                        alignSelf: 'start',
-                        fontFamily: 'Poppins',
-                        fontWeight: 700,
-                        fontSize: '30px',
-                        lineHeight: '52px',
-                        color: '#07143B',
-                        textAlign: 'center',
-                        marginTop: '50px'
-                    }}
-                >You have not ordered any combo.
-            </Typography>
             }
             </List>
-            <Divider sx={{marginBottom: 4}}/>
+            <Divider variant="middle" sx={{
+                marginTop: '20px',
+                marginBottom: '50px'
+            }}/>
+            </Box>
+            }
+            
         </Card>
     )
 }

@@ -8,8 +8,8 @@ import { styled } from '@mui/material/styles';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
+import YoutubeSearchedForRoundedIcon from '@mui/icons-material/YoutubeSearchedForRounded';
 import {useNavigate} from 'react-router';
-import {useSelector} from 'react-redux';
 export const CustomIconButton = styled(IconButton)({
     width: 45,
     height: 45,
@@ -186,10 +186,10 @@ export const MenuBar = ()=>{
                     </ListItemButton>
                 </CustomListItem>
                 <CustomListItem>
-                    <ListItemButton className='button' onClick={()=>{SetFocus('')}}>
-                    <ContactSupportRoundedIcon className='icon'/>
+                    <ListItemButton className='button' onClick = {()=>{navigate('/order')}}>
+                    <YoutubeSearchedForRoundedIcon className='icon'/>
                     <Typography className='typo'>
-                        Help
+                        Your Order
                     </Typography>
                     </ListItemButton>
                 </CustomListItem>
@@ -255,7 +255,7 @@ export const MenuBar = ()=>{
             <AccountCircleRoundedIcon className='icon'/>
             </CustomIconButton>
             <CustomIconButton>
-            <ContactSupportRoundedIcon className='icon'/>
+            <YoutubeSearchedForRoundedIcon className='icon'/>
             </CustomIconButton>
         </Stack>
     </AppBar>

@@ -5,37 +5,37 @@ const initialState = {
     entities: {},
     fetchingStatus: 'INITIAL'
 }
-export const fetchAllVegetables = createAsyncThunk('vegetables/fetchAllVegetables', async ()=>{
+export const fetchAllAppetizers = createAsyncThunk('appetizers/fetchAllAppetizers', async ()=>{
     try{
-        const response = await axios.get('https://pizzahust-d7124-default-rtdb.asia-southeast1.firebasedatabase.app/menu/menu_vegetarian.json');
+        const response = await axios.get('https://pizzahust-d7124-default-rtdb.asia-southeast1.firebasedatabase.app/menu/menu_appetizer.json');
         return response.data;
     }catch(err){
         console.error(err)
     }
 })
-const vegetableSlice = createSlice({
-    name: 'vegetables',
+const appetizerSlice = createSlice({
+    name: 'appetizers',
     initialState: initialState,
     reducers: {
-        updateVegetable(state, action){
+        updateAppetizer(state, action){
             const id = action.payload.id;
-            state.entities[id] = action.payload.newItem;
+            state.entities[id] = action.payload.item;
         }
     },
     extraReducers(builders){
         builders
-        .addCase(fetchAllVegetables.pending, (state,action)=>{
+        .addCase(fetchAllAppetizers.pending, (state,action)=>{
             state.fetchingStatus = 'LOADING'
         })
-        .addCase(fetchAllVegetables.fulfilled, (state,action)=>{
+        .addCase(fetchAllAppetizers.fulfilled, (state,action)=>{
             state.fetchingStatus = 'SUCCESS'
             state.ids = Object.keys(action.payload)
             state.entities = action.payload
         })
-        .addCase(fetchAllVegetables.rejected, (state,action)=>{
+        .addCase(fetchAllAppetizers.rejected, (state,action)=>{
             state.fetchingStatus = 'FAILED'
         })
     }
 })
-export default vegetableSlice.reducer;
-export const {updateVegetable} = vegetableSlice.actions;
+export default appetizerSlice.reducer;
+export const {updateAppetizer} = appetizerSlice.actions;
