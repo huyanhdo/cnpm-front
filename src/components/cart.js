@@ -155,7 +155,7 @@ export const Cart = ()=>{
             }}>
             
             {
-                cart.ids.map(id =>{
+                cart.ids && cart.ids.map(id =>{
                     return(
                         <CartItem 
                         image={pizzas[cart.entities[id].pizzaId].image_url} 
@@ -168,7 +168,7 @@ export const Cart = ()=>{
             }
                         {
             Object.keys(categories).map(category => 
-            cartExtras[category].ids.length > 0 &&
+            cartExtras[category] && cartExtras[category].ids && cartExtras[category].ids.length > 0 &&
             
                 cartExtras[category].ids.map((itemId) =>{
                     
@@ -183,7 +183,7 @@ export const Cart = ()=>{
                 })
             )}
             {
-                cartCombos.ids.map(id =>{
+            cartCombos.ids && cartCombos.ids.map(id =>{
                     const comboId = cartCombos.entities[id].comboId;
                     return(
                         <CartItem 
