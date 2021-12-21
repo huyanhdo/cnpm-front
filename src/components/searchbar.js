@@ -1,13 +1,31 @@
 import SearchIcon from '@mui/icons-material/Search';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import EmailIcon from '@mui/icons-material/Email';
+// import NotificationsIcon from '@mui/icons-material/Notifications';
+// import EmailIcon from '@mui/icons-material/Email';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { FormControl, InputAdornment, TextField, styled, IconButton, Avatar, AppBar, Toolbar, Box, Stack,Button } from "@mui/material";
+import { FormControl, InputAdornment, TextField, styled, IconButton, Avatar, AppBar, Toolbar, Box, Stack,Button,Menu,MenuItem } from "@mui/material";
 import { useAuth } from '../context/AuthContext';
-import React from "react";
+import React,{useState} from "react";
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { makeStyles } from '@mui/styles';
+const useStyles = makeStyles({
+    customButton:{
+        "&.MuiButton-root":{
+                    border:'none',
+                    borderRadius:'25px',
+                    color:'black',
+                   '&:hover':{ 
+                       color: '#EA6A12',
+                      '.MuiAvatar-root':{color: '#EA6A12'}
+                    }
+        },
+     
+    }
+})
 export const Searchbar = ()=>{
+    const classes = useStyles();
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
     const CssTextField = styled(TextField)({
         '& .MuiOutlinedInput-root': {
           '&.Mui-focused fieldset': {
@@ -22,9 +40,18 @@ export const Searchbar = ()=>{
         marginLeft: 20
     });
     const {logout} = useAuth();
+    const {resetPassword} = useAuth(); 
     const {currentUser} = useAuth();
     const navigate = useNavigate();
     const handlelogout= ()=>{logout();navigate('/') }
+
+    const changePassword = async ()=>{
+        resetPassword(currentUser.email);
+        alert('Hãy kiểm tra email của bạn');
+    }
+
+    const handleClose = () => {setAnchorEl(null)}
+    const handleClick = (e) => {setAnchorEl(e.currentTarget);}
     return(
         <AppBar
             position='sticky'
@@ -57,8 +84,8 @@ export const Searchbar = ()=>{
                 />
             </FormControl>
             <Box sx={{ flexGrow: 10 }} />
-            <Stack sx={{flexGrow: 2}} spacing={2} direction="row">
-                <IconButton onClick={handlelogout} >
+            <Stack sx={{flexGrow: 2,height:'40px'}} spacing={2} direction="row">
+                {/* <IconButton onClick={handlelogout} >
                 <NotificationsIcon
                 sx={{
                     '&:hover':{
@@ -66,15 +93,15 @@ export const Searchbar = ()=>{
                     }
                 }}
                 />
-                </IconButton>
-                <IconButton>
+                </IconButton> */}
+                {/* <IconButton>
                 <EmailIcon
                 sx={{
                     '&:hover':{
                         color: '#EA6A12'
                     }
                 }}/>
-                </IconButton>
+                </IconButton> */}
                 <Link to="/cart">
                 <IconButton>
                 <ShoppingCartIcon
@@ -87,15 +114,31 @@ export const Searchbar = ()=>{
                 </Link>
                 
                 { currentUser ?
-                <Avatar
-                    
-                sx={{
-                    '&:hover':{
-                        color: '#EA6A12'
-                    }
-                }}/>
+                <>
+                <Button 
+                    onClick={handleClick}
+                    className={classes.customButton}
+                    startIcon={ <Avatar />}>
+                Xin chào 
+                </Button>
+                <Menu sx={{width:'100%'}}
+                    open = {open}
+                    anchorEl={anchorEl}
+                    onClose={handleClose}
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'left',
+                      }}
+                >
+                <MenuItem sx={{width:'100%'}} 
+                        onClick={()=>{
+                        handleClose();
+                        changePassword();
+                        }}>Đổi mật khẩu</MenuItem>
+                <MenuItem sx={{width:'100%'}} onClick={handlelogout}>Đăng xuất</MenuItem>
+                </Menu>
+                </>
                 :
-    
                     <Button
                         onClick={()=>{navigate('/signin')}}
                         sx={{
@@ -106,7 +149,9 @@ export const Searchbar = ()=>{
                             backgroundColor:'#EA6A12',
                             color:'white',
                             }
-                        }}>Sign in</Button>
+                        }}
+                        >
+                            Sign in</Button>
              
                 }
             </Stack>

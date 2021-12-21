@@ -1,7 +1,7 @@
 import './App.css';
 import { MenuBar } from './components/sidebar';
 import { CartPage } from './pages/cartPage';
-import { Home } from './pages/home';
+import { Home } from './pages/Home';
 import { PizzaPage } from './pages/pizza';
 import { SinglePage } from './pages/singlePage';
 import {Box} from '@mui/material';
@@ -12,6 +12,7 @@ import { ComboPage } from './pages/comboPage';
 import SignIn from './pages/SignIn';
 import AuthContextProvider from './context/AuthContext';
 import { SingleExtraPage } from './pages/singleExtraPage';
+import ForgetPassword from './pages/ForgetPassword';
 function App() {
   return (
       <body>
@@ -33,6 +34,7 @@ function App() {
             
               <Routes>
                 <Route exact path='/signin' element ={<SignIn/>}/>
+                <Route exact path='/reset_password' element ={<ForgetPassword/>}/>
                 <Route path="/" element={<Home/>}/>
                 <Route path="/cart" element={<CartPage/>}/>
                 <Route path = "/menu/:category" element={<PizzaPage/>}/>

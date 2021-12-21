@@ -11,6 +11,7 @@ import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import {useNavigate} from 'react-router';
 import {useSelector} from 'react-redux';
 import { useAuth } from '../context/AuthContext';
+
 export const CustomIconButton = styled(IconButton)({
     width: 45,
     height: 45,
@@ -54,6 +55,13 @@ export const CustomListItem = styled(ListItem)({
         color: 'white'
     },
 })
+
+const Admin=[
+        {name:'Thống kê',id:'statistic'},
+        {name:'Tạo menu',id:'create_menu'},
+        {name:'Đơn hàng',id:'check_order'}]
+
+
 export const MenuBar = ()=>{
     const navigate = useNavigate();
     const [expand, SetExpand] = useState(false);
@@ -135,16 +143,44 @@ export const MenuBar = ()=>{
                     </Typography>
                     </ListItemButton>
                 </CustomListItem>
-                {currentUser &&<CustomListItem>
+
+                {currentUser &&
+                <>
+                <CustomListItem>
                     <ListItemButton className='button' onClick={()=>{SetFocus(
                         prev => {return prev==='user'? '': 'user'}
                     )}}>
                     <AccountCircleRoundedIcon className='icon'/>
-                    <Typography className='typo'>
-                        Admin
-                    </Typography>
+                    <Typography className='typo' component = 'pre'>
+                        Admin{'      '} 
+                    </Typography>   
+                    {focus==='user'?<ExpandLessIcon/>: <ExpandMoreIcon/>}
                     </ListItemButton>
-                </CustomListItem>}
+                </CustomListItem>
+
+                <Collapse in={focus==='user'} unmountOnExit>
+                    
+                    <List>
+                    {
+                    Admin.map(item => {
+                        return(
+                            <CustomListItem sx={{
+                                pl: 4
+                            }}>
+                                <ListItemButton className='button' onClick = {()=>{navigate('/admin/' + item.id)}}>
+                                <FiberManualRecordIcon className='icon'/>
+                                <Typography className='typo'>
+                                    {item.name}
+                                </Typography>
+                                </ListItemButton>
+                            </CustomListItem>
+                        )
+                    })
+                    }
+                    </List>
+                </Collapse>
+                </>}
+
                 <CustomListItem>
                     <ListItemButton className='button' onClick={()=>{SetFocus(prev => {return prev==='menu'? '': 'menu'})}}>
                     <DashboardRoundedIcon className='icon'/>
@@ -154,6 +190,7 @@ export const MenuBar = ()=>{
                     {focus==='menu'?<ExpandLessIcon/>: <ExpandMoreIcon/>}
                     </ListItemButton>
                 </CustomListItem>
+
                 <Collapse in={focus==='menu'} unmountOnExit>
                     
                         <List>

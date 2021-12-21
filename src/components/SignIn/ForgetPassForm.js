@@ -1,7 +1,6 @@
-import React,{useState,useRef,useEffect} from 'react';
+import React,{useState,useEffect,useRef} from 'react';
 import{Button,Box,TextField} from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import { useNavigate } from "react-router-dom";
 import { useAuth } from '../../context/AuthContext';
 import { Link } from 'react-router-dom';
 const useStyle = makeStyles({
@@ -60,24 +59,29 @@ const useStyle = makeStyles({
 
     }
 })
-const SignInForm = ()=>{
-    const [userName,setUserName] = useState("");
-    const [pass,setPass] = useState("");
-    const [error,setError] = useState("");
-    const {login} = useAuth();
-    const navigate = useNavigate();
+
+
+
+const ForgetPassForm = ()=>{
+    const [email,setEmail] = useState("");
+    const [submited,setSubmited] = useState(false);
+    const {resetPassword} = useAuth();
     const classes = useStyle();
+    const [error,setError] = useState('');
     const btn = useRef(null);
-    const handleSubmit= async (e)=>{
+    const handleResetPassword= async (e)=>{
         e.preventDefault();
+        if (!email){
+            setError('error');
+            return;
+        }
         try{
            setError('');
-           await login(userName,pass);
-           navigate('/');
+           await resetPassword(email);
+           setSubmited(true);
         }
         catch{setError('error')}
     };
-
 
     useEffect(() => {
         const listener = event => {
@@ -94,53 +98,52 @@ const SignInForm = ()=>{
 
 
     return (
+        <>
+        {!submited?
         <Box className={classes.container}>
         <Box py={6}></Box>
         <h1 style={{
             fontFamily:'Poppins',
             fontSize:'50px'
-        }}>Đăng nhập</h1>
+        }}>Quên mật khẩu</h1>
         <Box py={3} sx={{width:'100%'}}>
-            {error && 
-            <h3 style={{textAlign:'left',justifyContent:'left',fontSize:'15px',opacity:'0.5',marginLeft:'50px',color:'red'}}>
-                Tên đăng nhập hoặc mật khẩu không đúng
-            </h3>}
+        {error && <h3 style={{textAlign:'left',justifyContent:'left',fontSize:'15px',opacity:'0.5',marginLeft:'50px',color:'red'}}>
+                Chưa nhập Email hoặc không có Email này
+       </h3>}
         </Box> 
         <Box sx={{width:'100%'}}>
-        <h3 style={{textAlign:'left',justifyContent:'left',fontSize:'15px',opacity:'0.5',marginLeft:'50px'}}>Tên đăng nhập</h3>
+        <h3 style={{textAlign:'left',justifyContent:'left',fontSize:'15px',opacity:'0.5',marginLeft:'50px'}}>Email</h3>
         <TextField 
-            value={userName}
-            onChange = { e => setUserName(e.target.value)}
+            value={email}
+            onChange = { e => setEmail(e.target.value)}
             className={classes.textField} 
        
-            placeholder='Tên đăng nhập'/>
+            placeholder='Email'/>
         <Box py={1}></Box>
         </Box>
 
-        <Box sx={{width:'100%'}}>
-        <h3 style={{textAlign:'left',justifyContent:'left',fontSize:'15px',opacity:'0.5',marginLeft:'50px'}}>Mật khẩu</h3>
-        <TextField
-            value={pass}
-            onChange={e=>setPass(e.target.value)}
-            className={classes.textField} 
-            type ='password' 
-            placeholder='Mật khẩu'/>
-        <Box py={1}></Box>
-        </Box>
         <Box className={classes.forgetPass}>
-        <Link to ='/reset_password' style={{color:'black','&:hover':{textColor:'#EA6A12',}}}> Quên mật khẩu? </Link>
+        <Link to ='/signin' style={{color:'black','&:hover':{textColor:'#EA6A12',}}}> Đăng nhập </Link>
         </Box>
         <Box py={1}></Box>
         <Button variant="contained" 
-            onClick = {e => handleSubmit(e)}
+            onClick = {e => handleResetPassword(e)}
             className={classes.button}
-            ref = {btn}
+            ref={btn}
         >
-            Đăng nhập
+            Reset mật khẩu
         </Button>
         
-        </Box>
+        </Box> :
+        <Box sx={{
+            display:'flex',
+            alignItems:'center',
+            justifyContent:'center',
+        }}>
+            <div>Hãy kiểm tra email của bạn. Quay về trang  <Link to ='/signin'>{' '}Đăng nhập</Link></div>
+        </Box>}
+        </>
     )
 }
 
-export default SignInForm;
+export default ForgetPassForm;

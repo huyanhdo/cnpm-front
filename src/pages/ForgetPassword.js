@@ -1,12 +1,14 @@
 import React,{useEffect} from "react";
 import {Grid,Box,Hidden} from '@mui/material';
 import pic1 from '../assets/img/pic1.png';
-import SignInForm from "../components/SignIn/SignInForm";
+
 import { useAuth } from "../context/AuthContext";
-const SignIn = ( )=>{
+import ForgetPassForm from "../components/SignIn/ForgetPassForm";
+
+const ForgetPassword  = ( )=>{
     const {currentUser} = useAuth();
     const {logout} = useAuth();
-    
+
     useEffect(() => {
         if(currentUser) logout();
     }, [])
@@ -20,7 +22,7 @@ const SignIn = ( )=>{
             display='flex'
             flexDirection='row'>
         <Grid item xs={12} sm={12} md={4} >
-        <SignInForm/>
+        <ForgetPassForm/>
         </Grid>
         <Hidden only={['xs','sm']}>
         <Grid item xs >
@@ -39,4 +41,4 @@ const SignIn = ( )=>{
     )
 }
 
-export default SignIn;
+export default ForgetPassword;

@@ -4,7 +4,6 @@ const toppingSlice = createSlice({
     name: 'toppings',
     initialState: toppings,
     reducers: {
-        
     }
 })
 export default toppingSlice.reducer;
