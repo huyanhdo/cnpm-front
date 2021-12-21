@@ -1,7 +1,7 @@
 import './App.css';
 import { MenuBar } from './components/sidebar';
 import { CartPage } from './pages/cartPage';
-import { Home } from './pages/home';
+import { Home } from './pages/Home';
 import { PizzaPage } from './pages/pizza';
 import { SinglePage } from './pages/singlePage';
 import {Box} from '@mui/material';

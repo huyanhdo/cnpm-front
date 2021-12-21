@@ -13,7 +13,8 @@ import { useParams, useLocation, useNavigate } from "react-router";
 import { itemAdded, itemUpdated } from "../store/cartSlice";
 import { CustomPagination } from "./pizzaMenu";
 import { updatePizza } from "../store/pizzaSlice";
-const axios = require('axios')
+import axios from 'axios';
+//const axios = require('axios')
 const round = (num)=> Math.round(num * 100) / 100;
 export const SinglePizza = ()=>{
     const navigate = useNavigate();
