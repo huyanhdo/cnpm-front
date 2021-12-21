@@ -2,6 +2,7 @@ import { Box, Card, Divider, Step, StepLabel, Stepper, Typography } from '@mui/m
 import React from 'react'
 export const Bill = (props) =>{
     const order = props.order;
+    console.log(order);
     const categories = ['kid', 'dessert', 'appetizer', 'drink', 'vegetable']
     const steps = ['Pending', 'Preparing', 'Shipping', 'Completed']
     const activeStep = steps.findIndex(step => step === order.status)
@@ -86,10 +87,24 @@ export const Bill = (props) =>{
                     marginLeft: '20px',
                     m: 3,
                 }}
-                >{"+ Product code: " + pizza.id + "\nSize: " + pizza.size + "\tType: " + pizza.type + '\nTopping: ' + 
-                    pizza.topping.reduce((str, top) => str + top + ',', '')
-                }
+                >{"+ Product code: " + pizza.id + "\nSize: " + pizza.size + "\tType: " + pizza.type + '\n' }
                 </pre>
+                {
+                pizza.topping && 
+                <pre
+                style={{
+                    fontFamily: 'Poppins',
+                    fontWeight: 700,
+                    fontSize: '16px',
+                    lineHeight: '52px',
+                    color: '#07143B',
+                    textAlign: 'start',
+                    marginLeft: '20px',
+                    m: 3,
+                }}
+                >{"Topping: " + pizza.topping.reduce((str, t) => str + t + ',', '') }
+                </pre>
+                }
                 <Typography variant="h6"
                 sx={{
                     fontFamily: 'Poppins',
@@ -107,7 +122,7 @@ export const Bill = (props) =>{
             <Box
             sx={{
                 display: 'flex',
-                justifyContent: 'space-between'
+                justifyContent: 'space-between', flexWrap: 'wrap'
             }}
             >
             {
