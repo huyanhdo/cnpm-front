@@ -13,6 +13,7 @@ import SignIn from './pages/SignIn';
 import AuthContextProvider from './context/AuthContext';
 import { SingleExtraPage } from './pages/singleExtraPage';
 import ForgetPassword from './pages/ForgetPassword';
+import Order from './pages/Order';
 function App() {
   return (
       <body>
@@ -33,6 +34,7 @@ function App() {
             <Searchbar/>
             
               <Routes>
+                <Route exact path='/order' element ={<Order/>}/>
                 <Route exact path='/signin' element ={<SignIn/>}/>
                 <Route exact path='/reset_password' element ={<ForgetPassword/>}/>
                 <Route path="/" element={<Home/>}/>
