@@ -4,7 +4,7 @@ import DashboardRoundedIcon from '@mui/icons-material/DashboardRounded';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 import ContactSupportRoundedIcon from '@mui/icons-material/ContactSupportRounded';
-import { styled } from '@mui/material/styles';
+import { styled } from '@mui/styles';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
