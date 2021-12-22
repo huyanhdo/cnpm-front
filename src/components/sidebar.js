@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Avatar, Badge, Box, Typography, Divider, Stack, IconButton, List, ListItem, ListItemButton, Collapse, AppBar } from '@mui/material';
 import DashboardRoundedIcon from '@mui/icons-material/DashboardRounded';
+import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 import ContactSupportRoundedIcon from '@mui/icons-material/ContactSupportRounded';
@@ -135,7 +136,7 @@ export const MenuBar = ()=>{
                 </CustomListItem>
                 <CustomListItem>
                     <ListItemButton className='button' onClick={()=>{SetFocus(prev => {return prev==='menu'? '': 'menu'})}}>
-                    <DashboardRoundedIcon className='icon'/>
+                    <MenuRoundedIcon className='icon'/>
                     <Typography className='typo' component="pre">
                         Menu {'      '} 
                     </Typography>
@@ -183,6 +184,17 @@ export const MenuBar = ()=>{
                     </Typography>
                     </ListItemButton>
                 </CustomListItem>
+       
+                
+                <CustomListItem>
+                    <ListItemButton className='button' onClick = {()=>{navigate('/dashboard')}}>
+                    <DashboardRoundedIcon className='icon'/>
+                    <Typography className='typo'>
+                        Dashboard
+                    </Typography>
+                    </ListItemButton>
+                </CustomListItem>
+                
                 <CustomListItem>
                     <ListItemButton className='button' onClick={()=>{SetFocus('')}}>
                     <ContactSupportRoundedIcon className='icon'/>
@@ -247,10 +259,13 @@ export const MenuBar = ()=>{
             <HomeRoundedIcon className='icon'/>
             </CustomIconButton>
             <CustomIconButton>
-            <DashboardRoundedIcon className='icon'/>
+            <MenuRoundedIcon className='icon'/>
             </CustomIconButton>
             <CustomIconButton>
             <AccountCircleRoundedIcon className='icon'/>
+            </CustomIconButton>
+            <CustomIconButton>
+            <DashboardRoundedIcon className='icon'/>
             </CustomIconButton>
             <CustomIconButton>
             <ContactSupportRoundedIcon className='icon'/>
