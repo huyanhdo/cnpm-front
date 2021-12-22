@@ -1,5 +1,5 @@
 import { Box, Divider , IconButton, Rating, Stack, Typography} from "@mui/material";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import KeyboardArrowRightRoundedIcon from '@mui/icons-material/KeyboardArrowRightRounded';
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
@@ -298,8 +298,7 @@ export const Newest = () =>{
     >
         {
             sortedIds.map((id, index) => {
-                if(index < 4)
-                return <PizzaCard image={pizzas.entities[id].image_url} name={pizzas.entities[id].title} rate={pizzas.entities[id].rating} 
+                return (index < 4) && <PizzaCard image={pizzas.entities[id].image_url} name={pizzas.entities[id].title} rate={pizzas.entities[id].rating} 
                 price={pizzas.entities[id].price} link={`/pizza/${id}`}/>
             })
         }
