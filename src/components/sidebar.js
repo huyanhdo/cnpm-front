@@ -223,7 +223,7 @@ export const MenuBar = ()=>{
                                 </CustomListItem>
                         </List>
                     </Collapse>
-                
+{/*                 
                 <CustomListItem>
                     <ListItemButton className='button' onClick={()=>{SetFocus('')}}>
                     <ContactSupportRoundedIcon className='icon'/>
@@ -231,7 +231,7 @@ export const MenuBar = ()=>{
                         Help
                     </Typography>
                     </ListItemButton>
-                </CustomListItem>
+                </CustomListItem> */}
             </List>
         </AppBar>    
     </Collapse>
@@ -294,12 +294,9 @@ export const MenuBar = ()=>{
             <CustomIconButton>
             <DashboardRoundedIcon className='icon'/>
             </CustomIconButton>
-            <CustomIconButton>
-            <DashboardRoundedIcon className='icon'/>
-            </CustomIconButton>
-            <CustomIconButton>
+            {/* <CustomIconButton>
             <ContactSupportRoundedIcon className='icon'/>
-            </CustomIconButton>
+            </CustomIconButton> */}
         </Stack>
     </AppBar>
     </Collapse>
