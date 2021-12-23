@@ -37,6 +37,7 @@ function OrderReport() {
             
             setOrderLists(responseJSON);
             const keys = Object.keys(responseJSON).reverse();
+            console.log(responseJSON);
             setKeys(keys);
             setDetailItem(keys[0]);
             setStatus(responseJSON[keys[0]].status)
@@ -58,7 +59,7 @@ function OrderReport() {
             <Box sx={{width:'750px',
             padding :'0 0 20px 0',
             
-            backgroundColor:'#ffe6cc',
+            backgroundColor:'rgba(252, 237, 227, 0.3)',
             borderRadius:'8px',
             minHeight:'750px',
             display:'flex',
@@ -84,7 +85,7 @@ function OrderReport() {
                 </Box>
 
                 <Box sx={{
-                    marginLeft:'24px'
+                    
                 }}>
                     <table style={{
                         width:'100%'
@@ -96,35 +97,46 @@ function OrderReport() {
                             <th className='th-Order' style={{
                                 width:'30%',
                                 paddingLeft:'20px'
+                            }}>ID</th>
+                            <th className='th-Order' style={{
+                                width:'20%',
+                                paddingLeft:'20px'
                             }}>Khách hàng</th>
                             <th className='th-Order' style={{
-                                width:'30%'
-                            }}>Menu</th>
+                                width:'20%',
+                                textAlign:'center'
+                            }}>Thời gian</th>
                             <th className='th-Order' style={{
-                                width: '20%'
+                                width: '15%'
                             }}>Tổng Đơn</th>
                             <th className='th-Order' style={{
-                                width:'20%'
+                                width:'15%',
+                                
                             }}>Trạng Thái</th>
                         </tr>
                         {OrderList.map((order,index) => { 
                                                     
                                                     var key = Object.keys(OrderLists[order].detail);
-                                                    var menu = '';
-                                                    key.forEach((item)=>{
-                                                        menu += item + ', '
-                                                    })
-                                                    menu = menu.slice(0, menu.length-2)
+                                                    
+                                                    const day = new Date();
+                                                    day.setTime(OrderLists[order].time);
+                                                    let date = day.getDate();
+                                                    let month = day.getMonth();
+                                                    let year = day.getFullYear();
+                                                    let hour = day.getHours();
+                                                    let minute = day.getMinutes();
+                                                    
                                                 
                                         return(
                             <tr className="Order"
                                 tabIndex="0"            
                                  style ={{ cursor:'pointer',
-                                 borderBottom:' 1px solid white'
+                                 
                                 }}
                                  onClick={()=>{setDetailItem(order); setStatus(OrderLists[order].status)}} >
-                                <td style={{paddingLeft:'20px'}}>{OrderLists[order].customer}</td>
-                                <td>{menu}</td>
+                                <td style={{paddingLeft:'10px'}}>{order}</td>
+                                <td style={{paddingLeft:'10px'}}>{OrderLists[order].customer}</td>
+                                <td style={{textAlign:'center'}}>{`${hour}:${minute} ${date}/${month}/${year}`}</td>
                                 <td>{OrderLists[order]['total payment']}</td>
                                 <td>
                                     <button  className={OrderLists[order].status} style={{
@@ -161,7 +173,7 @@ function OrderReport() {
             <Box>
                
             {OrderLists[detailItem] && <Box sx={{
-                backgroundColor:'#ffe6cc',
+                backgroundColor:'rgba(252, 237, 227, 0.3)',
                 width:'600px',
                 minHeight:'750px',
                 borderRadius:'8px'

@@ -7,21 +7,20 @@ import './index.css'
 
 function OrderDetail(props) {
     const {detailItem, detailId, Status} = props;
-    console.log(detailId);
-    console.log(Status);
+    
     const detailURL = `https://pizzahust-d7124-default-rtdb.asia-southeast1.firebasedatabase.app/order/${detailId}.json`
     
     
     
     const [status, setStatus] = useState('')
-    console.log(status);
+    
     const detail = detailItem.detail;
     const detailKeys = Object.keys(detail)
     const [menu, setMenu] = useState({});
     const day = new Date();
-    console.log(detailItem.time);
+    
     day.setTime(detailItem.time)
-    console.log(day);
+    
     let date = day.getDate();
     let month = day.getMonth();
     let year = day.getFullYear();
@@ -36,7 +35,7 @@ function OrderDetail(props) {
             
             setMenu(responseJSON);
             setStatus(Status);
-            console.log(status);
+            
             
         }
         fetchMenu();
@@ -59,7 +58,7 @@ function OrderDetail(props) {
             const data = { ...detailItem,
                 status: value
                         }
-            console.log(data);
+            
             putData(data);
             setTimeout(() => {
                 window.location.reload();
@@ -244,7 +243,7 @@ function OrderDetail(props) {
                     }}> Thời gian </h4></Box>
                     <Box sx={{
                         marginLeft:'50px'
-                    }}><p>{`${hour}:${minute} Ngày ${date}/${month}/${year}`}</p></Box>
+                    }}><p>{`${hour}:${minute}  Ngày ${date}/${month}/${year}`}</p></Box>
                 </Box>
 
                 <Box sx={{

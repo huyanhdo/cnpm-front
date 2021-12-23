@@ -14,9 +14,12 @@ td {
     color: rgb(242, 242, 247);
 }
 .Order:focus{
-    background-color: #ffd9b3;
+    background-color: #ffcc99;
 }
 table { border-collapse: separate; }
+.Order:nth-child(even){
+    background-color: #ffe6cc;
+}
 
 tr:first-child ,td:first-child { border-top-left-radius: 25px; }
 tr:first-child ,td:last-child { border-top-right-radius: 25px; }
