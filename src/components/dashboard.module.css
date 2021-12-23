@@ -1,0 +1,9 @@
+.board{
+    background: #b2b8a8;
+    border-color:black;
+border-radius: 50px;
+}
+.hr{
+
+    border-top: 1px solid white;
+    }

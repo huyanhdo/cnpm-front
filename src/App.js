@@ -4,6 +4,7 @@ import { CartPage } from './pages/cartPage';
 import { Home } from './pages/Home';
 import { PizzaPage } from './pages/pizza';
 import { SinglePage } from './pages/singlePage';
+import Dashboard from './components/dashboard'
 import {Box} from '@mui/material';
 import { Searchbar } from './components/searchbar';
 import { Footer } from './components/footer';
@@ -43,8 +44,8 @@ function App() {
                 <Route path="product/:productId" element={<SinglePage/>}/>
                 <Route path="extra/:productId" element={<SingleExtraPage/>}/>
                 <Route path="/combo" element={<ComboPage/>}/>
-              </Routes> 
-             
+                <Route path="/statistic" element={<Dashboard/>}/>
+              </Routes>
             <Footer/>
           </Box>
           </AuthContextProvider>
