@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState } from "react";
 import {Box, Divider, IconButton, Stack, Typography, Rating, Button, List, ListItem, Modal, TextField, Checkbox, Fade} from '@mui/material';
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
 import  AddRoundedIcon  from "@mui/icons-material/AddRounded";
@@ -8,16 +8,77 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useParams, useNavigate } from "react-router";
 import { itemAdded } from "../store/cartExtraSlice";
+import { CustomPagination } from "./pizzaMenu";
+
+const axios = require('axios')
 const round = (num)=> Math.round(num * 100) / 100;
+
 export const SingleExtra = ()=>{
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const {productId} = useParams();
-    const extra = useSelector(state => state.extras.entities[productId]);
-    const comments = extra.comments;
+    const categories = {
+        'dessert':{
+            selector: useSelector(state => state.desserts),
+            link: 'https://pizzahust-d7124-default-rtdb.asia-southeast1.firebasedatabase.app/menu/menu_dessert/'
+        },
+        'drink':{
+            selector: useSelector(state => state.drinks),
+            link: 'https://pizzahust-d7124-default-rtdb.asia-southeast1.firebasedatabase.app/menu/menu_drink/'
+        },
+        'vegetable':{
+            selector: useSelector(state => state.vegetables),
+            link: 'https://pizzahust-d7124-default-rtdb.asia-southeast1.firebasedatabase.app/menu/menu_kid/'
+        },
+        'kid':{
+            selector: useSelector(state => state.kids),
+            link: 'https://pizzahust-d7124-default-rtdb.asia-southeast1.firebasedatabase.app/menu/menu_vegetarian/'
+        },
+        'appetizer':{
+            selector: useSelector(state => state.appetizers),
+        }
+    }
+    const {category , productId} = useParams();
+    const extra = categories[category].selector.entities[productId];
+    const comments = extra.comment;
     const [num, setNum] = useState(1);
     const [cmt, setCmt] = useState(false);
     const [done, setDone] = useState(false);
+    //comment
+    const [yourName, setYourName] = useState('')
+    const [yourCmt, setYourCmt] = useState('')
+    const [yourRate, setYourRate] = useState(0)
+    const max = 2
+    const totalPage = Math.ceil(comments.length / max);
+    const pageList = [];
+    for(let i = 1;i <= totalPage;i++)pageList.push(i);
+    const [page, setPage] = useState(1);
+    const closeCmt = () =>{
+        setCmt(false)
+        setYourName('')
+        setYourCmt('')
+}
+const postComment = async () =>{
+    try{
+        const newCmt = {
+            comment_time: Math.floor(Date.now()/1000),
+            content: yourCmt,
+            user_name: yourName,
+            user_rating: yourRate
+        }
+        let newExtra = {}
+        newExtra = Object.assign(newExtra, extra)
+        newExtra.comment = [...newExtra.comment, newCmt]
+        newExtra.rating = (extra.rating * comments.length + yourRate)/ (comments.length + 1)
+            console.log(newExtra)
+            await axios.put(
+                categories[category].link + productId + '/.json',
+                newExtra)
+        closeCmt()
+    }catch(err){
+        console.log(err)
+    }
+}
+
     return(
         <Box
         sx={{
@@ -42,12 +103,13 @@ export const SingleExtra = ()=>{
         }}
         >
             <img
-            src={extra.image}
-            alt={extra.name}
+            src={extra.image_url}
+            alt={extra.title}
             style={{
             width: '280px',
             height: '280px',
-            borderRadius: '50%'
+            borderRadius: '50%',
+            objectFit: 'cover'
             }}
             />
             <Stack spacing={2}
@@ -65,7 +127,7 @@ export const SingleExtra = ()=>{
                         textAlign: 'start',
                         
                     }}
-                    >{extra.name}
+                    >{extra.title}
                 </Typography>
                 <Typography
                     style={{
@@ -94,7 +156,7 @@ export const SingleExtra = ()=>{
                     }}
                     >$ {extra.price}
                 </div>
-                <Rating value={extra.rate} readOnly
+                <Rating value={extra.rating} readOnly
                 sx={{
                     color: '#EA6A12',
                 }}
@@ -197,6 +259,7 @@ export const SingleExtra = ()=>{
                         dispatch(itemAdded({
                             extraId: productId,
                             number: num,
+                            category: category,
                             total: round(num * extra.price)
                         }))
                     }}
@@ -249,7 +312,7 @@ export const SingleExtra = ()=>{
                     >
                         Add Comment
         </Button>
-        <Modal open={cmt} onClose = {() => {setCmt(false)}}>
+        <Modal open={cmt} onClose = {closeCmt}>
             <Fade in={cmt} timeout={500}>
             <Stack
             spacing = {1}
@@ -286,7 +349,10 @@ export const SingleExtra = ()=>{
                 inputProps={{style: {fontFamily: 'Poppins'}}} // font size of input text
                 InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
                 sx={{
-                    width: '60%'
+                    width: '100%'
+                }}
+                onChange={(e)=>{
+                    setYourName(e.target.value)
                 }}
                 />
                 <TextField
@@ -299,6 +365,9 @@ export const SingleExtra = ()=>{
                 maxRows = {4}
                 inputProps={{style: {fontFamily: 'Poppins'}}} // font size of input text
                 InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                onChange={(e)=>{
+                    setYourCmt(e.target.value)
+                }}
                 />
                 <Stack direction="row" spacing={5}
                 sx={{alignItems: 'center'}}
@@ -315,6 +384,10 @@ export const SingleExtra = ()=>{
                     >Rate: 
                 </Typography>
                 <Rating
+                
+                onChange={(e,newRate)=>{
+                    setYourRate(newRate)
+                }}
                 sx={{
                     color: '#EA6A12',
                 }}
@@ -322,28 +395,23 @@ export const SingleExtra = ()=>{
                 emptyIcon={<StarRoundedIcon/>}
                 />
                 </Stack>
-                <Stack direction="row" spacing={1}>
-                <Checkbox sx={{
-                    color: '#EA6A12',
-                    '&.Mui-checked': {
-                        color: '#EA6A12'
-                    }
-                }}/>
-                <Typography variant="h6"
+                {
+                (yourName.length === 0 || yourCmt.length === 0) &&
+                (<Typography variant="h6"
                     sx={{
                         fontFamily: 'Poppins',
                         fontWeight: 700,
-                        fontSize: '12px',
+                        fontSize: '15px',
                         lineHeight: '52px',
                         color: '#07143B',
-                        textAlign: 'start',
-                        display: 'inline-block'
+                        textAlign: 'center',
                     }}
-                    >I will recommend this product to my friends and family 
-                </Typography>
-                </Stack>
+                >
+                    Please fill out the information completely
+                </Typography>)
+                }
                 <Button variant="contained" 
-                    onClick={()=>{setCmt(false)}}
+                    onClick={postComment}
                     sx={{
                         backgroundColor: '#EA6A12',
                         borderRadius: '100px',
@@ -358,6 +426,7 @@ export const SingleExtra = ()=>{
                         },
                         marginBottom: 2
                     }}
+                    disabled = {yourName.length === 0 || yourCmt.length === 0}
                     >
                     Post
                 </Button>
@@ -373,13 +442,13 @@ export const SingleExtra = ()=>{
             }}>
             {
                 comments.length > 0 ? 
-                comments.map(comment =>{
-                    return(
+                comments.map((comment, index) =>
+                    (index >= (page - 1)*max && index < page * max) ?
                             <ListItem>
                                 <Comment comment = {comment}/>
                             </ListItem>
-                    )
-                })
+                    : false
+                )
                 : 
                 <Typography variant="h6"
                     sx={{
@@ -396,6 +465,10 @@ export const SingleExtra = ()=>{
             </Typography>
             }
             </List>
+            </Box>
+            <Box sx={{width: '100%', justifyContent: 'center', marginTop: '10px', display: 'flex'}}>
+            <CustomPagination variant="outlined" shape="rounded" count={totalPage}
+            onChange={(event, value) => {setPage(value)}} size="large" page={page}/>
             </Box>
         <Divider variant="middle" sx={{m: 5}}/>
         <Modal open={done} >

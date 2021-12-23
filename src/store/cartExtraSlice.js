@@ -12,7 +12,8 @@ const cartExtraSlice = createSlice({
                 state.entities[extraId].total += action.payload.total;
             }else{
                 state.ids.push(extraId);
-                state.entities[extraId] = {number: action.payload.number, total: action.payload.total}
+                state.entities[extraId] = action.payload
+                console.log(state.entities[extraId])
             }
         },
         itemRemoved(state, action){
@@ -22,8 +23,9 @@ const cartExtraSlice = createSlice({
                 state.ids.splice(index, 1);
             }
         },itemUpdated(state, action){
-            const id = action.payload.id;
-            state.entities[id] = action.payload.data;
+            const extraId = action.payload.id;
+            state.entities[extraId].number = action.payload.number;
+            state.entities[extraId].total = action.payload.total;
         }
     }
 })

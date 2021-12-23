@@ -1,14 +1,13 @@
-import { Box, Divider , IconButton, Rating, Stack, Typography} from "@mui/material";
+import { Box, Divider , IconButton, Rating, Stack, Typography,} from "@mui/material";
 import React, { useState } from "react";
 import KeyboardArrowRightRoundedIcon from '@mui/icons-material/KeyboardArrowRightRounded';
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
+
 export const Category = (props)=>{
     const navigate = useNavigate();
-    const image = props.image;
-    const name = props.name;
     const category = props.category;
     const [hov, setHov] = useState(false);
     const switchHov = ()=>{
@@ -32,8 +31,8 @@ export const Category = (props)=>{
         }}
         >
             <img
-            src={image}
-            alt={name}
+            src={category.image}
+            alt={category.name}
             style={{
             borderRadius: '50%',
             width: '64px',
@@ -49,7 +48,7 @@ export const Category = (props)=>{
                         color: hov? 'white': 'black',
                         textAlign: 'start'
                     }}
-                    >{name}
+                    >{category.name}
             </Typography>
             <Divider variant="middle" 
             sx={{
@@ -60,7 +59,7 @@ export const Category = (props)=>{
             />
             <IconButton
             onClick = {()=>{
-                navigate('/menu/' + category); 
+                navigate(category.menuLink); 
             }}
             sx={{
                 backgroundColor: hov? 'white': 'rgba(234, 106, 18, 0.7)',
@@ -221,11 +220,18 @@ export const PizzaCard = (props)=>{
     )
 }
 export const Categories = ()=>{
-    const categories = useSelector(state => state.categories);
-    const pizzas = useSelector(state => state.pizzas);
+    const categories = [
+        {name: 'Pizza', image: '/pizza1.png', menuLink : '/menu/pizza'},
+        {name: 'Vegetable', image: '/vegetable.png', menuLink : '/menu/vegetable'},
+        {name: 'Kid', image: '/sweet.png', menuLink : '/menu/kid'},
+        {name: 'Dessert', image: '/trend1.png', menuLink : '/menu/dessert'},
+        {name: 'Appetizer', image: '/trend2.png', menuLink : '/menu/appetizer'},
+        {name: 'Drink', image: '/trend3.png', menuLink : '/menu/drink'},
+    ]
+
     return(
     <Box sx = {{
-        width: {md: '70%', sm: '100%', xs : '100%'}
+        width: '100%'
     }}>
         <Typography variant="h6"
                     sx={{
@@ -247,12 +253,23 @@ export const Categories = ()=>{
     }}
     >
         {
-            categories.ids.map(id =>{
-                return <Category image={categories.entities[id].image} name={categories.entities[id].name} category={id}/>
+            categories.map(category =>{
+                return <Category category={category}/>
             })
         }
     </Box>
-    <Typography variant="h6"
+    
+    </Box>
+    )
+}
+
+export const Newest = () =>{
+    const pizzas = useSelector(state => state.pizzas);
+    return (
+        <Box sx = {{
+            width: '100%'
+        }}>
+            <Typography variant="h6"
                     sx={{
                         fontFamily: 'Playfair Display',
                         fontWeight: 700,
@@ -274,11 +291,11 @@ export const Categories = ()=>{
         {
             pizzas.ids.map((id, index) => {
                 if(index < 4)
-                return <PizzaCard image={pizzas.entities[id].image} name={pizzas.entities[id].name} rate={pizzas.entities[id].rate} 
-                price={pizzas.entities[id].price[0]} link={`/product/${id}`}/>
+                return <PizzaCard image={pizzas.entities[id].image_url} name={pizzas.entities[id].title} rate={pizzas.entities[id].rating} 
+                price={pizzas.entities[id].price} link={`/pizza/${id}`}/>
             })
         }
     </Box>
-    </Box>
+        </Box>
     )
 }

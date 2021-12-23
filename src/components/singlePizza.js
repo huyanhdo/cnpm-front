@@ -11,8 +11,8 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useParams, useLocation, useNavigate } from "react-router";
 import { itemAdded, itemUpdated } from "../store/cartSlice";
-const sizes = ['S', 'M', 'L'];
-const soles = ['Soft', 'Crispy'];
+import { CustomPagination } from "./pizzaMenu";
+const axios = require('axios')
 const round = (num)=> Math.round(num * 100) / 100;
 export const SinglePizza = ()=>{
     const navigate = useNavigate();
@@ -20,18 +20,54 @@ export const SinglePizza = ()=>{
     const dispatch = useDispatch();
     const {productId} = useParams();
     const pizza = useSelector(state => state.pizzas.entities[productId]);
-    const allToppings = useSelector(state => state.toppings.entities);
-    const toppings = pizza.toppings;
-    const comments = pizza.comments;
+    const toppings = pizza.topping;
+    const comments = pizza.comment;
+    const sizes = pizza.size;
+    const soles = pizza.type;
     const [size, setSize] = useState(location.state? location.state.size: 0);
     const [sole, setSole] = useState(location.state? location.state.sole: 0);
     const [num, setNum] = useState(location.state? location.state.number: 1);
-    const [total, setTotal] = useState(location.state? round(location.state.total / location.state.number) : pizza.price[0]);
+    const [total, setTotal] = useState(location.state? round(location.state.total / location.state.number) : pizza.price);
     const [cmt, setCmt] = useState(false);
     const [tops, setTops] = useState(location.state? location.state.toppings: []);
     const [done, setDone] = useState(false);
+    //comment
+    const [yourName, setYourName] = useState('')
+    const [yourCmt, setYourCmt] = useState('')
+    const [yourRate, setYourRate] = useState(0)
+    const max = 2
+    const totalPage = Math.ceil(comments.length / max);
+    const pageList = [];
+    for(let i = 1;i <= totalPage;i++)pageList.push(i);
+    const [page, setPage] = useState(1);
+    const closeCmt = () =>{
+            setCmt(false)
+            setYourName('')
+            setYourCmt('')
+    }
+    const postComment = async () =>{
+        try{
+            const newCmt = {
+                comment_time: Math.floor(Date.now()/1000),
+                content: yourCmt,
+                user_name: yourName,
+                user_rating: yourRate
+            }
+            let newPizza = {}
+            newPizza = Object.assign(newPizza, pizza)
+            newPizza.comment = [...newPizza.comment, newCmt]
+            newPizza.rating = (pizza.rating * comments.length + yourRate)/ (comments.length + 1)
+                console.log(newPizza)
+                await axios.put(
+                    'https://pizzahust-d7124-default-rtdb.asia-southeast1.firebasedatabase.app/menu/menu_main_courses/' + productId + '/.json',
+                    newPizza)
+            closeCmt()
+        }catch(err){
+            console.log(err)
+        }
+    }
     const handleAdd = (_id, add)=>{
-        setTotal(prev => add ? round(prev + allToppings[_id].price) : round(prev - allToppings[_id].price));
+        setTotal(prev => add ? round(prev + toppings[_id].topping_price) : round(prev - toppings[_id].topping_price));
         if(add) {
             
             setTops(prev => {
@@ -49,7 +85,7 @@ export const SinglePizza = ()=>{
     }
     const sizeChanged = (o, n)=>{
         setSize(n);
-        setTotal(prev => round(prev - pizza.price[o] + pizza.price[n]));
+        setTotal(prev => round(prev - sizes[o].type_price + sizes[n].type_price));
     }
     return(
         <Box
@@ -75,12 +111,13 @@ export const SinglePizza = ()=>{
         }}
         >
             <img
-            src={pizza.image}
-            alt={pizza.name}
+            src={pizza.image_url}
+            alt={pizza.title}
             style={{
             width: '300px',
             height: '300px',
-            borderRadius: '50%'
+            borderRadius: '50%',
+            objectFit: 'cover'
             }}
             />
             <Stack spacing={2}
@@ -98,7 +135,7 @@ export const SinglePizza = ()=>{
                         textAlign: 'start',
                         
                     }}
-                    >{pizza.name}
+                    >{pizza.title}
                 </Typography>
                 <Typography
                     style={{
@@ -125,9 +162,9 @@ export const SinglePizza = ()=>{
                         color:'#EA6A12',
                         textAlign: 'start'
                     }}
-                    >$ {pizza.price[size]}
+                    >$ {pizza.price + sizes[size].type_price}
                 </div>
-                <Rating value={pizza.rate} readOnly
+                <Rating value={pizza.rating} readOnly
                 sx={{
                     color: '#EA6A12',
                 }}
@@ -151,7 +188,7 @@ export const SinglePizza = ()=>{
                     >Size: 
                 </Typography>
                 <IconButton 
-                onClick={() => sizeChanged(size, (size - 1) % 3)}
+                onClick={() => sizeChanged(size, (size - 1) % sizes.length)}
                 >
                     <KeyboardArrowLeftRoundedIcon/>
                 </IconButton>
@@ -164,10 +201,10 @@ export const SinglePizza = ()=>{
                         color:'#07143B',
                         textAlign: 'start'
                     }}
-                    >{sizes[size]}
+                    >{sizes[size].type_detail}
                 </Typography>
                 <IconButton 
-                onClick={() => sizeChanged(size, (size + 1) % 3)}
+                onClick={() => sizeChanged(size, (size + 1) % sizes.length)}
                 >
                     <KeyboardArrowRightRoundedIcon/>
                 </IconButton>
@@ -238,11 +275,10 @@ export const SinglePizza = ()=>{
         }}
         >
             {
-            toppings.map((toppingId) =>{
-                const topping = allToppings[toppingId];
+            toppings.map((topping, toppingId) =>{
                 return (<ToppingCard 
-                name={topping.name} image = {topping.image}
-                    price = {topping.price} _id = {toppingId} 
+                name={topping.topping_name} image = {topping.topping_image}
+                    price = {topping.topping_price} _id = {toppingId} 
                     handleAdd = {handleAdd} added = {location.state ? location.state.toppings.find(t => t === toppingId) : false}
                 />
                 )
@@ -344,8 +380,8 @@ export const SinglePizza = ()=>{
                                 id: location.state.id,
                                 data: {
                                     pizzaId: productId,
-                                    size: sizes[size],
-                                    sole: soles[sole],
+                                    size: size,
+                                    sole: sole,
                                     toppings: tops,
                                     total: round(total * num),
                                     number: num
@@ -354,8 +390,8 @@ export const SinglePizza = ()=>{
                         }else{
                             dispatch(itemAdded({
                                 pizzaId: productId,
-                                size: sizes[size],
-                                sole: soles[sole],
+                                size: size,
+                                sole: sole,
                                 toppings: tops,
                                 total: round(total * num),
                                 number: num
@@ -413,7 +449,7 @@ export const SinglePizza = ()=>{
                     >
                         Add Comment
         </Button>
-        <Modal open={cmt} onClose = {() => {setCmt(false)}}>
+        <Modal open={cmt} onClose = {closeCmt}>
             <Fade in={cmt} timeout={500}>
             <Stack
             spacing = {1}
@@ -450,7 +486,10 @@ export const SinglePizza = ()=>{
                 inputProps={{style: {fontFamily: 'Poppins'}}} // font size of input text
                 InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
                 sx={{
-                    width: '60%'
+                    width: '100%'
+                }}
+                onChange={(e)=>{
+                    setYourName(e.target.value)
                 }}
                 />
                 <TextField
@@ -463,6 +502,9 @@ export const SinglePizza = ()=>{
                 maxRows = {4}
                 inputProps={{style: {fontFamily: 'Poppins'}}} // font size of input text
                 InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                onChange={(e)=>{
+                    setYourCmt(e.target.value)
+                }}
                 />
                 <Stack direction="row" spacing={5}
                 sx={{alignItems: 'center'}}
@@ -479,6 +521,10 @@ export const SinglePizza = ()=>{
                     >Rate: 
                 </Typography>
                 <Rating
+                
+                onChange={(e,newRate)=>{
+                    setYourRate(newRate)
+                }}
                 sx={{
                     color: '#EA6A12',
                 }}
@@ -486,28 +532,23 @@ export const SinglePizza = ()=>{
                 emptyIcon={<StarRoundedIcon/>}
                 />
                 </Stack>
-                <Stack direction="row" spacing={1}>
-                <Checkbox sx={{
-                    color: '#EA6A12',
-                    '&.Mui-checked': {
-                        color: '#EA6A12'
-                    }
-                }}/>
-                <Typography variant="h6"
+                {
+                (yourName.length === 0 || yourCmt.length === 0) &&
+                (<Typography variant="h6"
                     sx={{
                         fontFamily: 'Poppins',
                         fontWeight: 700,
-                        fontSize: '12px',
+                        fontSize: '15px',
                         lineHeight: '52px',
                         color: '#07143B',
-                        textAlign: 'start',
-                        display: 'inline-block'
+                        textAlign: 'center',
                     }}
-                    >I will recommend this product to my friends and family 
-                </Typography>
-                </Stack>
+                >
+                    Please fill out the information completely
+                </Typography>)
+                }
                 <Button variant="contained" 
-                    onClick={()=>{setCmt(false)}}
+                    onClick={postComment}
                     sx={{
                         backgroundColor: '#EA6A12',
                         borderRadius: '100px',
@@ -522,6 +563,7 @@ export const SinglePizza = ()=>{
                         },
                         marginBottom: 2
                     }}
+                    disabled = {yourName.length === 0 || yourCmt.length === 0}
                     >
                     Post
                 </Button>
@@ -532,18 +574,17 @@ export const SinglePizza = ()=>{
             
             <Divider variant="middle"/>
             <Box sx={{margin: '0 20px'}}>
-            <List sx={{width: '100%', height: '90%', overflow: 'auto', 
-            maxHeight: '500px', backgroundColor: 'rgba(252, 237, 227, 0.3)', alignSelf: 'center'
+            <List sx={{width: '100%', height: '90%', backgroundColor: 'rgba(252, 237, 227, 0.3)', alignSelf: 'center'
             }}>
             {
                 comments.length > 0 ? 
-                comments.map(comment =>{
-                    return(
+                comments.map((comment, index) =>
+                    (index >= (page - 1)*max && index < page * max) ?
                             <ListItem>
                                 <Comment comment = {comment}/>
                             </ListItem>
-                    )
-                })
+                    : false
+                )
                 : 
                 <Typography variant="h6"
                     sx={{
@@ -560,6 +601,10 @@ export const SinglePizza = ()=>{
             </Typography>
             }
             </List>
+            </Box>
+            <Box sx={{width: '100%', justifyContent: 'center', marginTop: '10px', display: 'flex'}}>
+            <CustomPagination variant="outlined" shape="rounded" count={totalPage}
+            onChange={(event, value) => {setPage(value)}} size="large" page={page}/>
             </Box>
         <Divider variant="middle" sx={{m: 5}}/>
         <Modal open={done} >

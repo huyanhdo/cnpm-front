@@ -1,9 +1,8 @@
-import { Button, Stack, Typography, Box, IconButton, Divider , Collapse, Tabs, Modal, Fade, Grow} from '@mui/material';
+import { Button, Stack, Typography, Box, IconButton, Divider , Collapse, Modal, Fade, Grow} from '@mui/material';
 import React, { useState } from 'react';
 import {ExpandLess, ExpandMore, AddRounded, RemoveRounded} from '@mui/icons-material';
 import AddCircleRounded from '@mui/icons-material/AddCircleRounded';
 import DeleteIcon from '@mui/icons-material/Delete';
-import {CustomTab} from './pizzaMenu';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { itemAdded } from '../store/cartComboSlice';

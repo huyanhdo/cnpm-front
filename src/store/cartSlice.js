@@ -1,5 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { cartPizzas } from "./fakeData";
+const initialState = {
+    
+}
 const cartSlice = createSlice({
     name: 'cart',
     initialState: cartPizzas,

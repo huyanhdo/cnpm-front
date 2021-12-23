@@ -1,9 +1,15 @@
 import React from "react";
-import {Box, Stack, Typography, Rating, Divider, Checkbox} from "@mui/material";
+import {Stack, Typography, Rating, Divider} from "@mui/material";
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
-import { Favorite, FavoriteBorder } from "@mui/icons-material";
 export const Comment = (props) =>{
     const comment = props.comment;
+    let date = new Date(comment.comment_time * 1000)
+    let year = date.getFullYear()
+    let month = date.getMonth()
+    let day = date.getDate()
+    let hour = date.getHours()
+    let minute = date.getMinutes()
+    let second = date.getSeconds()
     return(
         <Stack
         spacing={1}
@@ -16,12 +22,6 @@ export const Comment = (props) =>{
             margin: '10px 20px'
         }}
         >
-            <Stack direction="row"
-            sx={{
-                
-                justifyContent: 'space-between'
-            }}
-            >
             <Typography variant="h6"
                     sx={{
                         fontFamily: 'Playfair Display',
@@ -31,20 +31,17 @@ export const Comment = (props) =>{
                         color: '#07143B',
                         textAlign: 'start'
                     }}
-                    >{comment.name}
+                    >{comment.user_name}
             </Typography>
-            <Checkbox icon={<FavoriteBorder/>} checkedIcon={<Favorite sx= {{color: 'red'}}/>}/>
-            </Stack>
             <Stack direction = "row" spacing={5}>
-            <Rating value={comment.rate} readOnly
+            <Rating value={comment.user_rating} readOnly
                 sx={{
                     color: '#EA6A12',
                 }}
                 icon={<StarRoundedIcon/>}
             emptyIcon={<StarRoundedIcon/>}
             />
-            {
-                comment.share ? <Typography variant="subtitle1"
+                <Typography variant="subtitle1"
                 sx={{
                     fontFamily: 'Poppins',
                     fontWeight: 600,
@@ -54,10 +51,11 @@ export const Comment = (props) =>{
                     textAlign: 'start',
                     marginBottom: '10px'
                 }}
-                > ❤ I will recommend this product to friends and family
-                </Typography> : false
-            }
-            
+                >
+                    {
+                        'Time: '+year+'/'+month+'/'+day+'-'+hour+':'+minute+':'+second
+                    }
+                </Typography>
             </Stack>
             <Divider sx={{width: '50%'}}/>
             <Typography
