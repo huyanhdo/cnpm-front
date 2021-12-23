@@ -5,7 +5,7 @@ import AddCircleRounded from '@mui/icons-material/AddCircleRounded';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {CustomTab} from './pizzaMenu';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import { itemAdded } from '../store/cartComboSlice';
 import { CustomPagination } from './pizzaMenu';
 const round = (num)=> Math.round(num * 100) / 100;

@@ -1,7 +1,7 @@
 import { Box, Divider, IconButton, Stack, Typography, Card, Button, List } from '@mui/material';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import React from 'react';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 const CartItem = (props)=>{
     const name = props.name;

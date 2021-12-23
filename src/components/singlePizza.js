@@ -9,7 +9,7 @@ import { ToppingCard } from "./topping";
 import { Comment } from "./comment";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { useParams, useLocation, useNavigate } from "react-router";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { itemAdded, itemUpdated } from "../store/cartSlice";
 const sizes = ['S', 'M', 'L'];
 const soles = ['Soft', 'Crispy'];

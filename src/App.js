@@ -13,7 +13,8 @@ import SignIn from './pages/SignIn';
 import AuthContextProvider from './context/AuthContext';
 import { SingleExtraPage } from './pages/singleExtraPage';
 import ForgetPassword from './pages/ForgetPassword';
-import Order from './pages/Order';
+// import Order from './pages/Order';
+import OrderReport from './pages/OrderReport';
 function App() {
   return (
       <body>
@@ -34,7 +35,7 @@ function App() {
             <Searchbar/>
             
               <Routes>
-                <Route exact path='/order' element ={<Order/>}/>
+                <Route exact path='/order' element ={ <OrderReport/>}/>
                 <Route exact path='/signin' element ={<SignIn/>}/>
                 <Route exact path='/reset_password' element ={<ForgetPassword/>}/>
                 <Route path="/" element={<Home/>}/>
@@ -43,7 +44,8 @@ function App() {
                 <Route path="product/:productId" element={<SinglePage/>}/>
                 <Route path="extra/:productId" element={<SingleExtraPage/>}/>
                 <Route path="/combo" element={<ComboPage/>}/>
-              </Routes>
+              </Routes> 
+             
             <Footer/>
           </Box>
           </AuthContextProvider>

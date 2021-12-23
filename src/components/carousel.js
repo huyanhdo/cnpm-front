@@ -3,7 +3,7 @@ import {React, useState} from "react";
 import { Carousel } from "react-bootstrap";
 import { Box, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 export const ComboCarousel = function(){
     const [index, setIndex] = useState(0);
     const ids = useSelector(state => state.combos.ids);
