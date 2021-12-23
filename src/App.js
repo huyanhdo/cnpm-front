@@ -7,13 +7,12 @@ import { SinglePage } from './pages/singlePage';
 import {Box} from '@mui/material';
 import { Searchbar } from './components/searchbar';
 import { Footer } from './components/footer';
-import {BrowserRouter , Routes, Route,Navigate} from 'react-router-dom';
+import {BrowserRouter , Routes, Route} from 'react-router-dom';
 import { ComboPage } from './pages/comboPage';
 import SignIn from './pages/SignIn';
 import AuthContextProvider from './context/AuthContext';
 import { SingleExtraPage } from './pages/singleExtraPage';
 import ForgetPassword from './pages/ForgetPassword';
-// import Order from './pages/Order';
 import OrderReport from './pages/OrderReport';
 function App() {
   return (
@@ -35,7 +34,7 @@ function App() {
             <Searchbar/>
             
               <Routes>
-                <Route exact path='/order' element ={ <OrderReport/>}/>
+                <Route exact path='/order_report' element ={ <OrderReport/>}/>
                 <Route exact path='/signin' element ={<SignIn/>}/>
                 <Route exact path='/reset_password' element ={<ForgetPassword/>}/>
                 <Route path="/" element={<Home/>}/>

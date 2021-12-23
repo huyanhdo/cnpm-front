@@ -59,7 +59,7 @@ export const CustomListItem = styled(ListItem)({
 const Admin=[
         {name:'Thống kê',id:'statistic'},
         {name:'Tạo menu',id:'create_menu'},
-        {name:'Đơn hàng',id:'check_order'}]
+        {name:'Đơn hàng',id:'order_report'}]
 
 
 export const MenuBar = ()=>{
@@ -167,7 +167,7 @@ export const MenuBar = ()=>{
                             <CustomListItem sx={{
                                 pl: 4
                             }}>
-                                <ListItemButton className='button' onClick = {()=>{navigate('/admin/' + item.id)}}>
+                                <ListItemButton className='button' onClick = {()=>{navigate( item.id)}}>
                                 <FiberManualRecordIcon className='icon'/>
                                 <Typography className='typo'>
                                     {item.name}
