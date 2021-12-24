@@ -58,7 +58,7 @@ export const SinglePizza = ()=>{
             }
             let newPizza = {}
             newPizza = Object.assign(newPizza, pizza)
-            newPizza.comment = [...newPizza.comment, newCmt]
+            newPizza.comment = [...comments, newCmt]
             newPizza.rating = (pizza.rating * comments.length + yourRate)/ (comments.length + 1)
             const result = await axios.put(
                     'https://pizzahust-d7124-default-rtdb.asia-southeast1.firebasedatabase.app/menu/menu_main_courses/' + productId + '/.json',
