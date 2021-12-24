@@ -1,6 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
 import pizzaReducer from "./pizzaSlice";
-import toppingReducer from "./toppingSlice";
 import cartReducer from "./cartSlice";
 import comboReducer from "./comboSlice";
 import dessertSlice from "./categories/dessertSlice";
@@ -21,7 +20,6 @@ const persistConfig = {
 }
 const rootReducer = combineReducers({
     pizzas: pizzaReducer,
-    toppings: toppingReducer,
     cart: cartReducer,
     cartExtras: cartExtraReducer,
     cartCombos: cartComboReducer,

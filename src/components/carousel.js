@@ -83,7 +83,9 @@ export const ComboCarousel = function(){
                     src={combos[id].image}
                     alt="combo"
                     style={{
-                        width: '75%',
+                        width: '200px',
+                        height: '200px',
+                        objectFit: 'cover',
                         //transform: 'translateY(10%)'
                         maxWidth: '250px',
                         borderRadius: '150px'
@@ -155,7 +157,9 @@ export const ComboCarousel = function(){
                     src={combos[id].image}
                     alt="combo"
                     style={{
-                        width: '75%',
+                        width: '200px',
+                        height: '200px',
+                        objectFit: 'cover',
                         borderRadius: '150px',
                         maxWidth: '250px',
                         //height: '300px'

@@ -339,10 +339,12 @@ export const ComboMenuItem = (props) =>{
             alt={combo.title}
             style={{
             borderRadius: '50%',
+            objectFit: 'cover',
             //boxShadow: '-10px 0px 30px rgba(0, 0, 0, 0.1)',
             alignSelf: 'center',
             //transform: 'translateX(5%)',
-            width: '75%',
+            width: '150px',
+            height: '150px'
             }}
             />
         </Box>
