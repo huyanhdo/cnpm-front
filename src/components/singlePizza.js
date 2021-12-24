@@ -22,7 +22,7 @@ export const SinglePizza = ()=>{
     const {productId} = useParams();
     const pizza = useSelector(state => state.pizzas.entities[productId]);
     const toppings = pizza.topping;
-    const comments = pizza.comment;
+    const comments = pizza.comment ? pizza.comment : [];
     const sizes = pizza.size;
     const soles = pizza.type;
     const [size, setSize] = useState(location.state? location.state.size: 0);
