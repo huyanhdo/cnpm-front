@@ -1,16 +1,16 @@
 import React from "react";
 import {Box, CircularProgress, Typography} from '@mui/material';
-import { SinglePizza } from "../components/singlePizza";
+import {SingleCombo} from "../components/singleCombo"
 import { useSelector } from "react-redux";
-export const SinglePage = ()=>{
-    const fetchingStatus = useSelector(state => state.pizzas.fetchingStatus)
+export const SingleComboPage = ()=>{
+    const fetchingStatus = useSelector(state => state.combos.fetchingStatus)
     return(
         <Box style={{
             width: '100%',
         }}>
         {
         fetchingStatus === 'SUCCESS'?
-            <SinglePizza/>:
+            <SingleCombo/>:
         fetchingStatus === 'LOADING' || fetchingStatus === 'INITIAL'?
         <Box sx= {{width: '100%', alignItems: 'center'}}>
             <Typography variant="h6"

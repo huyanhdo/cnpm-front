@@ -1,6 +1,6 @@
 import {Box} from '@mui/material';
 import { Cart } from '../components/cart';
-import { Categories } from '../components/categories';
+import { Categories, Newest } from '../components/categories';
 import { ImageDecorator } from '../components/decorator';
 import { TrendingList } from '../components/trending';
 import React from 'react';
@@ -14,8 +14,12 @@ export const Home = () =>{
                 <Box sx={{alignItems: 'stretch', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between',
                 margin: '0 20px'
                 }}>
-                <Categories/>
-                <Cart/>
+                    <Box sx={{width: {md: '70%', sm: '100%', xs : '100%'}}}>
+                    <Categories/>
+                    <Newest/>
+                    </Box>
+                
+                    <Cart/>
                 </Box>
                 <ImageDecorator/>
                 <Box sx={{marginTop: '50px', marginBottom: '150px', paddingRight: '20px', alignItems: 'stretch',

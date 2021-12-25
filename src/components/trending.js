@@ -1,10 +1,16 @@
 import AddCircleRounded from '@mui/icons-material/AddCircleRounded';
 import { Divider, IconButton, Stack, Typography, Box } from '@mui/material';
 import React, {useState} from 'react';
+import { useSelector } from 'react-redux';
+import {useNavigate} from 'react-router-dom'
 export const Trending = (props)=>{
+    const navigate = useNavigate();
+    const order = props.order;
+    const category = props.category;
     const [hov, setHov] = useState(false);
     const switchHov = ()=>{
         setHov(prev => !prev);
+        console.log(order);
     }
     return(
         <Box
@@ -20,7 +26,7 @@ export const Trending = (props)=>{
             borderRadius: '24px',
             p: 3,
             boxSizing: 'border-box',
-            marginRight: '2.5%',
+            marginRight: '5%',
             marginLeft: '2.5%'
         }}
         >
@@ -35,7 +41,7 @@ export const Trending = (props)=>{
                         color: hov? 'white':'#EA6A12',
                         textAlign: 'start'
                     }}
-                    >👑 Top of the {props.time}
+                    >👑 Top {category}s
             </Typography>
             <Typography variant="subtitle1"
                     sx={{
@@ -47,7 +53,7 @@ export const Trending = (props)=>{
                         textAlign: 'start',
                         marginBottom: '10px'
                     }}
-                    >{props.name}
+                    >{order.title}
             </Typography>
             <Typography variant="subtitle1"
                     sx={{
@@ -59,24 +65,12 @@ export const Trending = (props)=>{
                         textAlign: 'start',
                         marginBottom: '20px'
                     }}
-                    >{props.calories} calories                    
+                    >{order.order_number} orders                    
             </Typography>
             <Divider variant="light"  sx={{
                 width: '50%',
                 color: hov?'white': 'rgb(0,0,0,0.5)'
             }}/>
-            <Typography variant="subtitle1"
-                    sx={{
-                        fontFamily: 'Poppins',
-                        fontWeight: 400,
-                        fontSize: '13px',
-                        lineHeight: '22.75px',
-                        textAlign: 'start',
-                        color: hov? 'white': '#959895',
-                        marginBottom: '20px'
-                    }}
-                    >{props.persons} persons                    
-            </Typography>
             <Stack
             direction='row'
             spacing={1}
@@ -93,13 +87,16 @@ export const Trending = (props)=>{
                         color: hov? 'white': '#EA6A12',
                         textAlign: 'start'
                     }}
-                    >$ {props.price}
+                    >$ {order.price}
                 </Typography>
                 <IconButton
                 size="small"
                 sx={{
                 width: '24px',
                 height: '24px'
+                }}
+                onClick = {() =>{
+                    navigate('/'+category+'/'+props.id)
                 }}
                 >
                 <AddCircleRounded
@@ -112,31 +109,38 @@ export const Trending = (props)=>{
             </Stack>
             
             <img
-            src={props.image}
-            alt={props.name}
+            src={order.image_url}
+            alt={order.title}
             style={{
-            borderRadius: '50%',
+            borderRadius: '100px',
             boxShadow: '-10px 0px 30px rgba(0, 0, 0, 0.1)',
             alignSelf: 'center',
-            //transform: 'translateX(5%)',
-            width: '75%',
+            width: '160px',
+            height: '160px',
+            objectFit: 'cover'
             }}
             />
             
         </Box>
     )
 }
-const trendings = [
-    {image: './trend1.png', name: 'Italian Salad', time: 'week', calories: 100, persons: 4, price: 7.49},
-    {image: './trend2.png', name: 'Italian Salad', time: 'day', calories: 50, persons: 1, price: 7.49},
-    {image: './trend3.png', name: 'Italian Salad', time: 'month', calories: 90, persons: 3, price: 7.49},
-    {image: './trend4.png', name: 'Italian Salad', time: 'week', calories: 50, persons: 1, price: 7.49},
-    {image: './trend5.png', name: 'Italian Salad', time: 'day', calories: 70, persons: 2, price: 7.49},
-    {image: './trend6.png', name: 'Italian Salad', time: 'month', calories: 80, persons: 3, price: 7.49},
-    {image: './trend1.png', name: 'Italian Salad', time: 'week', calories: 100, persons: 4, price: 7.49},
-    {image: './trend2.png', name: 'Italian Salad', time: 'day', calories: 50, persons: 1, price: 7.49},
-]
+
 export const TrendingList = ()=>{
+    let categories = [
+        {category: 'pizza', selector: useSelector(state => state.pizzas)},
+        {category: 'vegetable', selector: useSelector(state => state.vegetables)},
+        {category: 'kid', selector: useSelector(state => state.kids)},
+        {category: 'dessert', selector: useSelector(state => state.desserts)},
+        {category: 'appetizer', selector: useSelector(state => state.appetizers)},
+        {category: 'drink', selector: useSelector(state => state.drinks)},
+    ]
+    categories.map((category) =>{
+        const products = category.selector;
+        const sortedIds = [...products.ids];
+        sortedIds.sort((id1, id2) => products.entities[id2].order_number - products.entities[id1].order_number)
+        category.mostOrder = products.entities[sortedIds[0]]
+        category.mostId = sortedIds[0]
+    })
     return(
         <Box
         sx={{
@@ -159,7 +163,7 @@ export const TrendingList = ()=>{
                         color: '#07143B',
                         textAlign: 'start'
                     }}
-                    >Trending Orders
+                    >Most Orders
         </Typography>
         </Box>
         <Box
@@ -169,10 +173,10 @@ export const TrendingList = ()=>{
         }}
         >
         {
-            trendings.map(trending=>{
+            categories.map(category=>{
                 return(
-                    <Trending image={trending.image} name ={trending.name} time={trending.time}
-                    calories={trending.calories} persons={trending.persons} price={trending.price}
+                    category.selector.fetchingStatus === 'SUCCESS' && <Trending order = {category.mostOrder} category = {category.category}
+                    id= {category.mostId}
                     />
                 )
             })

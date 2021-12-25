@@ -9,10 +9,12 @@ import { styled } from '@mui/styles';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
-import {useNavigate} from 'react-router-dom';
+//import {useNavigate} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 import { useAuth } from '../context/AuthContext';
 
+import YoutubeSearchedForRoundedIcon from '@mui/icons-material/YoutubeSearchedForRounded';
+import {useNavigate} from 'react-router';
 export const CustomIconButton = styled(IconButton)({
     width: 45,
     height: 45,
@@ -63,6 +65,9 @@ const Admin=[
         {name:'Đơn hàng',id:'order_report'}]
 
 
+const categories = [
+    'pizza', 'dessert', 'appetizer', 'vegetable', 'kid', 'drink'
+]
 export const MenuBar = ()=>{
     const navigate = useNavigate();
     const [expand, SetExpand] = useState(false);
@@ -196,15 +201,15 @@ export const MenuBar = ()=>{
                     
                         <List>
                         {
-                        categories.ids.map(id => {
+                        categories.map(category => {
                             return(
                                 <CustomListItem sx={{
                                     pl: 4
                                 }}>
-                                    <ListItemButton className='button' onClick = {()=>{navigate('/menu/' + id)}}>
+                                    <ListItemButton className='button' onClick = {()=>{navigate('/menu/' + category)}}>
                                     <FiberManualRecordIcon className='icon'/>
                                     <Typography className='typo'>
-                                        {categories.entities[id].name}
+                                        {category}
                                     </Typography>
                                     </ListItemButton>
                                 </CustomListItem>
@@ -225,10 +230,10 @@ export const MenuBar = ()=>{
                     </Collapse>
 {/*                 
                 <CustomListItem>
-                    <ListItemButton className='button' onClick={()=>{SetFocus('')}}>
-                    <ContactSupportRoundedIcon className='icon'/>
+                    <ListItemButton className='button' onClick = {()=>{navigate('/order')}}>
+                    <YoutubeSearchedForRoundedIcon className='icon'/>
                     <Typography className='typo'>
-                        Help
+                        Your Order
                     </Typography>
                     </ListItemButton>
                 </CustomListItem> */}
@@ -297,6 +302,9 @@ export const MenuBar = ()=>{
             {/* <CustomIconButton>
             <ContactSupportRoundedIcon className='icon'/>
             </CustomIconButton> */}
+            <CustomIconButton>
+            <YoutubeSearchedForRoundedIcon className='icon'/>
+            </CustomIconButton>
         </Stack>
     </AppBar>
     </Collapse>

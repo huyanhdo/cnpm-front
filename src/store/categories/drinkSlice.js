@@ -1,42 +1,41 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 const axios = require('axios');
-
-export const fetchAllPizzas = createAsyncThunk('pizzas/fetchAllPizzas', async () =>{
+const initialState = {
+    ids:[],
+    entities: {},
+    fetchingStatus: 'INITIAL'
+}
+export const fetchAllDrinks = createAsyncThunk('drinks/fetchAllDrinks', async ()=>{
     try{
-        const response = await axios.get('https://pizzahust-d7124-default-rtdb.asia-southeast1.firebasedatabase.app/menu/menu_main_courses.json');
+        const response = await axios.get('https://pizzahust-d7124-default-rtdb.asia-southeast1.firebasedatabase.app/menu/menu_drink.json');
         return response.data;
     }catch(err){
         console.error(err)
     }
 })
-const initialState = {
-    ids:[],
-    entities:{},
-    fetchingStatus: 'INITIAL'
-}
-const pizzaSlice = createSlice({
-    name: 'pizzas',
+const drinkSlice = createSlice({
+    name: 'drinks',
     initialState: initialState,
     reducers: {
-        updatePizza(state, action){
+        updateDrink(state, action){
             const id = action.payload.id;
             state.entities[id] = action.payload.item;
         }
     },
     extraReducers(builders){
         builders
-        .addCase(fetchAllPizzas.pending, (state,action)=>{
+        .addCase(fetchAllDrinks.pending, (state,action)=>{
             state.fetchingStatus = 'LOADING'
         })
-        .addCase(fetchAllPizzas.fulfilled, (state,action)=>{
+        .addCase(fetchAllDrinks.fulfilled, (state,action)=>{
             state.fetchingStatus = 'SUCCESS'
             state.ids = Object.keys(action.payload)
             state.entities = action.payload
         })
-        .addCase(fetchAllPizzas.rejected, (state,action)=>{
+        .addCase(fetchAllDrinks.rejected, (state,action)=>{
             state.fetchingStatus = 'FAILED'
         })
     }
 })
-export default pizzaSlice.reducer;
-export const {updatePizza} = pizzaSlice.actions;
+export default drinkSlice.reducer;
+export const {updateDrink} = drinkSlice.actions;

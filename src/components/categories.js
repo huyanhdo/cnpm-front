@@ -7,8 +7,6 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 export const Category = (props)=>{
     const navigate = useNavigate();
-    const image = props.image;
-    const name = props.name;
     const category = props.category;
     const [hov, setHov] = useState(false);
     const switchHov = ()=>{
@@ -28,12 +26,13 @@ export const Category = (props)=>{
             minWidth: '112px',
             minHeight: '236px',
             borderRadius: '24px',
-            m: {md: 0, sm: 1, xs: 1}
+            marginRight: {md: '20px', sm: '10px', xs: '10px'},
+            marginBottom: '10px'
         }}
         >
             <img
-            src={image}
-            alt={name}
+            src={category.image}
+            alt={category.name}
             style={{
             borderRadius: '50%',
             width: '64px',
@@ -49,7 +48,7 @@ export const Category = (props)=>{
                         color: hov? 'white': 'black',
                         textAlign: 'start'
                     }}
-                    >{name}
+                    >{category.name}
             </Typography>
             <Divider variant="middle" 
             sx={{
@@ -60,7 +59,7 @@ export const Category = (props)=>{
             />
             <IconButton
             onClick = {()=>{
-                navigate('/menu/' + category); 
+                navigate(category.menuLink); 
             }}
             sx={{
                 backgroundColor: hov? 'white': 'rgba(234, 106, 18, 0.7)',
@@ -122,7 +121,11 @@ export const PizzaCard = (props)=>{
     const navigate = useNavigate();
     const link = props.link;
     const image = props.image;
-    const name = props.name;
+    let name = props.name;
+    if(name.length > 20){
+        name = name.substring(0, 15);
+        name += '...';
+    }
     const price = props.price;
     const rate = props.rate;
     const [hov, setHov] = useState(false);
@@ -132,7 +135,8 @@ export const PizzaCard = (props)=>{
     return (
         <Box
         sx={{
-            marginTop: '100px'
+            marginTop: '100px',
+            alignSelf: 'flex-end'
         }}
         >
         <Box
@@ -146,8 +150,8 @@ export const PizzaCard = (props)=>{
             alignItems: 'start',
             backgroundColor: hov ?'rgba(234, 106, 18, 0.7)': 'rgba(255, 255, 255, 0.4)',
             boxShadow: '0 2px 5px rgba(0, 0, 0, 0.5)',
-            maxWidth: '200px',
-            maxHeight: '230px',
+            width: '200px',
+            height: '230px',
             borderRadius: '24px',
             p: 3,
             boxSizing: 'border-box',
@@ -161,8 +165,10 @@ export const PizzaCard = (props)=>{
             borderRadius: '50%',
             boxShadow: '0px 30px 30px rgba(234, 106, 18, 0.05)',
             alignSelf: 'center',
-            transform: 'translateY(-25%)',
-            width: '90%'
+            marginTop: '-1000px',
+            transform: 'translateY(-20px)',
+            width: '150px', height: '150px',
+            objectFit: 'cover'
             }}
             />
             <Typography variant="subtitle1"
@@ -184,13 +190,12 @@ export const PizzaCard = (props)=>{
             icon={<StarRoundedIcon/>}
             emptyIcon={<StarRoundedIcon/>}
             />
-            <Stack
-            direction='row'
-            spacing={11}
-            sx={{
-                marginTop: '20px'
-            }}
-            >
+            <Box sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                width: '100%',
+                marginTop: '20%'
+            }}>
                 <Typography variant="subtitle1"
                     sx={{
                         fontFamily: 'Poppins',
@@ -202,7 +207,7 @@ export const PizzaCard = (props)=>{
                     }}
                     >$ {price}
                 </Typography>
-               <IconButton
+                <IconButton
                 size="small"
                 sx={{
                 width: '24px',
@@ -215,17 +220,24 @@ export const PizzaCard = (props)=>{
                     }}
                 />
                 </IconButton> 
-            </Stack>
+            </Box>
         </Box>
         </Box>
     )
 }
 export const Categories = ()=>{
-    const categories = useSelector(state => state.categories);
-    const pizzas = useSelector(state => state.pizzas);
+    const categories = [
+        {name: 'Pizza', image: '/pizza1.png', menuLink : '/menu/pizza'},
+        {name: 'Vegetable', image: '/vegetable.png', menuLink : '/menu/vegetable'},
+        {name: 'Kid', image: '/sweet.png', menuLink : '/menu/kid'},
+        {name: 'Dessert', image: '/trend1.png', menuLink : '/menu/dessert'},
+        {name: 'Appetizer', image: '/trend2.png', menuLink : '/menu/appetizer'},
+        {name: 'Drink', image: '/trend3.png', menuLink : '/menu/drink'},
+    ]
+
     return(
     <Box sx = {{
-        width: {md: '70%', sm: '100%', xs : '100%'}
+        width: '100%'
     }}>
         <Typography variant="h6"
                     sx={{
@@ -235,24 +247,37 @@ export const Categories = ()=>{
                         lineHeight: '52px',
                         color: '#07143B',
                         textAlign: 'start', 
-                        m: 3
+                        m: 3,
+                        
                     }}
                     >Menu categories
         </Typography>
     <Box
     sx={{
         display: 'flex',
-        justifyContent: {md: 'space-evenly', sm: 'flex-start', xs: 'flex-start'},
         flexWrap: 'wrap',
+        paddingLeft: '5%'
     }}
     >
         {
-            categories.ids.map(id =>{
-                return <Category image={categories.entities[id].image} name={categories.entities[id].name} category={id}/>
+            categories.map(category =>{
+                return <Category category={category}/>
             })
         }
     </Box>
-    <Typography variant="h6"
+    
+    </Box>
+    )
+}
+export const Newest = () =>{
+    const pizzas = useSelector(state => state.pizzas);
+    let sortedIds = [...pizzas.ids];
+    sortedIds.sort((id1, id2)=> pizzas.entities[id2].rating - pizzas.entities[id1].rating)
+    return (
+        <Box sx = {{
+            width: '100%'
+        }}>
+            <Typography variant="h6"
                     sx={{
                         fontFamily: 'Playfair Display',
                         fontWeight: 700,
@@ -262,7 +287,7 @@ export const Categories = ()=>{
                         textAlign: 'start',
                         m:3
                     }}
-                    >Newest 
+                    >Best Rating Pizzas
         </Typography>
     <Box
     sx={{
@@ -272,13 +297,12 @@ export const Categories = ()=>{
     }}
     >
         {
-            pizzas.ids.map((id, index) => {
-                if(index < 4)
-                return <PizzaCard image={pizzas.entities[id].image} name={pizzas.entities[id].name} rate={pizzas.entities[id].rate} 
-                price={pizzas.entities[id].price[0]} link={`/product/${id}`}/>
+            sortedIds.map((id, index) => {
+                return (index < 4) && <PizzaCard image={pizzas.entities[id].image_url} name={pizzas.entities[id].title} rate={pizzas.entities[id].rating} 
+                price={pizzas.entities[id].price} link={`/pizza/${id}`}/>
             })
         }
     </Box>
-    </Box>
+        </Box>
     )
 }

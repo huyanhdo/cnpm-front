@@ -1,8 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { cartPizzas } from "./fakeData";
 const cartSlice = createSlice({
     name: 'cart',
-    initialState: cartPizzas,
+    initialState: {
+        ids: [],
+        entities: {},
+        nextId: 0
+    },
     reducers: {
         itemAdded(state, action){
             state.ids = [...state.ids, state.nextId];

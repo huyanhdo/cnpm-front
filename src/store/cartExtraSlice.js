@@ -1,29 +1,54 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { cartExtras } from "./fakeData";
 const cartExtraSlice = createSlice({
     name: 'cartExtras',
-    initialState: cartExtras,
+    initialState: {
+        'kid':{
+            ids: [],
+            entities: {}
+        },
+        'dessert':{
+            ids: [],
+            entities: {}
+        },
+        'appetizer':{
+            ids: [],
+            entities: {}
+        },
+        'drink':{
+            ids: [],
+            entities: {}
+        },
+        'vegetable':{
+            ids: [],
+            entities: {}
+        }
+    },
     reducers: {
         itemAdded(state, action){
             const extraId = action.payload.extraId;
-            const existingId = state.ids.find(id => id === extraId);
+            const category = action.payload.category;
+            const existingId = state[category].ids.find(id => id === extraId);
             if(existingId !== undefined){
-                state.entities[extraId].number += action.payload.number;
-                state.entities[extraId].total += action.payload.total;
+                state[category].entities[extraId].number += action.payload.number;
+                if(state[category].entities[extraId].number > 10) state[category].entities[extraId].number = 10;
+                state[category].entities[extraId].total += action.payload.total;
             }else{
-                state.ids.push(extraId);
-                state.entities[extraId] = {number: action.payload.number, total: action.payload.total}
+                state[category].ids.push(extraId);
+                state[category].entities[extraId] = action.payload
             }
         },
         itemRemoved(state, action){
-            const id = action.payload;
-            const index = state.ids.indexOf(id);
+            const id = action.payload.id;
+            const category = action.payload.category;
+            const index = state[category].ids.indexOf(id);
             if(index !== -1){
-                state.ids.splice(index, 1);
+                state[category].ids.splice(index, 1);
             }
         },itemUpdated(state, action){
-            const id = action.payload.id;
-            state.entities[id] = action.payload.data;
+            const extraId = action.payload.id;
+            const category = action.payload.category;
+            state[category].entities[extraId].number = action.payload.number;
+            state[category].entities[extraId].total = action.payload.total;
         }
     }
 })

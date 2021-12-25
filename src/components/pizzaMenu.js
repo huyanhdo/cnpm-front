@@ -1,11 +1,8 @@
 import React, { useState } from "react";
 import { PizzaCard } from "./categories";
-import {Box, Tab, Typography, styled, Pagination, Grow} from '@mui/material';
+import { Box, Typography, styled, Pagination, Grow, CircularProgress} from '@mui/material';
 import { useSelector } from "react-redux";
 import { useParams } from "react-router";
-export const CustomTab = styled(Tab)({
-    fontFamily: 'Poppins',
-})
 export const CustomPagination = styled(Pagination)({
     "& .MuiPaginationItem-root": {
         fontFamily: 'Poppins'
@@ -15,24 +12,46 @@ export const CustomPagination = styled(Pagination)({
     },
     '& .Mui-selected': {
         backgroundColor: 'rgb(234, 106, 18, 0.5)',
-
     }
 })
 export const PizzaMenu = ()=>{
+    const categories = {
+        'pizza':{
+            selector: useSelector(state => state.pizzas),
+            menuName: 'Pizzas',
+            singlePath: '/pizza/'
+        },
+        'dessert':{
+            selector: useSelector(state => state.desserts),
+            menuName: 'Desserts',
+            singlePath: '/dessert/'
+        },
+        'drink':{
+            selector: useSelector(state => state.drinks),
+            menuName: 'Drinks',
+            singlePath: '/drink/'
+        },
+        'vegetable':{
+            selector: useSelector(state => state.vegetables),
+            menuName: 'Vegetables',
+            singlePath: '/vegetable/'
+        },
+        'kid':{
+            selector: useSelector(state => state.kids),
+            menuName: 'Kids',
+            singlePath: '/kid/'
+        },
+        'appetizer':{
+            selector: useSelector(state => state.appetizers),
+            menuName: 'Appetizers',
+            singlePath: '/appetizer/'
+        }
+    }
     const {category} = useParams();
-    const products = useSelector(state => 
-        category == 0 ? 
-        state.pizzas.entities 
-        : state.extras.entities
-    );
-    const ids = useSelector(state => {
-        if(category == 0)
-        return state.pizzas.ids;
-        else return state.extras.ids.filter(id => {
-            return (state.extras.entities[id].category == category)
-        })
-    });
-    const max = 2;
+    const fetchingStatus = categories[category].selector.fetchingStatus
+    const products = categories[category].selector.entities
+    const ids = categories[category].selector.ids
+    const max = 5;
     const [page, setPage] = useState(1);
     const totalPage = Math.ceil(ids.length / max);
     const pageList = [];
@@ -49,8 +68,11 @@ export const PizzaMenu = ()=>{
                         textAlign: 'start',
                         m: 3
                     }}
-                    >Pizzas
+                    >{categories[category].menuName}
         </Typography>
+        {
+        fetchingStatus === 'SUCCESS'?
+        <Box>
         {
             pageList.map(p => {return(
             <Grow in={page===p} mountOnEnter unmountOnExit timeout={page===p ? 1000: 0}>
@@ -65,9 +87,9 @@ export const PizzaMenu = ()=>{
                 .map((id, index) =>{
                     return (index >= (page - 1)*max && index < page * max) ?
                         <Box sx={{marginLeft: '20px'}}>
-                            <PizzaCard image={products[id].image} name={products[id].name} 
-                            rate={products[id].rate} price={category == 0 ? products[id].price[0] : products[id].price}
-                            id = {id} link = {category==0 ? `/product/${id}` : `/extra/${id}` }
+                            <PizzaCard image={products[id].image_url} name={products[id].title} 
+                            rate={products[id].rating} price={products[id].price}
+                            id = {id} link = {categories[category].singlePath + id}
                             />
                         </Box>
                     : false
@@ -76,6 +98,39 @@ export const PizzaMenu = ()=>{
             </Box>
                 </Grow>   
             )})
+        }
+        </Box>
+        :
+        fetchingStatus === 'LOADING' || fetchingStatus === 'INITIAL'?
+        <Box sx= {{width: '100%', alignItems: 'center'}}>
+            <Typography variant="h6"
+                    sx={{
+                        fontFamily: 'Poppins',
+                        fontWeight: 700,
+                        fontSize: '30px',
+                        lineHeight: '52px',
+                        color: '#07143B',
+                        textAlign: 'start',
+                        m: 3
+                    }}
+                    >Please Wait
+            </Typography>
+            <CircularProgress/>
+        </Box>
+        :<Box sx= {{width: '100%', alignItems: 'center'}}>
+        <Typography variant="h6"
+                sx={{
+                    fontFamily: 'Poppins',
+                    fontWeight: 700,
+                    fontSize: '30px',
+                    lineHeight: '52px',
+                    color: '#07143B',
+                    textAlign: 'start',
+                    m: 3
+                }}
+                >Opps...Sorry, something went wrong
+        </Typography>
+        </Box>
         }
         <Box sx={{marginTop: '100px', alignItems: 'center', width: '100%', marginLeft: '40%'}}>
         <CustomPagination variant="outlined" shape="rounded" count={totalPage}

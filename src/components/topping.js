@@ -1,54 +1,34 @@
 import React, { useState } from "react";
-import {Box, Divider, IconButton, Stack, Typography} from "@mui/material";
+import {Box, IconButton, Typography} from "@mui/material";
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import RemoveRoundedIcon from '@mui/icons-material/RemoveRounded';
 export const ToppingCard = (props) =>{
     const name = props.name;
-    const image = props.image;
     const handleAdd = props.handleAdd;
     const price = props.price;
     const _id = props._id;
     const [added, setAdded] = useState(props.added);
     return (
-        <Box sx={{
-            display: 'flex',
-            alignItems: 'center',
-            maxHeight: '80px',
-            width: {md: '45%', sm: '95%', xs: '100%'},
-            m: 3,
-        }}>
-            <img
-            src={image}
-            alt={name}
-            style={{
-                borderRadius: '100px',
-                width: '100px',
-                height: '100px',
-                boxShadow: '5px 0px 20px rgba(0, 0, 0, 0.1)',
-                zIndex: 2,
-                transform: 'translateX(40px)',
-            }}
-            />
             <Box
             sx={{
                 display: 'flex',
                 borderRadius: '100px',
                 justifyContent: 'space-between',
-                width: '90%',
+                width: {md: '45%', sm: '80%', xs:'90%'},
                 alignItems: 'center',
-                padding: '5px 20px 5px 100px',
+                padding: '5px 10px 5px 20px',
                 boxSizing: 'border-box',
-                transform: 'translateX(-40px)',
                 zIndex: 1,
-                backgroundColor: added ? '#EA6A12':'rgba(252, 237, 227, 0.3)'
+                backgroundColor: added ? '#EA6A12':'rgba(252, 237, 227, 0.3)',
+                marginRight: {md: '30px', sm: '0', xs:'0'},
+                marginBottom: '20px'
             }}
             >
-                <Stack>
                 <Typography variant="subtitle1"
                     sx={{
                         fontFamily: 'Poppins',
                         fontWeight: 600,
-                        fontSize: '16px',
+                        fontSize: '18px',
                         lineHeight: '175%',
                         color: added?'white':'black',
                         textAlign: 'start',
@@ -56,8 +36,10 @@ export const ToppingCard = (props) =>{
                     }}
                     >{name}
                 </Typography>
-                <Divider sx={{width: '50%',
-                }}/>
+                <Box sx={{
+                    display: 'flex',
+                    alignItems:'center'
+                }}>
                 <Typography variant="subtitle1"
                     sx={{
                         fontFamily: 'Poppins',
@@ -65,11 +47,11 @@ export const ToppingCard = (props) =>{
                         fontSize: '16px',
                         lineHeight: '175%',
                         color: added? 'white': '#EA6A12',
-                        textAlign: 'start'
+                        textAlign: 'start',
+                        marginRight:'20px'
                     }}
                     >$ {price}
                 </Typography>
-                </Stack>
                 <IconButton
                 sx={{
                 width: '40px',
@@ -103,7 +85,7 @@ export const ToppingCard = (props) =>{
                 }
                 
                 </IconButton>
+                </Box>
             </Box>
-        </Box>
     )
 }

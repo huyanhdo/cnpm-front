@@ -1,19 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { cartCombos } from "./fakeData";
 const cartComboSlice = createSlice({
     name: 'cartCombos',
-    initialState: cartCombos,
+    initialState: {
+        ids: [],
+        entities: {},
+        nextId: 0
+    },
     reducers: {
         itemAdded(state, action){
-            const comboId = action.payload.comboId;
-            const existingId = state.ids.find(id => id === comboId);
-            if(existingId !== undefined){
-                state.entities[comboId].number += action.payload.number;
-                state.entities[comboId].total += action.payload.total;
-            }else{
-                state.ids.push(comboId);
-                state.entities[comboId] = {number: action.payload.number, total: action.payload.total}
-            }
+            state.ids = [...state.ids, state.nextId];
+            state.entities[state.nextId] = action.payload;
+            state.nextId += 1;
         },
         itemRemoved(state, action){
             const id = action.payload;
@@ -21,7 +18,8 @@ const cartComboSlice = createSlice({
             if(index !== -1){
                 state.ids.splice(index, 1);
             }
-        },itemUpdated(state, action){
+        },
+        itemUpdated(state, action){
             const id = action.payload.id;
             state.entities[id] = action.payload.data;
         }
