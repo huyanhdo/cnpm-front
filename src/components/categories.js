@@ -1,10 +1,11 @@
-import { Box, Divider , IconButton, Rating, Stack, Typography} from "@mui/material";
+import { Box, Divider , IconButton, Rating, Stack, Typography,} from "@mui/material";
 import React, { useState } from "react";
 import KeyboardArrowRightRoundedIcon from '@mui/icons-material/KeyboardArrowRightRounded';
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+
 export const Category = (props)=>{
     const navigate = useNavigate();
     const category = props.category;

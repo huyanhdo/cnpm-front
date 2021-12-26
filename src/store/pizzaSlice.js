@@ -21,6 +21,16 @@ const pizzaSlice = createSlice({
         updatePizza(state, action){
             const id = action.payload.id;
             state.entities[id] = action.payload.item;
+        },
+        add1Pizza(state, action){
+            const id = action.payload.id;
+            state.entities[id] = action.payload.itm;
+            state.ids.push(id);
+        },
+        delete1Pizza(state, action){
+            const deleteId = action.payload.id;
+            const newIds = state.ids.filter((id) => id !== deleteId );
+            state.ids = newIds;
         }
     },
     extraReducers(builders){
@@ -40,3 +50,4 @@ const pizzaSlice = createSlice({
 })
 export default pizzaSlice.reducer;
 export const {updatePizza} = pizzaSlice.actions;
+export const {add1Pizza, delete1Pizza} = pizzaSlice.actions;

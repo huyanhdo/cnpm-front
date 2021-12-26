@@ -13,7 +13,8 @@ import orderSlice from './orderSlice';
 import {combineReducers} from 'redux';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-//storage.removeItem('persist:root');
+import appetizerSlice from "./categories/appetizerSlice";
+storage.removeItem('persist:root');
 const persistConfig = {
     key: 'root',
     storage,

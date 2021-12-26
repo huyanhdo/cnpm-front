@@ -16,7 +16,16 @@ const comboSlice = createSlice({
         fetchingStatus: 'INITIAL'
     },
     reducers: {
-        
+        add1Combo(state, action){
+            const id = action.payload.id;
+            state.entities[id] = action.payload.itm;
+            state.ids.push(id);
+        },
+        delete1Combo(state, action){
+            const deleteId = action.payload.id;
+            const newIds = state.ids.filter((id) => id !== deleteId );
+            state.ids = newIds;
+        }
     },
     extraReducers(builders){
         builders
@@ -34,3 +43,4 @@ const comboSlice = createSlice({
     }
 })
 export default comboSlice.reducer;
+export const {add1Combo, delete1Combo} = comboSlice.actions;

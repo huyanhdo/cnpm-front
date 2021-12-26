@@ -14,6 +14,8 @@ export const CustomPagination = styled(Pagination)({
         backgroundColor: 'rgb(234, 106, 18, 0.5)',
     }
 })
+
+
 export const PizzaMenu = ()=>{
     const categories = {
         'pizza':{
@@ -140,3 +142,4 @@ export const PizzaMenu = ()=>{
         </Box>
     )
 }
+

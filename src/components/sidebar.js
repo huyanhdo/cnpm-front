@@ -4,7 +4,7 @@ import DashboardRoundedIcon from '@mui/icons-material/DashboardRounded';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
-import ContactSupportRoundedIcon from '@mui/icons-material/ContactSupportRounded';
+
 import { styled } from '@mui/styles';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -232,6 +232,18 @@ export const MenuBar = ()=>{
                 <CustomListItem>
                     <ListItemButton className='button' onClick = {()=>{navigate('/order')}}>
                     <YoutubeSearchedForRoundedIcon className='icon'/>
+                    <ListItemButton className='button' onClick={()=>{SetFocus(
+                        prev => {navigate('/productsManagement')}
+                    )}}>
+                    <AccountCircleRoundedIcon className='icon'/>
+                    <Typography className='typo'>
+                        Admin
+                    </Typography>
+                    </ListItemButton>
+                </CustomListItem>
+                <CustomListItem>
+                    <ListItemButton className='button' onClick={()=>{SetFocus('')}}>
+                    <ContactSupportRoundedIcon className='icon'/>
                     <Typography className='typo'>
                         Your Order
                     </Typography>

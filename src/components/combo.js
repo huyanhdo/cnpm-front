@@ -2,7 +2,6 @@ import { Stack, Typography, Box, IconButton, Divider , Collapse, Grow} from '@mu
 import React, { useState } from 'react';
 import AddCircleRounded from '@mui/icons-material/AddCircleRounded';
 import DeleteIcon from '@mui/icons-material/Delete';
-import {CustomTab} from './pizzaMenu';
 import { useSelector, useDispatch } from 'react-redux';
 //import { useNavigate } from 'react-router-dom';
 import { itemAdded } from '../store/cartComboSlice';

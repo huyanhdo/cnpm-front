@@ -15,6 +15,7 @@ import AuthContextProvider from './context/AuthContext';
 import { SingleExtraPage } from './pages/singleExtraPage';
 import ForgetPassword from './pages/ForgetPassword';
 import OrderReport from './pages/OrderReport';
+import {ManagePage} from './pages/managePage';
 import { fetchAllDesserts } from "./store/categories/dessertSlice";
 import { fetchAllDrinks } from "./store/categories/drinkSlice";
 import { fetchAllVegetables } from "./store/categories/vegetableSlice";
@@ -36,6 +37,7 @@ function App() {
     dispatch(fetchAllKids())
     dispatch(fetchAllAppetizers())
     dispatch(fetchAllCombos())
+
   })
   return (
       <body>
@@ -68,6 +70,8 @@ function App() {
                 <Route path="/statistic" element={<Dashboard/>}/>
                 <Route path="/combo/:comboId" element = {<SingleComboPage/>}/>
                 <Route path="/order" element={<OrderPage/>}/>
+                <Route path="/create_menu" element={<ManagePage/>}/>
+                
               </Routes>
             <Footer/>
           </Box>
