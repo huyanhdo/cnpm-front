@@ -4,15 +4,14 @@ import DashboardRoundedIcon from '@mui/icons-material/DashboardRounded';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
-
-import { styled } from '@mui/styles';
+import {styled} from '@mui/styles';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 //import {useNavigate} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 import { useAuth } from '../context/AuthContext';
-
+import ContactSupportRoundedIcon from '@mui/icons-material/ContactSupportRounded'
 import YoutubeSearchedForRoundedIcon from '@mui/icons-material/YoutubeSearchedForRounded';
 import {useNavigate} from 'react-router';
 export const CustomIconButton = styled(IconButton)({
@@ -73,7 +72,7 @@ export const MenuBar = ()=>{
     const [expand, SetExpand] = useState(false);
     const [focus, SetFocus] = useState('');
     const {currentUser} = useAuth();
-    const categories = useSelector(state => state.categories);
+   // const categories = useSelector(state => state.categories);
     const switchExpand = ()=>{
         SetExpand(prev => !prev);
     }
@@ -240,15 +239,15 @@ export const MenuBar = ()=>{
                         Admin
                     </Typography>
                     </ListItemButton>
-                </CustomListItem>
+                    </CustomListItem>*/}
                 <CustomListItem>
-                    <ListItemButton className='button' onClick={()=>{SetFocus('')}}>
+                    <ListItemButton className='button' onClick={()=>{navigate('/order')}}>
                     <ContactSupportRoundedIcon className='icon'/>
                     <Typography className='typo'>
                         Your Order
                     </Typography>
                     </ListItemButton>
-                </CustomListItem> */}
+                </CustomListItem> 
             </List>
         </AppBar>    
     </Collapse>

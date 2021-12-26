@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {Box, Divider, IconButton, Stack, Typography, Rating, Button, List, ListItem, Modal, TextField, Checkbox, Fade, Snackbar} from '@mui/material';
+import {Box, Divider, IconButton, Stack, Typography, Rating, Button, List, ListItem, Modal, TextField,  Fade, Snackbar} from '@mui/material';
 import KeyboardArrowLeftRoundedIcon from '@mui/icons-material/KeyboardArrowLeftRounded';
 import KeyboardArrowRightRoundedIcon from '@mui/icons-material/KeyboardArrowRightRounded';
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
@@ -12,7 +12,7 @@ import { useDispatch } from "react-redux";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { itemAdded, itemUpdated } from "../store/cartSlice";
 import { CustomPagination } from "./pizzaMenu";
-import { updatePizza } from "../store/pizzaSlice";
+import { updatePizza } from "../store/categories/pizzaSlice";
 const axios = require('axios')
 const round = (num)=> Math.round(num * 100) / 100;
 export const SinglePizza = ()=>{

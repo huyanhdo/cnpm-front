@@ -8,8 +8,8 @@ import StarRoundedIcon from '@mui/icons-material/StarRounded';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DateTimePicker from '@mui/lab/DateTimePicker';
-import { useDispatch, useSelector } from "react-redux";
-import { delete1Pizza } from "../store/pizzaSlice";
+import { useDispatch} from "react-redux";
+import { delete1Pizza } from "../store/categories/pizzaSlice";
 import { delete1Appetizer } from "../store/categories/appetizerSlice";
 import { delete1Dessert } from "../store/categories/dessertSlice";
 import { delete1Drink } from "../store/categories/drinkSlice";
@@ -123,7 +123,7 @@ export const PizzaManageCard = (props)=>{
         }
         try {
             const resp = await axios.put(url, newItem);
-            if (resp.statusText == "OK"){
+            if (resp.statusText === "OK"){
 
             }else{
                 alert("Sua khong thanh cong !");
@@ -139,7 +139,7 @@ export const PizzaManageCard = (props)=>{
         try {
             const resp = await axios.delete(url);
             console.log(resp);
-            if (resp.statusText == "OK"){
+            if (resp.statusText === "OK"){
                 // setInterval(window.location.reload(), 1000);
                 dispatch(categories[category].delete({id: id}));
             }
@@ -156,7 +156,7 @@ export const PizzaManageCard = (props)=>{
         >
         <Box
         onMouseEnter={switchHov}
-        onMouseLeave = {() => {if(hov == true) switchHov()}}
+        onMouseLeave = {() => {if(hov === true) switchHov()}}
         sx={{
             display: 'flex',
             flexDirection: 'column',
@@ -181,7 +181,7 @@ export const PizzaManageCard = (props)=>{
             alignSelf: 'center',
             transform: 'translateY(-30px)',
             objectFit: 'cover',
-            boxShadow: '1px -1px 5px rgba(0,0,0, 0.5)',
+            // boxShadow: '1px -1px 5px rgba(0,0,0, 0.5)',
             width: '150px', height: '150px',
             marginTop: '-1000px',
             }}
@@ -290,7 +290,7 @@ export const PizzaManageCard = (props)=>{
                 </Button>
             </Stack>
         </Box>
-        <Modal open={editPizza} onClose = {() => {if(hov == true) switchHov() ;setEditPizza(false)}}>
+        <Modal open={editPizza} onClose = {() => {if(hov === true) switchHov() ;setEditPizza(false)}}>
             <Fade in={editPizza} timeout={500}>
             <Stack
             spacing = {2}
@@ -524,7 +524,7 @@ export const PizzaManageCard = (props)=>{
             </Stack>
             </Fade>
         </Modal>
-        <Modal open={deletePizza} onClose = {() => {if(hov == true ) switchHov() ;setDeletePizza(false)}}>
+        <Modal open={deletePizza} onClose = {() => {if(hov === true ) switchHov() ;setDeletePizza(false)}}>
             <Fade in={deletePizza} timeout={500}>
             <Stack
             spacing = {2}
@@ -626,8 +626,8 @@ export const ComboManageCard = (props) =>{
     let keys = Object.keys(combo);
     let a =[];
     for (const k of keys ) {
-        if(k != "title" && k != "subtitle" && k != "banner" && k != "image" && k != "description" && k != "start"
-        && k != "end" && k != "persons" && k != "pizza" && k != "off"){
+        if(k !== "title" && k !== "subtitle" && k !== "banner" && k !== "image" && k !== "description" && k !== "start"
+        && k !== "end" && k !== "persons" && k !== "pizza" && k !== "off"){
             a.push({'name' : k, 'number' : combo[k],})
         }
     }
@@ -674,7 +674,7 @@ export const ComboManageCard = (props) =>{
 
         try {
             const resp = await axios.put(url, newItem);
-            if (resp.statusText != "OK"){
+            if (resp.statusText !== "OK"){
                 alert("Sua khong thanh cong !");
             }
         } catch (err) {
@@ -686,7 +686,7 @@ export const ComboManageCard = (props) =>{
     const handleDeleteCombo = async () => { 
         try {
             const resp = await axios.delete(url);
-            if (resp.statusText == "OK"){
+            if (resp.statusText === "OK"){
                 dispatch(delete1Combo({id: comboId}));
                 // setInterval(window.location.reload(), 1000);
             }
@@ -704,7 +704,7 @@ export const ComboManageCard = (props) =>{
         >
         <Box
         onMouseEnter={switchHov}
-        onMouseLeave = {() => {if(hov == true) switchHov()}}
+        onMouseLeave = {() => {if(hov === true) switchHov()}}
         sx={{
             display: 'flex',
             flexDirection:'column',
@@ -879,7 +879,7 @@ export const ComboManageCard = (props) =>{
             </Stack>
             </Box>
             
-            <Modal open={editCombo} onClose = {() => {if(hov == true) switchHov(); setEditCombo(false)}}>
+            <Modal open={editCombo} onClose = {() => {if(hov === true) switchHov(); setEditCombo(false)}}>
             <Fade in={editCombo} timeout={500}>
             <Stack
             spacing = {2}
@@ -1113,7 +1113,7 @@ export const ComboManageCard = (props) =>{
             </Fade>
             </Modal>
 
-            <Modal open={deleteCombo} onClose = {() => {if(hov == true) switchHov() ;setDeleteCombo(false)}}>
+            <Modal open={deleteCombo} onClose = {() => {if(hov === true) switchHov() ;setDeleteCombo(false)}}>
             <Fade in={deleteCombo} timeout={500}>
             <Stack
             spacing = {2}

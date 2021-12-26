@@ -8,7 +8,7 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DateTimePicker from '@mui/lab/DateTimePicker';
 import { add1Combo } from "../store/comboSlice";
-import { add1Pizza } from "../store/pizzaSlice";
+import { add1Pizza } from "../store/categories/pizzaSlice";
 import { add1Appetizer } from "../store/categories/appetizerSlice";
 import { add1Dessert } from "../store/categories/dessertSlice";
 import { add1Drink } from "../store/categories/drinkSlice";
@@ -111,7 +111,7 @@ export const ComboManage = ()=> {
 
         try {
             const resp = await axios.post(url, newItem);
-            if (resp.statusText == "OK"){
+            if (resp.statusText === "OK"){
                 dispatch(add1Combo({id: resp.data.name, itm: newItem}));
             }
         } catch (err) {
@@ -502,7 +502,7 @@ export const PizzaManage = (props)=> {
     //handle the dynamic Sizes in Modal
     const handleSizeChange = (index, e) => {
         const Sizes = [...newSizes];
-        Sizes[index][e.target.id] =e.target.id =='type_detail' ? e.target.value : parseInt(e.target.value);
+        Sizes[index][e.target.id] =e.target.id ==='type_detail' ? e.target.value : parseInt(e.target.value);
         setNewSizes(Sizes);
     }
 
@@ -520,7 +520,7 @@ export const PizzaManage = (props)=> {
     //handle the dynamic Toppings in Modal
     const handleToppingChange = (index, e) => {
         const Toppings = [...newToppings];
-        Toppings[index][e.target.id] = e.target.id == 'topping_name' ? e.target.value : parseInt(e.target.value);
+        Toppings[index][e.target.id] = e.target.id === 'topping_name' ? e.target.value : parseInt(e.target.value);
         setNewToppings(Toppings);
     }
 
@@ -681,7 +681,7 @@ export const PizzaManage = (props)=> {
                 />
                 </Stack>
 
-                {category =='pizza' &&
+                {category ==='pizza' &&
                     <Box 
                     sx={{
                         display: 'flex',
@@ -765,7 +765,7 @@ export const PizzaManage = (props)=> {
                 }}
                 />
                 
-                { category =='pizza' &&
+                { category ==='pizza' &&
                     <Box 
                     sx={{
                         display: 'flex',

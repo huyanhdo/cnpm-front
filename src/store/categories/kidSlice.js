@@ -20,6 +20,16 @@ const kidSlice = createSlice({
         updateKid(state, action){
             const id = action.payload.id;
             state.entities[id] = action.payload.item;
+        },
+        add1Kid(state, action){
+            const id = action.payload.id;
+            state.entities[id] = action.payload.itm;
+            state.ids.push(id);
+        },
+        delete1Kid(state, action){
+            const deleteId = action.payload.id;
+            const newIds = state.ids.filter((id) => id !== deleteId );
+            state.ids = newIds;
         }
     },
     extraReducers(builders){
@@ -38,4 +48,4 @@ const kidSlice = createSlice({
     }
 })
 export default kidSlice.reducer;
-export const {updateKid} = kidSlice.actions;
+export const {updateKid,add1Kid,delete1Kid} = kidSlice.actions;

@@ -20,7 +20,18 @@ const drinkSlice = createSlice({
         updateDrink(state, action){
             const id = action.payload.id;
             state.entities[id] = action.payload.item;
+        },
+        add1Drink(state, action){
+            const id = action.payload.id;
+            state.entities[id] = action.payload.itm;
+            state.ids.push(id);
+        },
+        delete1Drink(state, action){
+            const deleteId = action.payload.id;
+            const newIds = state.ids.filter((id) => id !== deleteId );
+            state.ids = newIds;
         }
+
     },
     extraReducers(builders){
         builders
@@ -38,4 +49,4 @@ const drinkSlice = createSlice({
     }
 })
 export default drinkSlice.reducer;
-export const {updateDrink} = drinkSlice.actions;
+export const {updateDrink,add1Drink,delete1Drink} = drinkSlice.actions;

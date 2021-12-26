@@ -1,32 +1,33 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 const axios = require('axios');
-const initialState = {
-    ids:[],
-    entities: {},
-    fetchingStatus: 'INITIAL'
-}
-export const fetchAllVegetables = createAsyncThunk('vegetables/fetchAllVegetables', async ()=>{
+
+export const fetchAllPizzas = createAsyncThunk('pizzas/fetchAllPizzas', async () =>{
     try{
-        const response = await axios.get('https://pizzahust-d7124-default-rtdb.asia-southeast1.firebasedatabase.app/menu/menu_vegetarian.json');
+        const response = await axios.get('https://pizzahust-d7124-default-rtdb.asia-southeast1.firebasedatabase.app/menu/menu_main_courses.json');
         return response.data;
     }catch(err){
         console.error(err)
     }
 })
-const vegetableSlice = createSlice({
-    name: 'vegetables',
+const initialState = {
+    ids:[],
+    entities:{},
+    fetchingStatus: 'INITIAL'
+}
+const pizzaSlice = createSlice({
+    name: 'pizzas',
     initialState: initialState,
     reducers: {
-        updateVegetable(state, action){
+        updatePizza(state, action){
             const id = action.payload.id;
-            state.entities[id] = action.payload.newItem;
+            state.entities[id] = action.payload.item;
         },
-        add1Vegetable(state, action){
+        add1Pizza(state, action){
             const id = action.payload.id;
             state.entities[id] = action.payload.itm;
             state.ids.push(id);
         },
-        delete1Vegetable(state, action){
+        delete1Pizza(state, action){
             const deleteId = action.payload.id;
             const newIds = state.ids.filter((id) => id !== deleteId );
             state.ids = newIds;
@@ -34,18 +35,19 @@ const vegetableSlice = createSlice({
     },
     extraReducers(builders){
         builders
-        .addCase(fetchAllVegetables.pending, (state,action)=>{
+        .addCase(fetchAllPizzas.pending, (state,action)=>{
             state.fetchingStatus = 'LOADING'
         })
-        .addCase(fetchAllVegetables.fulfilled, (state,action)=>{
+        .addCase(fetchAllPizzas.fulfilled, (state,action)=>{
             state.fetchingStatus = 'SUCCESS'
             state.ids = Object.keys(action.payload)
             state.entities = action.payload
         })
-        .addCase(fetchAllVegetables.rejected, (state,action)=>{
+        .addCase(fetchAllPizzas.rejected, (state,action)=>{
             state.fetchingStatus = 'FAILED'
         })
     }
 })
-export default vegetableSlice.reducer;
-export const {updateVegetable,add1Vegetable,delete1Vegetable} = vegetableSlice.actions;
+export default pizzaSlice.reducer;
+export const {updatePizza,add1Pizza, delete1Pizza} = pizzaSlice.actions;
+

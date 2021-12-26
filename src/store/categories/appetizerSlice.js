@@ -20,6 +20,16 @@ const appetizerSlice = createSlice({
         updateAppetizer(state, action){
             const id = action.payload.id;
             state.entities[id] = action.payload.item;
+        },
+        add1Appetizer(state, action){
+            const id = action.payload.id;
+            state.entities[id] = action.payload.itm;
+            state.ids.push(id);
+        },
+        delete1Appetizer(state, action){
+            const deleteId = action.payload.id;
+            const newIds = state.ids.filter((id) => id !== deleteId );
+            state.ids = newIds;
         }
     },
     extraReducers(builders){
@@ -38,4 +48,4 @@ const appetizerSlice = createSlice({
     }
 })
 export default appetizerSlice.reducer;
-export const {updateAppetizer} = appetizerSlice.actions;
+export const {updateAppetizer,delete1Appetizer,add1Appetizer} = appetizerSlice.actions;

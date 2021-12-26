@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import pizzaReducer from "./pizzaSlice";
+import pizzaReducer from "./categories/pizzaSlice.js";
 import cartReducer from "./cartSlice";
 import comboReducer from "./comboSlice";
 import dessertSlice from "./categories/dessertSlice";
@@ -13,7 +13,7 @@ import orderSlice from './orderSlice';
 import {combineReducers} from 'redux';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import appetizerSlice from "./categories/appetizerSlice";
+import appetizerReducer from "./categories/appetizerSlice";
 storage.removeItem('persist:root');
 const persistConfig = {
     key: 'root',

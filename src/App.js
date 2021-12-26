@@ -20,7 +20,7 @@ import { fetchAllDesserts } from "./store/categories/dessertSlice";
 import { fetchAllDrinks } from "./store/categories/drinkSlice";
 import { fetchAllVegetables } from "./store/categories/vegetableSlice";
 import { fetchAllKids } from "./store/categories/kidSlice";
-import { fetchAllPizzas} from "./store/pizzaSlice";
+import { fetchAllPizzas} from "./store/categories/pizzaSlice";
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchAllAppetizers } from './store/categories/appetizerSlice';
@@ -73,7 +73,7 @@ function App() {
                 <Route path="/create_menu" element={<ManagePage/>}/>
                 
               </Routes>
-            <Footer/>
+            {/* <Footer/> */}
           </Box>
           </AuthContextProvider>
           </BrowserRouter>

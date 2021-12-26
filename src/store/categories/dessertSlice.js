@@ -20,6 +20,16 @@ const dessertSlice = createSlice({
         updateDessert(state, action){
             const id = action.payload.id;
             state.entities[id] = action.payload.item;
+        },
+        add1Dessert(state, action){
+            const id = action.payload.id;
+            state.entities[id] = action.payload.itm;
+            state.ids.push(id);
+        },
+        delete1Dessert(state, action){
+            const deleteId = action.payload.id;
+            const newIds = state.ids.filter((id) => id !== deleteId );
+            state.ids = newIds;
         }
     },
     extraReducers(builders){
@@ -38,4 +48,4 @@ const dessertSlice = createSlice({
     }
 })
 export default dessertSlice.reducer;
-export const {updateDessert} = dessertSlice.actions;
+export const {updateDessert,add1Dessert,delete1Dessert} = dessertSlice.actions;
