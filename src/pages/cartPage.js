@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Box, Button, Typography, Modal, TextField, Fade, Stack, Select, MenuItem, Snackbar} from '@mui/material';
+import {Box, Button, Typography, Modal, TextField, Fade, Stack, Select, MenuItem, Snackbar, Checkbox, FormControlLabel} from '@mui/material';
 import { Cart } from "../components/mainCart";
 import { useSelector, useDispatch } from "react-redux";
 import {itemRemoved} from '../store/cartSlice';
@@ -84,13 +84,16 @@ export const CartPage = ()=>{
     const [phone, setPhone] = useState('')
     const [province, setProvince] = useState('Ha Noi')
     const [address, setAddress] = useState('')
+    const [inPlace, setInPlace] = useState(false);
     const [posted, setPosted] = useState(false)
     const [message, setMessage] = useState('')
     const pros = ['Ha Noi', 'Ha Nam', 'Ninh Binh', 'Nam Dinh', 'Hai Duong', 'Hung Yen']
     const validForm = () =>{
         if(customer.length ===0) return false;
+        if(!inPlace){
         if(address.length ===0) return false;
         if(province.length ===0) return false;
+        }
         return /[0-9]{10}/.test(phone)
     }
     const pizzas = useSelector(state => state.pizzas.entities)
@@ -127,8 +130,8 @@ export const CartPage = ()=>{
                 const comboId = cartCombo.comboId
                 const combo = combos[comboId]
                 const comboNumber = cartCombo.number;
-                const pizzaNumber = combo.pizza
-                
+                let pizzaNumber = combo.pizza
+                if(combo.free && combo.free.pizza) pizzaNumber += combo.free.pizza;
                 if(pizzaNumber && pizzaNumber > 0){
                     const pizzaSlot = cartCombo.pizzaSlot
                     for(let i = 0;i< pizzaNumber;i++){
@@ -146,19 +149,19 @@ export const CartPage = ()=>{
                 }
                 const categories = {
                     'drink': {
-                        comNumber: combo.drink, slot: cartCombo.drinkSlot
+                        comNumber: combo.drink ? combo.drink : 0 + combo.free && combo.free.drink ? combo.free.drink : 0, slot: cartCombo.drinkSlot
                     },
                     'kid': {
-                        comNumber: combo.kid, slot: cartCombo.kidSlot
+                        comNumber: combo.kid ? combo.kid : 0 + combo.free && combo.free.kid ? combo.free.kid : 0, slot: cartCombo.kidSlot
                     },
                     'appetizer': {
-                        comNumber: combo.appetizer, slot: cartCombo.appetizerSlot
+                        comNumber: combo.appetizer ? combo.appetizer : 0 + combo.free && combo.free.appetizer ? combo.free.appetizer : 0, slot: cartCombo.appetizerSlot
                     },
                     'dessert': {
-                        comNumber: combo.dessert, slot: cartCombo.dessertSlot
+                        comNumber: combo.dessert ? combo.dessert : 0 + combo.free && combo.free.dessert ? combo.free.dessert : 0, slot: cartCombo.dessertSlot
                     },
                     'vegetable': {
-                        comNumber: combo.vegetable, slot: cartCombo.vegetableSlot
+                        comNumber: combo.vegetable ? combo.vegetable : 0 + combo.free && combo.free.vegetable ? combo.free.vegetable : 0, slot: cartCombo.vegetableSlot
                     },
                 }
                 Object.keys(categories).map(category =>{
@@ -193,7 +196,7 @@ export const CartPage = ()=>{
             })
         })
         detail['pizza'] = orderedPizzas;
-        const fullAddress = address + '-' + province
+        const fullAddress = inPlace ? "Đặt tại quán" :address + ',' + province
         const order = {
             "customer": customer,
             "phone": phone,
@@ -250,7 +253,7 @@ export const CartPage = ()=>{
                         color: '#07143B',
                         textAlign: 'start'
                     }}
-                    >Total: $ {totalValue}
+                    >Total: {totalValue}đ
                     </Typography>
                     <Button variant="contained" 
                     disabled = {totalValue < 0.01}
@@ -303,7 +306,7 @@ export const CartPage = ()=>{
                 <TextField
                 required
                 id="name-field"
-                label="Name"
+                label="Tên"
                 value={customer}
                 onChange={(e) =>{
                     setCustomer(e.target.value)
@@ -317,7 +320,7 @@ export const CartPage = ()=>{
                 <TextField
                 required
                 id="name-field"
-                label="Phone Number"
+                label="Số điện thoại"
                 value = {phone}
                 onChange={(e) =>{
                     setPhone(e.target.value)
@@ -329,6 +332,21 @@ export const CartPage = ()=>{
                 inputProps={{style: {fontFamily: 'Poppins'}}} // font size of input text
                 InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
                 />
+                <FormControlLabel
+                label="Đặt tại quán"
+                control = {
+                    <Checkbox
+                        color="warning"
+                        checked={inPlace}
+                        onChange={e => setInPlace(prev => !prev)}
+                    />
+                }
+                />
+                
+                
+                
+                
+                { !inPlace &&
                 <Select
                 label="Province"
                 value={province}
@@ -353,10 +371,12 @@ export const CartPage = ()=>{
                         )    
                     }
                 </Select>
+                }
+                {!inPlace &&
                 <TextField
                 required
                 id="name-field"
-                label="Address"
+                label="Địa chỉ chi tiết"
                 multiline
                 value={address}
                 onChange={(e) =>{
@@ -367,6 +387,8 @@ export const CartPage = ()=>{
                 inputProps={{style: {fontFamily: 'Poppins'}}} // font size of input text
                 InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
                 />
+                }
+                
                 <Typography variant="h6"
                     sx={{
                         fontFamily: 'Poppins',
@@ -376,7 +398,7 @@ export const CartPage = ()=>{
                         color: '#07143B',
                         textAlign: 'start',
                     }}
-                    >Shipping Fee: {province ==='Ha Noi'? 0 : 30000}
+                    >Phí ship: {province ==='Ha Noi'? 0 : 30000}
                 </Typography>
                 <Typography variant="h6"
                     sx={{
@@ -387,7 +409,7 @@ export const CartPage = ()=>{
                         color: '#07143B',
                         textAlign: 'start',
                     }}
-                    >Total Pay: {totalValue + (province ==='Ha Noi'? 0 : 30000)}
+                    >Tổng đơn: {totalValue + (province ==='Ha Noi'? 0 : 30000)}
                 </Typography>
                 <Button variant="contained" 
                     disabled={!validForm()}

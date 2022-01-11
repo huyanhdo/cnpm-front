@@ -40,6 +40,11 @@ export const OrderPage = () =>{
                 }}
                 >Orders List
             </Typography>
+            <Box sx={{
+                width: '100%',
+                overflow: "auto",
+                maxHeight: '1000px'
+            }}>
             {
                 orders.ids.map((id,index) =>
                     <Box
@@ -63,6 +68,7 @@ export const OrderPage = () =>{
                     </Box>
                 )
             }
+            </Box>
             </Box>
         </Box>
     )

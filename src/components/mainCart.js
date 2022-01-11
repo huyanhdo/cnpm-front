@@ -3,7 +3,6 @@ import {Box, Divider, IconButton, Stack, Typography, Card, List, ListItem, Chip,
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useSelector} from "react-redux";
-import { ComboCard } from "./combo";
 import { useNavigate } from "react-router";
 import AddRounded from "@mui/icons-material/AddRounded";
 import { ExpandLess, ExpandMore, RemoveRounded } from "@mui/icons-material";
@@ -85,7 +84,7 @@ export const PizzaCartItem = (props)=>{
                         textAlign: 'start',
                         display: {md: 'block', sm: 'none', xs: 'none'}
                     }}
-                    >Total: $ {cartInfo.total}
+                    >Total:  {cartInfo.total}đ
                     </Typography>
                         <IconButton
                         onClick={() =>{
@@ -187,7 +186,7 @@ export const PizzaCartItem = (props)=>{
                         textAlign: 'start',
                         display: {md: 'none', sm: 'block', xs: 'block'}
                     }}
-                    >Total: $ {cartInfo.total}
+                    >Total: {cartInfo.total}đ
                     </Typography>
                 <Divider sx={{width: '50%'}}/>
                 <Box
@@ -292,7 +291,7 @@ export const ExtraCartItem = (props)=>{
                         textAlign: 'start',
                         display: {md: 'block', sm: 'none', xs: 'none'}
                     }}
-                    >Total: $ {round(num * price)}
+                    >Total:  {round(num * price)}đ
                     </Typography>
                         <IconButton
                         sx={{
@@ -413,7 +412,7 @@ export const ExtraCartItem = (props)=>{
                         textAlign: 'start',
                         display: {md: 'none', sm: 'block', xs: 'block'}
                     }}
-                    >Total: $ {round(price * num)}
+                    >Total: {round(price * num)}đ
                     </Typography>
             </Stack>
         </Box>
@@ -467,23 +466,31 @@ export const ComboCartItem = (props)=>{
     const [expand, setExpand] = useState(false);
     const categories = {
         'pizza':{
-            number: combo.pizza, slot: cartInfo.pizzaSlot, selector: useSelector(state => state.pizzas.entities)
+            number: combo.pizza ? combo.pizza : 0, slot: cartInfo.pizzaSlot, selector: useSelector(state => state.pizzas.entities)
         },
         'kid':{
-            number: combo.kid, slot: cartInfo.kidSlot, selector: useSelector(state => state.kids.entities)
+            number: combo.kid ? combo.kid : 0, slot: cartInfo.kidSlot, selector: useSelector(state => state.kids.entities)
         },
         'vegetable':{
-            number: combo.vegetable, slot: cartInfo.vegetableSlot, selector: useSelector(state => state.vegetables.entities)
+            number: combo.vegetable ? combo.vegetable : 0, slot: cartInfo.vegetableSlot, selector: useSelector(state => state.vegetables.entities)
         },
         'appetizer':{
-            number: combo.appetizer, slot: cartInfo.appetizerSlot, selector: useSelector(state => state.appetizers.entities)
+            number: combo.appetizer ? combo.appetizer : 0, slot: cartInfo.appetizerSlot, selector: useSelector(state => state.appetizers.entities)
         },
         'dessert':{
-            number: combo.dessert, slot: cartInfo.dessertSlot, selector: useSelector(state => state.desserts.entities)
+            number: combo.dessert ? combo.dessert : 0, slot: cartInfo.dessertSlot, selector: useSelector(state => state.desserts.entities)
         },
         'drink':{
-            number: combo.drink, slot: cartInfo.drinkSlot, selector: useSelector(state => state.drinks.entities)
+            number: combo.drink ? combo.drink : 0, slot: cartInfo.drinkSlot, selector: useSelector(state => state.drinks.entities)
         },
+    }
+    if(combo.free){
+        categories['pizza'].number += combo.free.pizza ? combo.free.pizza : 0;
+        categories['kid'].number += combo.free.kid ? combo.free.kid : 0;
+        categories['vegetable'].number += combo.free.vegetable ? combo.free.vegetable : 0;
+        categories['appetizer'].number += combo.free.appetizer ? combo.free.appetizer : 0;
+        categories['dessert'].number += combo.free.dessert ? combo.free.dessert : 0;
+        categories['drink'].number += combo.free.drink ? combo.free.drink : 0;
     }
     const navigate = useNavigate()
     return (
@@ -555,7 +562,7 @@ export const ComboCartItem = (props)=>{
                         textAlign: 'start',
                         display: {md: 'block', sm: 'none', xs: 'none'}
                     }}
-                    >Total: $ {cartInfo.total}
+                    >Total: {cartInfo.total}đ
                     </Typography>
                         <IconButton
                         onClick={() =>{
@@ -640,7 +647,7 @@ export const ComboCartItem = (props)=>{
                         textAlign: 'start',
                         marginBottom: '10px'
                     }}
-                    >{combo.off}% Off
+                    >{combo.off > 0 ? combo.off + " %Off" : "Bonus"}
                     </Typography>
                     <Typography variant="subtitle1"
                     sx={{
@@ -666,7 +673,7 @@ export const ComboCartItem = (props)=>{
                         textAlign: 'start',
                         display: {md: 'none', sm: 'block', xs: 'block'}
                     }}
-                    >Total: $ {cartInfo.total}
+                    >Total: {cartInfo.total}đ
                 </Typography>
                 
             </Stack>
