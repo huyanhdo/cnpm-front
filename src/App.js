@@ -1,7 +1,7 @@
 import './App.css';
 import { MenuBar } from './components/sidebar';
 import { CartPage } from './pages/cartPage';
-import { Home } from './pages/Home';
+import { Home } from './pages/home';
 import { PizzaPage } from './pages/pizza';
 import { SinglePage } from './pages/singlePage';
 import Dashboard from './components/dashboard'
