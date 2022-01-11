@@ -10,7 +10,7 @@ import {itemAdded, itemUpdated} from '../store/cartComboSlice'
 const timeToDate = (time) =>{
     let date = new Date(time * 1000)
     let year = date.getFullYear()
-    let month = date.getMonth()
+    let month = date.getMonth() + 1
     let day = date.getDate()
     return year + '/' + month + '/' + day;   
 }
@@ -179,14 +179,15 @@ export const ComboChooseModal = (props) =>{
                         textAlign: 'start',
                         margin: '20px'
                     }}
-                    >Choose your {category}
+                    >Choose your {category} dish
             </Typography>
             <Box sx={{
-                m: 3,
-                p: 3,
+                m: 1,
+                p: 2,
                 backgroundColor: 'rgba(252, 237, 227, 0.3)',
                 display: 'flex',
-                justifyContent: 'space-evenly'
+                justifyContent: 'space-evenly',
+                overflow: 'auto'
             }}>
             {
                 ids
@@ -255,7 +256,7 @@ export const AddSlot = (props) =>{
                         color: 'black',
                         textAlign: 'center',
                     }}
-                    >Choose your {category}
+                    >Choose your {category} dish
             </Typography>
         </Box>
     )
@@ -293,6 +294,11 @@ export const AddedExtra = (props) =>{
                 flexWrap: 'wrap'
             }}
             >
+            <Box
+            sx={{
+                display: {md: 'block', sm: 'none', xs: 'none'}
+            }}
+            >
             <img
             src={product.image_url}
             alt={product.title}
@@ -303,6 +309,7 @@ export const AddedExtra = (props) =>{
             objectFit: 'cover'
             }}
             />
+            </Box>
             <Stack spacing = {2} sx={{
                 marginLeft: {md: '50px', sm: 0, xs: 0}
             }}>
@@ -310,7 +317,7 @@ export const AddedExtra = (props) =>{
                     sx={{
                         fontFamily: 'Fairplay Display',
                         fontWeight: 700,
-                        fontSize: '35px',
+                        fontSize: {md: '35px', sm: '25px', xs: '20px'},
                         lineHeight: '52px',
                         color: '#07143B',
                         textAlign: 'start',
@@ -323,7 +330,7 @@ export const AddedExtra = (props) =>{
                     sx={{
                         fontFamily: 'Poppins',
                         fontWeight: 700,
-                        fontSize: '25px',
+                        fontSize: {md: '25px', sm: '20px', xs: '20px'},
                         lineHeight: '52px',
                         color: '#07143B',
                         textAlign: 'start',
@@ -373,7 +380,12 @@ export const AddedPizza = (props) =>{
             sx={{
                 display: 'flex',
                 flexWrap: 'wrap',
-                width: '90%'
+                width: {md: '90%', sm: '95%', xs: '95%'}
+            }}
+            >
+                <Box
+            sx={{
+                display: {md: 'block', sm: 'none', xs: 'none'}
             }}
             >
             <img
@@ -386,9 +398,10 @@ export const AddedPizza = (props) =>{
             objectFit: 'cover'
             }}
             />
+            </Box>
             <Stack spacing = {2} sx={{
                 marginLeft: {md: '50px', sm: 0, xs: 0},
-                width: '70%'
+                width: {md: '70%', sm: '100%', xs: '100%'}
             }}>
             <Box
             sx={{
@@ -402,7 +415,7 @@ export const AddedPizza = (props) =>{
                     sx={{
                         fontFamily: 'Fairplay Display',
                         fontWeight: 700,
-                        fontSize: '35px',
+                        fontSize: {md: '35px', sm: '30px', xs: '25px'},
                         lineHeight: '52px',
                         color: '#07143B',
                         textAlign: 'start',
@@ -414,7 +427,7 @@ export const AddedPizza = (props) =>{
                     sx={{
                         fontFamily: 'Poppins',
                         fontWeight: 700,
-                        fontSize: '25px',
+                        fontSize: {md: '25px', sm: '20px', xs: '20px'},
                         lineHeight: '52px',
                         color: '#07143B',
                         textAlign: 'start',
@@ -428,12 +441,13 @@ export const AddedPizza = (props) =>{
             <Box
             sx={{
                 display: 'flex',
-                width: '70%',
+                width: {md: '70%', sm: '90%', xs: '90%'},
                 justifyContent: 'space-between',
-                alignItems: 'center'
+                alignItems: 'center',
+                flexWrap: 'wrap'
             }}
             >
-            <Stack spacing={1} direction="row"
+            <Stack spacing={1} direction='row'
                 sx={{
                     alignItems: 'center'
                 }}
@@ -442,7 +456,7 @@ export const AddedPizza = (props) =>{
                     sx={{
                         fontFamily: 'Poppins',
                         fontWeight: 400,
-                        fontSize: '20px',
+                        fontSize: {md: '20px', sm: '15px', xs: '15px'},
                         lineHeight: '22.75px',
                         color: '#07143B',
                         textAlign: 'start'
@@ -471,7 +485,7 @@ export const AddedPizza = (props) =>{
                     sx={{
                         fontFamily: 'Fairplay Display',
                         fontWeight: 600,
-                        fontSize: '20px',
+                        fontSize: {md: '20px', sm: '15px', xs: '15px'},
                         lineHeight: '175%',
                         color:'#07143B',
                         textAlign: 'start'
@@ -508,7 +522,7 @@ export const AddedPizza = (props) =>{
                     sx={{
                         fontFamily: 'Poppins',
                         fontWeight: 400,
-                        fontSize: '20px',
+                        fontSize: {md: '20px', sm: '15px', xs: '15px'},
                         lineHeight: '22.75px',
                         color: '#07143B',
                         textAlign: 'start'
@@ -534,7 +548,7 @@ export const AddedPizza = (props) =>{
                     sx={{
                         fontFamily: 'Fairplay Display',
                         fontWeight: 600,
-                        fontSize: '20px',
+                        fontSize: {md: '20px', sm: '15px', xs: '15px'},
                         lineHeight: '175%',
                         color:'#07143B',
                         textAlign: 'start'
@@ -563,7 +577,7 @@ export const AddedPizza = (props) =>{
                     sx={{
                         fontFamily: 'Poppins',
                         fontWeight: 400,
-                        fontSize: '20px',
+                        fontSize: {md: '20px', sm: '15px', xs: '15px'},
                         lineHeight: '22.75px',
                         color: '#07143B',
                         textAlign: 'start'
@@ -581,7 +595,7 @@ export const AddedPizza = (props) =>{
             >
                 {
                     product.topping.map((top, index) =>
-                        <Stack direction='row' spacing={3} sx={{width: '45%', alignItems: 'center'}}>
+                        <Stack direction='row' spacing={3} sx={{width: {md: '70%', sm: '100%', xs: '100%'}, alignItems: 'center'}}>
                             <Checkbox 
                                 sx={{
                                     '&.Mui-checked': {
@@ -645,6 +659,7 @@ export const CustomProduct = (props) =>{
     const category = props.category;
     const slot = props.slot;
     const handleAdd = props.handleAdd;
+    const offset = props.offset ? props.offset : 0;
     const [open, setOpen] = useState(false);
     const [openSlot, setOpenSlot] = useState(-1);
     const openModal = (id) =>{
@@ -652,7 +667,7 @@ export const CustomProduct = (props) =>{
         setOpenSlot(id)
     }
     const range = [];
-    for(let i=0;i<number;i++)range.push(i);
+    for(let i=offset;i<offset + number;i++)range.push(i);
     return (
         <Box
         sx={{
@@ -719,6 +734,16 @@ export const SingleCombo = () =>{
     ]
     let proNum = combo.pizza;
     extras.map(extra => proNum += extra.number ? extra.number : 0)
+    if(combo.free){
+        extras[0].freeNumber = combo.free.kid ? combo.free.kid: 0;
+        extras[1].freeNumber = combo.free.drink ? combo.free.drink: 0;
+        extras[2].freeNumber = combo.free.vegetable ? combo.free.vegetable: 0;
+        extras[3].freeNumber = combo.free.appetizer ? combo.free.appetizer: 0;
+        extras[4].freeNumber = combo.free.dessert ? combo.free.dessert: 0;
+        proNum += combo.free.pizza ? combo.free.pizza : 0;
+        extras.map(extra => proNum += extra.freeNumber)
+    }
+    
     const initTotal = cartId >= 0 ? round((cartInfo.total * 100 / (100 - combo.off)) / cartInfo.number) : 0
     const [total, setTotal] = useState(initTotal);
     const [num, setNum] = useState(cartId >= 0 ? cartInfo.number :1);
@@ -726,8 +751,10 @@ export const SingleCombo = () =>{
     const [done, setDone] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    
-    return (
+    console.log(Date.now()/ 1000)
+    console.log(combo.end)
+    const valid = Date.now() / 1000 >= combo.start && Date.now() / 1000 <= combo.end
+    return valid? (
         <Box sx ={{
             display: 'flex',
             justifyContent: 'center',
@@ -819,6 +846,8 @@ export const SingleCombo = () =>{
                     }}
                     >{timeToDate(combo.start)} - {timeToDate(combo.end)}
                 </Typography>
+                {
+                    combo.off > 0 &&
                 <Typography
                     style={{
                         fontFamily: 'Poppins',
@@ -834,6 +863,7 @@ export const SingleCombo = () =>{
                     }}
                     >{combo.off}% Off
                 </Typography>
+                }
                 <Typography
                     style={{
                         fontFamily: 'Poppins',
@@ -887,7 +917,7 @@ export const SingleCombo = () =>{
                         textAlign: 'center',
                         textOverflow: 'ellipsis'
                     }}
-                    >-{combo.off}%
+                    >{combo.off > 0 ? `-${combo.off}%`: "Bonus"}
                 </Typography>
             </Box>
             </Box>
@@ -945,6 +975,72 @@ export const SingleCombo = () =>{
                         />
                     })
                 }
+                {
+                    combo.free &&
+                    <Box sx={{
+                        width: '100%'
+                    }}>
+                    <Typography variant="subtitle1"
+                    sx={{
+                        fontFamily: 'Fairplay Display',
+                        fontWeight: 600,
+                        fontSize: '35px',
+                        lineHeight: '175%',
+                        color: '#07143B',
+                        textAlign: 'start',
+                        marginBottom: '10px',
+                        m: 3
+                    }}
+                    >Bonus (100% free)
+                    </Typography>
+                    {
+                        combo.free.pizza && combo.free.pizza > 0 && 
+                        <CustomProduct 
+                        category="pizza" number={combo.free.pizza}
+                        slot = {pizzaSlot}
+                        offset = {combo.pizza}
+                        handleAdd = {(slotId, productId, price) =>{
+                            setPizzaSlot(prev =>{
+                                let New = {...prev}
+                                if(!prev[slotId]) setFilled(prev => prev + 1)
+                                delete New[slotId]
+                                New[slotId] = {productId: productId, pizzaInfo: {
+                                    price: 0, 
+                                    size: 0,
+                                    type: 0,
+                                    topping: {}
+                                }}
+                                return New
+                            })
+                        }}
+                        handleChange = {(slotId, newPizza) =>{
+                            setPizzaSlot(prev =>{
+                                let New = {...prev}
+                                New[slotId] = newPizza
+                                return New
+                            })
+                        }}
+                        />
+                    }
+                    {
+                    extras.map(extra =>{
+                        return extra.freeNumber && extra.freeNumber > 0 && 
+                        <CustomProduct
+                        number = {extra.freeNumber} category = {extra.category} slot = {extra.slot}
+                        offset = {extra.number}
+                        handleAdd = {(slotId, productId, price) =>{
+                            extra.setSlot(prev =>{
+                                let New = {...prev}
+                                if(!prev[slotId]) setFilled(prev => prev + 1)
+                                New[slotId] = {productId: productId, price: 0}
+                                return New
+                            })
+                        }}
+                        />
+                    })
+                    }
+                    </Box>
+                }
                 <Divider variant='middle'/>
                 <Box
                 sx={{
@@ -952,10 +1048,12 @@ export const SingleCombo = () =>{
                     width: '100%',
                     p: 5,
                     justifyContent: 'space-between',
-                    alignItems: 'center'
+                    alignItems: 'center',
+                    flexWrap: 'wrap'
                 }}
                 > 
-                <Stack direction="row" spacing={5}
+                <Stack direction= "row"
+                spacing={5}
                 sx={{
                 alignItems: 'center',
                 }}
@@ -1034,6 +1132,8 @@ export const SingleCombo = () =>{
                     }}
                     >Total: {round(total* num *(100 - combo.off) / 100)}đ
                     </Typography>
+                    {
+                    combo.off > 0 &&
                     <Typography variant="h6"
                     sx={{
                         fontFamily: 'Fairplay Display',
@@ -1047,6 +1147,7 @@ export const SingleCombo = () =>{
                     }}
                     >({round(total * num)}đ)
                     </Typography>
+                    }
                 </Stack>
                 </Box>
                 <Button variant="contained" 
@@ -1178,5 +1279,19 @@ export const SingleCombo = () =>{
                 </CardContent>
             </Card>
         </Box>
+    ):(
+        <Typography variant="subtitle1"
+                    sx={{
+                        fontFamily: 'Fairplay Display',
+                        fontWeight: 600,
+                        fontSize: '35px',
+                        lineHeight: '175%',
+                        color: '#07143B',
+                        textAlign: 'start',
+                        marginBottom: '10px',
+                        m: 3
+                    }}
+                    >Opps.. Sorry! This combo is expired or not started yet...
+                    </Typography>
     )
 }

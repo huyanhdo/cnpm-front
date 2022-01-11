@@ -11,7 +11,7 @@ import { CustomPagination } from './pizzaMenu';
 const timeToDate = (time) =>{
     let date = new Date(time * 1000)
     let year = date.getFullYear()
-    let month = date.getMonth()
+    let month = date.getMonth() + 1
     let day = date.getDate()
     return year + '/' + month + '/' + day;   
 }
@@ -234,6 +234,7 @@ export const ComboMenuItem = (props) =>{
     const switchHov = ()=>{
         setHov(prev => !prev);
     }
+    const valid = Date.now() / 1000 >= combo.start && Date.now() / 1000 <= combo.end
     return(
         <Box
         onMouseEnter={switchHov}
@@ -283,11 +284,11 @@ export const ComboMenuItem = (props) =>{
                         fontWeight: 400,
                         fontSize: '13px',
                         lineHeight: '22.75px',
-                        color: hov? 'white': '#959895',
+                        color: hov? 'white': valid ? '#959895': 'red',
                         textAlign: 'start',
                         marginBottom: '20px'
                     }}
-                    >{timeToDate(combo.start)} - {timeToDate(combo.end)}   
+                    >{valid ? timeToDate(combo.start) + " - " + timeToDate(combo.end): "Expired"}   
             </Typography>
             <Divider variant="light"  sx={{
                 width: '50%',
@@ -321,7 +322,7 @@ export const ComboMenuItem = (props) =>{
                         color: hov? 'white': '#EA6A12',
                         textAlign: 'start'
                     }}
-                    >{combo.off}% Off
+                    >{combo.off && combo.off > 0 ? combo.off + ' %Off': 'Bonus'}
                 </Typography>
                 <IconButton
                 sx={{

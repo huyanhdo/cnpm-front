@@ -9,7 +9,7 @@ export const Bill = (props) =>{
     const timeToDate = (time) =>{
         let date = new Date(time)
         let year = date.getFullYear()
-        let month = date.getMonth()
+        let month = date.getMonth() + 1
         let day = date.getDate()
         let hour = date.getHours()
         let min = date.getMinutes()
@@ -67,17 +67,9 @@ export const Bill = (props) =>{
             </Typography>
             }
             {order.detail.pizza && order.detail.pizza.map(pizza =>
-            <Box
-            sx={{
-                display: 'flex',
-                width: '100%',
-                justifyContent: 'space-between',
-                p: 3,
-                alignItems: 'center'
-            }}
-            >
                 <pre
                 style={{
+                    width: '50%',
                     fontFamily: 'Poppins',
                     fontWeight: 700,
                     fontSize: '16px',
@@ -87,37 +79,8 @@ export const Bill = (props) =>{
                     marginLeft: '20px',
                     m: 3,
                 }}
-                >{"+ Product code: " + pizza.id + "\nSize: " + pizza.size + "\tType: " + pizza.type + '\n' }
+                >{"+ Product code: " + pizza.id + "\t\tx" + pizza.number}
                 </pre>
-                {
-                pizza.topping && 
-                <pre
-                style={{
-                    fontFamily: 'Poppins',
-                    fontWeight: 700,
-                    fontSize: '16px',
-                    lineHeight: '52px',
-                    color: '#07143B',
-                    textAlign: 'start',
-                    marginLeft: '20px',
-                    m: 3,
-                }}
-                >{"Topping: " + pizza.topping.reduce((str, t) => str + t + ',', '') }
-                </pre>
-                }
-                <Typography variant="h6"
-                sx={{
-                    fontFamily: 'Poppins',
-                    fontWeight: 700,
-                    fontSize: '16px',
-                    lineHeight: '52px',
-                    color: '#07143B',
-                    textAlign: 'center',
-                    m: 3,
-                }}
-                >{"x" + pizza.number}
-                </Typography>
-            </Box>
             )}
             <Box
             sx={{
