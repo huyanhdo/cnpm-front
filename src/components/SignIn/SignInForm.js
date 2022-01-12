@@ -40,23 +40,26 @@ const useStyle = makeStyles({
     },
     textField:{
         '& .MuiOutlinedInput-root': {
-          '&.Mui-focused fieldset': {
-            borderColor: 'black',
-          },
-          '& input':{
-              height:'8px',
-              "&:-webkit-autofill": {
-                WebkitBoxShadow: "0 0 0 1000px white inset"
-              }
+        borderRadius:100,
+        border:'solid',
+        borderWidth:'1px',
+        '&.Mui-focused fieldset': {
+            borderColor: 'white',
+        },
+        '& input':{
+            height:'8px',
+            "&:-webkit-autofill": {
+            WebkitBoxShadow: "0 0 0 1000px white inset"
+            }
          },
-     
         },
         '& fieldset':{
-            borderRadius: 100,
+            border:'none',
             fontFamily: 'Poppins',
-            paddingLeft:'10px'
+            paddingLeft:'10px',
         },      
         width:'80%',
+        
 
     }
 })

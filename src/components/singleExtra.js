@@ -1,5 +1,5 @@
 import React, {useState } from "react";
-import {Box, Divider, IconButton, Stack, Typography, Rating, Button, List, ListItem, Modal, TextField, Checkbox, Fade, Snackbar} from '@mui/material';
+import {Box, Divider, IconButton, Stack, Typography, Rating, Button, List, ListItem, Modal, TextField, Fade, Snackbar} from '@mui/material';
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
 import  AddRoundedIcon  from "@mui/icons-material/AddRounded";
 import RemoveRoundedIcon from '@mui/icons-material/RemoveRounded';
@@ -61,7 +61,7 @@ export const SingleExtra = ()=>{
     const [posted, setPosted] = useState(false);
     const [message, setMess] = useState('')
     const max = 2
-    const totalPage = Math.ceil(comments.length / max);
+    const totalPage = comments && Math.ceil(comments.length / max) ;
     const pageList = [];
     for(let i = 1;i <= totalPage;i++)pageList.push(i);
     const [page, setPage] = useState(1);
