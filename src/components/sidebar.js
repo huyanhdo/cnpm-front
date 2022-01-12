@@ -227,19 +227,7 @@ export const MenuBar = ()=>{
                                 </CustomListItem>
                         </List>
                     </Collapse>
-{/*                 
-                <CustomListItem>
-                    <ListItemButton className='button' onClick = {()=>{navigate('/order')}}>
-                    <YoutubeSearchedForRoundedIcon className='icon'/>
-                    <ListItemButton className='button' onClick={()=>{SetFocus(
-                        prev => {navigate('/productsManagement')}
-                    )}}>
-                    <AccountCircleRoundedIcon className='icon'/>
-                    <Typography className='typo'>
-                        Admin
-                    </Typography>
-                    </ListItemButton>
-                    </CustomListItem>*/}
+                { !currentUser &&
                 <CustomListItem>
                     <ListItemButton className='button' onClick={()=>{navigate('/order')}}>
                     <ContactSupportRoundedIcon className='icon'/>
@@ -247,7 +235,7 @@ export const MenuBar = ()=>{
                         Your Order
                     </Typography>
                     </ListItemButton>
-                </CustomListItem> 
+                </CustomListItem> }
             </List>
         </AppBar>    
     </Collapse>
@@ -310,12 +298,10 @@ export const MenuBar = ()=>{
             <CustomIconButton>
             <DashboardRoundedIcon className='icon'/>
             </CustomIconButton>
-            {/* <CustomIconButton>
-            <ContactSupportRoundedIcon className='icon'/>
-            </CustomIconButton> */}
+            {!currentUser &&
             <CustomIconButton>
             <YoutubeSearchedForRoundedIcon className='icon'/>
-            </CustomIconButton>
+            </CustomIconButton>}
         </Stack>
     </AppBar>
     </Collapse>

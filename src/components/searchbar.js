@@ -1,6 +1,4 @@
 import SearchIcon from '@mui/icons-material/Search';
-// import NotificationsIcon from '@mui/icons-material/Notifications';
-// import EmailIcon from '@mui/icons-material/Email';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { FormControl, InputAdornment, TextField, styled, IconButton, Avatar, AppBar, Toolbar, Box, Stack,Button,Menu,MenuItem } from "@mui/material";
 import { useAuth } from '../context/AuthContext';
@@ -85,23 +83,6 @@ export const Searchbar = ()=>{
             </FormControl>
             <Box sx={{ flexGrow: 10 }} />
             <Stack sx={{flexGrow: 2,height:'40px'}} spacing={2} direction="row">
-                {/* <IconButton onClick={handlelogout} >
-                <NotificationsIcon
-                sx={{
-                    '&:hover':{
-                        color: '#EA6A12'
-                    }
-                }}
-                />
-                </IconButton> */}
-                {/* <IconButton>
-                <EmailIcon
-                sx={{
-                    '&:hover':{
-                        color: '#EA6A12'
-                    }
-                }}/>
-                </IconButton> */}
                 <Link to="/cart">
                 <IconButton>
                 <ShoppingCartIcon
