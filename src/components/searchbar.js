@@ -64,23 +64,7 @@ export const Searchbar = ()=>{
                 width: '100%'
             }}
             >
-            <FormControl sx={{flexGrow:1}}>
-                <CssTextField placeholder="Search..."
-                    variant="outlined"
-                    size="small"
-                    InputProps={
-                        {
-                            startAdornment:(
-                                <InputAdornment position="start">
-                                    <IconButton>
-                                    <SearchIcon/>
-                                    </IconButton>
-                                </InputAdornment>
-                            )
-                        }
-                    }
-                />
-            </FormControl>
+       
             <Box sx={{ flexGrow: 10 }} />
             <Stack sx={{flexGrow: 2,height:'40px'}} spacing={2} direction="row">
                 <Link to="/cart">

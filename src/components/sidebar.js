@@ -8,8 +8,6 @@ import {styled} from '@mui/styles';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
-//import {useNavigate} from 'react-router-dom';
-import {useSelector} from 'react-redux';
 import { useAuth } from '../context/AuthContext';
 import ContactSupportRoundedIcon from '@mui/icons-material/ContactSupportRounded'
 import YoutubeSearchedForRoundedIcon from '@mui/icons-material/YoutubeSearchedForRounded';

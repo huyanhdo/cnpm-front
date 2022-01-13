@@ -3,14 +3,10 @@ import BookmarkRoundedIcon from '@mui/icons-material/BookmarkRounded';
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 import styles from "./dashboard.module.css"
 import { Box } from '@mui/system';
-import { Button, Stack, Typography, IconButton, Divider , Collapse, Tabs, Modal, Fade, Grow} from '@mui/material';
-import { ListItem } from '@mui/material';
-
-import axios from 'axios'
-import SplitButton from './splitButton';
-import { ListItemButton } from '@mui/material';
-import { useSelector } from "react-redux";
+import { Typography} from '@mui/material';
 import React, {useEffect,useState} from 'react';
+import {Home} from '../pages/Home';
+import { useAuth } from '../context/AuthContext';
 export const MostOrder=()=>{
     const [menu, setMenu] = useState({});
     const [status,setStatus]=useState('pending');
@@ -60,13 +56,13 @@ export const MostOrder=()=>{
         }}>
              <table className={styles.table}>
                             <tr>
-                                <th style={{width:'20%',color:'white',fontSize:'30px'}}>Ảnh</th>
-                                <th style={{width:'50%',color:'white',fontSize:'30px' }}>Món</th>
-                                <th style={{width:'30%',color:'white',fontSize:'30px'}}>Menu</th>
+                                <th style={{width:'20%',color:'black',fontSize:'30px'}}>Ảnh</th>
+                                <th style={{width:'50%',color:'black',fontSize:'30px',textAlign:'start',paddingLeft:'10%' }}>Món</th>
+                                <th style={{width:'30%',color:'black',fontSize:'30px',textAlign:'start'  }}>Menu</th>
                             </tr>
             {mostList.map(v=>
                 <tr style={{borderSpacing:'10px'}}>
-                    <td>
+                    <td style={{textAlign:'center'}}>
                     <img
                     src={v.image_url}
                     alt=''
@@ -86,14 +82,16 @@ export const MostOrder=()=>{
                                     fontWeight:550,
                                     fontSize:'28px',
                                     textAlign:'start',
-                                    color:'white'
+                                    color:'black',
+                                    paddingLeft:'20%'
                                 }}>{v.title}</Typography>
                         <Typography variant='p' sx={{
                                     marginTop:'8px',
                                     fontWeight:550,
                                     fontSize:'15px',
                                     textAlign:'start',  
-                                    color:'gray'
+                                    color:'gray',
+                                    paddingLeft:'20%',
                                     
                                 }}>{`${v.order_number} dishes ordered`}
                         </Typography>
@@ -104,8 +102,8 @@ export const MostOrder=()=>{
                                     
                                     fontWeight:550,
                                     fontSize:'28px',
-                                    textAlign:'center',
-                                    color:'white',
+                                    textAlign:'start',
+                                    color:'black',
                                     
                                 }}>{v.category}</Typography>
                     </td>
@@ -121,8 +119,8 @@ export const MostOrder=()=>{
 
 
 
-const Dashboard =(props) =>{
-   
+const Dashboard =() =>{
+    const {currentUser} = useAuth();
     const [OrderLists,setOrderLists]=useState([]);
     useEffect(()=>{
         async function fetchOrderLists() {
@@ -155,51 +153,127 @@ const Dashboard =(props) =>{
     totalpay /= 1000;
     
     return (
-       
-            <Box sx={{
-                
-                backgroundColor: '#252836',
-                width:'100%',
+            currentUser ? 
+            <Box 
+                sx={{
+                backgroundColor: '#FFE6CC',
+                width:'80%',
                 height:'100%',
+                marginLeft:'10%',
+                marginRight:'10%'
             }}>
+                <Box py={1}></Box>
                 <Box sx={{
                 display:'flex',
-                justifyContent:'space-between',
-                alignItems:'flex-start',
-                
+                justifyContent:'space-evenly',
+                alignItems:'rows',
                  }}>
                 
                     <Box sx={{
-                        minWidth:'30%',
-                        backgroundColor:'#1F1D2B',
-                        minHeight:'15%',
+                        width:'200px',
+                        backgroundColor:'#F9C4A6',
+                        height:'150px',
                         borderRadius:'8px',
                         padding:'16px'
                     }}> 
+                    <Box sx={{display:'flex',flexDirection:'row',alignItems:'center'}}>
                     <Box sx={{
                         width:'38px',
                         height:'38px',
-                        backgroundColor:'#252836',
+                        backgroundColor:'#FFD3A8',
                         padding:'5px',
-                        borderRadius:'8px'
+                        borderRadius:'8px',
                     }}>
-                    <MonetizationOnRoundedIcon sx={{color:'#9288E0'}}/></Box>
-                    <Typography variant='h1' sx={{
-                        marginTop:'8px',
-                        fontWeight:550,
-                        fontSize:'28px',
-                        textAlign:'start',
-                        color:'white'
-                    }}>{`${totalpay} K`}</Typography>
+                    <MonetizationOnRoundedIcon sx={{color:'#ffbe0b'}}/>
+                    </Box>
+                    <Box pl={1}></Box>
                     <Typography variant='h3' sx={{
                         marginTop:'8px',
                         fontWeight:500,
-                        fontSize:'14px',
+                        fontSize:'20px',
                         textAlign:'start',
-                        color:'#ABBBC2'
-                    }}>Total Revenue</Typography>
+                        color:'#252836'
+                    }}>Doanh thu</Typography>
+                    </Box>
+                    <Typography variant='h1' sx={{
+                        marginTop:'10%',
+                        fontWeight:550,
+                        fontSize:'28px',
+                        textAlign:'start',
+                        color:'black'
+                    }}>{`${totalpay} K`}</Typography>
+                    </Box>
+
+                    <Box sx={{
+                        width:'200px',
+                        backgroundColor:'#F9C4A6',
+                        height:'150px',
+                        borderRadius:'8px',
+                        padding:'16px'
+                    }}> 
+                    <Box sx={{display:'flex',flexDirection:'row',alignItems:'center'}}>
+                    <Box sx={{
+                        width:'38px',
+                        height:'38px',
+                        backgroundColor:'#FFD3A8',
+                        padding:'5px',
+                        borderRadius:'8px',
+                    }}>
+                    <BookmarkRoundedIcon sx={{color:'#E97500'}}/>
+                    </Box>
+                    <Box pl={1}></Box>
+                    <Typography variant='h3' sx={{
+                        marginTop:'8px',
+                        fontWeight:500,
+                        fontSize:'20px',
+                        textAlign:'start',
+                        color:'#252836'
+                    }}>Tổng đĩa</Typography>
+                    </Box>
+                    <Typography variant='h1' sx={{
+                        marginTop:'10%',
+                        fontWeight:550,
+                        fontSize:'28px',
+                        textAlign:'start',
+                        color:'black'
+                    }}>{`${totaldish}`}</Typography>
                     </Box>
                     <Box sx={{
+                        width:'200px',
+                        backgroundColor:'#F9C4A6',
+                        height:'150px',
+                        borderRadius:'8px',
+                        padding:'16px'
+                    }}> 
+                    <Box sx={{display:'flex',flexDirection:'row',alignItems:'center'}}>
+                    <Box sx={{
+                        width:'38px',
+                        height:'38px',
+                        backgroundColor:'#FFD3A8',
+                        padding:'5px',
+                        borderRadius:'8px',
+                    }}>
+                    <AccountCircleRoundedIcon sx={{color:'#1d3557'}}/>
+                    </Box>
+                    <Box pl={1}></Box>
+                    <Typography variant='h3' sx={{
+                        marginTop:'8px',
+                        fontWeight:500,
+                        fontSize:'20px',
+                        textAlign:'start',
+                        color:'#252836'
+                    }}>Tổng khách</Typography>
+                    </Box>
+                    <Typography variant='h1' sx={{
+                        marginTop:'10%',
+                        fontWeight:550,
+                        fontSize:'28px',
+                        textAlign:'start',
+                        color:'black'
+                    }}>{`${totalcustomer}`}</Typography>
+                    </Box>
+                                        
+                    {/* <Box sx={{
                         width:'30%',
                         backgroundColor:'#1F1D2B',
                         height:'15%',
@@ -219,7 +293,7 @@ const Dashboard =(props) =>{
                         fontWeight:550,
                         fontSize:'28px',
                         textAlign:'start',
-                        color:'white'
+                        color:'black'
                     }}>{totaldish}</Typography>
                     <Typography variant='h3' sx={{
                         marginTop:'8px',
@@ -249,7 +323,7 @@ const Dashboard =(props) =>{
                         fontWeight:550,
                         fontSize:'28px',
                         textAlign:'start',
-                        color:'white'
+                        color:'black+'
                     }}>{totalcustomer}</Typography>
                     <Typography variant='h3' sx={{
                         marginTop:'8px',
@@ -258,9 +332,10 @@ const Dashboard =(props) =>{
                         textAlign:'start',
                         color:'#ABBBC2'
                     }}>Total Customer </Typography>
-                    </Box>
-                    </Box>
+                    </Box>*/}
+                    </Box> 
                     <br/>
+                    
                 <Box sx={{
                     display: 'flex',
                     flexDirection: 'row',
@@ -273,14 +348,14 @@ const Dashboard =(props) =>{
                     fontWeight:550,
                     fontSize:'50px',
                     textAlign:'center',
-                    color:'white'
-                }}>Most Ordered </Typography>
+                    color:'black'
+                }}>Món nổi bật nhất </Typography>
                     
                             
                 </Box>
                 <hr className={styles.hr}/>
                 <MostOrder/>
-            </Box>
+            </Box> : <Home/>
             
         
     );

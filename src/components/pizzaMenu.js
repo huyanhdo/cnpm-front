@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from "react";
-import { Categories, Category, PizzaCard } from "./categories";
+import { PizzaCard } from "./categories";
 import {IconButton, Box, Typography, styled, Pagination, Grow, CircularProgress,TextField,InputAdornment} from '@mui/material';
 import { useSelector } from "react-redux";
 import { useParams } from "react-router";
@@ -11,13 +11,15 @@ const useStyle = makeStyles({
     borderRadius:100,
     border:'solid',
     borderWidth:'1px',
+    backgroundColor:'white',
     '&.Mui-focused fieldset': {
         borderColor: 'white',
     },
     '& input':{
         height:'8px',
         backgroundColor:'white',
-        borderRadius:100,
+        borderTopRightRadius:'100px',
+        borderBottomRightRadius:'100px',
         "&:-webkit-autofill": {
         WebkitBoxShadow: "0 0 0 1000px white inset"
         }
@@ -81,22 +83,18 @@ export const PizzaMenu = ()=>{
     }
     const {category} = useParams();
     const [search,setSearch] = useState('');
-    const [ids,setids] = useState(categories[category].selector.ids);
+  //  const [ids,setids] = useState([]);
+    const ids = categories[category].selector.ids;
     const [page, setPage] = useState(1);
     const fetchingStatus = categories[category].selector.fetchingStatus
     const products = categories[category].selector.entities
-    const max = 5;
+    const max = 10;
     const totalPage = Math.ceil(ids.length / max);
     const pageList = [];
     for(let i = 1;i <= totalPage;i++)pageList.push(i);
-    useEffect(()=>{ 
-        console.log(products)
-        !search ?
-            setids(categories[category].selector.ids)
-            : setids(categories[category].selector.ids.filter(
-                (item) =>  products[item].title.toUpperCase().includes(search.toString().toUpperCase())
-            ))
-    },[search,products])
+    useEffect(()=>{
+        setSearch('');
+    },[category])
     
     return(
         <Box sx={{p: 5, marginBottom: '100px', width: '100%'}}>
@@ -124,6 +122,7 @@ export const PizzaMenu = ()=>{
                             <IconButton className = {classes.iconButton}><SearchRoundedIcon /></IconButton>
                             </InputAdornment>,
               }}/>
+             
         </Box>
         </Box>
         {
@@ -138,17 +137,18 @@ export const PizzaMenu = ()=>{
                 flexWrap: 'wrap'
             }}
             >
-            {
-                ids
+            {   
+                ids.filter(id=>   
+                    !search ? id : products[id].title.toUpperCase().includes(search.toString().toUpperCase())
+                   )
                 .map((id, index) =>{
-                    return (index >= (page - 1)*max && index < page * max) ?
+                    return (index >= (page - 1)*max && index < page * max) &&
                         <Box sx={{marginLeft: '20px'}}>
                             <PizzaCard image={products[id].image_url} name={products[id].title} 
                             rate={products[id].rating} price={products[id].price}
                             id = {id} link = {categories[category].singlePath + id}
                             />
                         </Box>
-                    : false
                 })
             }
             </Box>

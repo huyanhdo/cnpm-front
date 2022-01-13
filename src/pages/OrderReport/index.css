@@ -10,7 +10,7 @@ td {
 .Preparing,
 .Pending,
 .Shipping{
-    background-color: black;
+    background-color: #FF99AA;
     color: rgb(242, 242, 247);
 }
 .Order:focus{
@@ -20,8 +20,10 @@ table { border-collapse: separate; }
 .Order:nth-child(even){
     background-color: #ffe6cc;
 }
-
-tr:first-child ,td:first-child { border-top-left-radius: 25px; }
+.Order:nth-child(even):focus{
+    background-color: #ffcc99;
+}
+/* tr:first-child ,td:first-child { border-top-left-radius: 25px; }
 tr:first-child ,td:last-child { border-top-right-radius: 25px; }
 tr:last-child ,td:first-child { border-bottom-left-radius: 25px; }
-tr:last-child, td:last-child { border-bottom-right-radius: 25px; }
+tr:last-child, td:last-child { border-bottom-right-radius: 25px; } */
