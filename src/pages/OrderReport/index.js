@@ -3,24 +3,18 @@ import {Box, Typography} from '@mui/material';
 import { CustomPagination } from '../../components/pizzaMenu';
 import './index.css'
 import OrderDetail from '../../components/OrderReport/OrderDetail';
-
-
-
-
+import { useAuth } from '../../context/AuthContext';
+import { Home } from '../Home';
 function OrderReport() {
     const [OrderLists, setOrderLists] = useState(
         {
     });
-    
-    
-    
-
-    
+        
     // const keys = Object.keys(OrderLists)
     const [keys, setKeys] = useState([])
     const maxrow = 9;
     const totalPage = Math.ceil(keys.length / maxrow);
-    
+    const {currentUser} = useAuth();
     const [page, setPage] = useState(1);
     const [orderStart, setOrderStart] = useState(0);
     const [orderEnd, setOrderEnd] = useState(8);
@@ -51,6 +45,7 @@ function OrderReport() {
     console.log(detailItem);
     
     return (
+        currentUser ?
         <div style={{
             display:'flex',
             justifyContent:'space-between'
@@ -72,10 +67,10 @@ function OrderReport() {
                 <Typography variant="h2"
                 sx={{
                     fontWeight: 600,
-                    fontSize: '20px',
-                    
+                    fontSize: '30px',
                     justifyContent:'left',
-                    textAlign: 'start',
+                    textAlign: 'center',
+
                     
                     
                 }}>
@@ -116,7 +111,7 @@ function OrderReport() {
                         </tr>
                         {OrderList.map((order,index) => { 
                                                     
-                                                    var key = Object.keys(OrderLists[order].detail);
+                                                    //var key = Object.keys(OrderLists[order].detail);
                                                     
                                                     const day = new Date();
                                                     day.setTime(OrderLists[order].time);
@@ -184,7 +179,7 @@ function OrderReport() {
             </Box>
             }
             </Box>
-        </div>
+        </div> : <Home/>
     );
 }
 

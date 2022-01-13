@@ -7,7 +7,6 @@ import { SinglePage } from './pages/singlePage';
 import Dashboard from './components/dashboard'
 import {Box} from '@mui/material';
 import { Searchbar } from './components/searchbar';
-import { Footer } from './components/footer';
 import {BrowserRouter , Routes, Route} from 'react-router-dom';
 import { ComboPage } from './pages/comboPage';
 import SignIn from './pages/SignIn';
@@ -27,6 +26,7 @@ import { fetchAllAppetizers } from './store/categories/appetizerSlice';
 import { fetchAllCombos } from './store/comboSlice';
 import { SingleComboPage } from './pages/singleComboPage';
 import { OrderPage } from './pages/orderPage';
+
 function App() {
   const dispatch = useDispatch()
   useEffect(()=>{
@@ -37,8 +37,8 @@ function App() {
     dispatch(fetchAllKids())
     dispatch(fetchAllAppetizers())
     dispatch(fetchAllCombos())
-
   })
+
   return (
       <body>
      
@@ -71,9 +71,7 @@ function App() {
                 <Route path="/combo/:comboId" element = {<SingleComboPage/>}/>
                 <Route path="/order" element={<OrderPage/>}/>
                 <Route path="/create_menu" element={<ManagePage/>}/>
-                
               </Routes>
-            {/* <Footer/> */}
           </Box>
           </AuthContextProvider>
           </BrowserRouter>
