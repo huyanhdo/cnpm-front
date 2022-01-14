@@ -99,7 +99,7 @@ export const CartPage = ()=>{
     const pizzas = useSelector(state => state.pizzas.entities)
     const combos = useSelector(state => state.combos.entities)
     const makeOrder = () =>{
-        const shipment = province ==='Ha Noi'? 0 : 30000
+        const shipment = inPlace || province ==='Ha Noi'? 0 : 30000
         const time = Date.now()
         const detail = {
             'pizza': [],
@@ -398,7 +398,7 @@ export const CartPage = ()=>{
                         color: '#07143B',
                         textAlign: 'start',
                     }}
-                    >Phí ship: {province ==='Ha Noi'? 0 : 30000}
+                    >Phí ship: {inPlace || province ==='Ha Noi'? 0 : 30000}
                 </Typography>
                 <Typography variant="h6"
                     sx={{
@@ -409,7 +409,7 @@ export const CartPage = ()=>{
                         color: '#07143B',
                         textAlign: 'start',
                     }}
-                    >Tổng đơn: {totalValue + (province ==='Ha Noi'? 0 : 30000)}
+                    >Tổng đơn: {totalValue + (inPlace || province ==='Ha Noi'? 0 : 30000)}
                 </Typography>
                 <Button variant="contained" 
                     disabled={!validForm()}
