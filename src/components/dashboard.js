@@ -228,7 +228,7 @@ const Dashboard =() =>{
                         fontSize:'20px',
                         textAlign:'start',
                         color:'#252836'
-                    }}>Tổng đĩa</Typography>
+                    }}>Tổng món</Typography>
                     </Box>
                     <Typography variant='h1' sx={{
                         marginTop:'10%',
@@ -262,7 +262,7 @@ const Dashboard =() =>{
                         fontSize:'20px',
                         textAlign:'start',
                         color:'#252836'
-                    }}>Tổng khách</Typography>
+                    }}>Tổng đơn</Typography>
                     </Box>
                     <Typography variant='h1' sx={{
                         marginTop:'10%',
