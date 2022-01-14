@@ -88,9 +88,9 @@ export const PizzaMenu = ()=>{
     const [page, setPage] = useState(1);
     const fetchingStatus = categories[category].selector.fetchingStatus
     const products = categories[category].selector.entities
-    const ids = categories[category].selector.ids
+   // const ids = categories[category].selector.ids
     const max = 10;
-    const [page, setPage] = useState(1);
+    //const [page, setPage] = useState(1);
     const totalPage = Math.ceil(ids.length / max);
     const pageList = [];
     for(let i = 1;i <= totalPage;i++)pageList.push(i);
