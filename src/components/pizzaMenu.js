@@ -1,8 +1,40 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { PizzaCard } from "./categories";
-import { Box, Typography, styled, Pagination, Grow, CircularProgress} from '@mui/material';
+import {IconButton, Box, Typography, styled, Pagination, Grow, CircularProgress,TextField,InputAdornment} from '@mui/material';
 import { useSelector } from "react-redux";
 import { useParams } from "react-router";
+import { makeStyles } from "@mui/styles";
+import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
+const useStyle = makeStyles({
+    textField:{
+    '& .MuiOutlinedInput-root': {
+    borderRadius:100,
+    border:'solid',
+    borderWidth:'1px',
+    backgroundColor:'white',
+    '&.Mui-focused fieldset': {
+        borderColor: 'white',
+    },
+    '& input':{
+        height:'8px',
+        backgroundColor:'white',
+        borderTopRightRadius:'100px',
+        borderBottomRightRadius:'100px',
+        "&:-webkit-autofill": {
+        WebkitBoxShadow: "0 0 0 1000px white inset"
+        }
+     },
+    },
+    '& fieldset':{
+        border:'none',
+        fontFamily: 'be Vietnam',
+        paddingLeft:'10px',
+    },      
+    width:'100%',
+    },
+    iconButton:{backgroundColor:'white'}
+})
+
 export const CustomPagination = styled(Pagination)({
     "& .MuiPaginationItem-root": {
         fontFamily: 'Poppins'
@@ -15,8 +47,8 @@ export const CustomPagination = styled(Pagination)({
     }
 })
 
-
 export const PizzaMenu = ()=>{
+    const classes = useStyle();
     const categories = {
         'pizza':{
             selector: useSelector(state => state.pizzas),
@@ -50,6 +82,10 @@ export const PizzaMenu = ()=>{
         }
     }
     const {category} = useParams();
+    const [search,setSearch] = useState('');
+  //  const [ids,setids] = useState([]);
+    const ids = categories[category].selector.ids;
+    const [page, setPage] = useState(1);
     const fetchingStatus = categories[category].selector.fetchingStatus
     const products = categories[category].selector.entities
     const ids = categories[category].selector.ids
@@ -58,8 +94,13 @@ export const PizzaMenu = ()=>{
     const totalPage = Math.ceil(ids.length / max);
     const pageList = [];
     for(let i = 1;i <= totalPage;i++)pageList.push(i);
+    useEffect(()=>{
+        setSearch('');
+    },[category])
+    
     return(
         <Box sx={{p: 5, marginBottom: '100px', width: '100%'}}>
+        <Box sx={{display:'flex',flexDirection:'row'}}>
         <Typography variant="h6"
                     sx={{
                         fontFamily: 'Playfair Display',
@@ -72,6 +113,20 @@ export const PizzaMenu = ()=>{
                     }}
                     >{categories[category].menuName}
         </Typography>
+        <Box sx={{display:'flex',alignItems:'center'}}>
+        <TextField 
+            className = {classes.textField}
+            placeholder="Search..."
+            value={search}
+            onChange = {(e)=>setSearch(e.target.value)}
+            InputProps={{
+                startAdornment: <InputAdornment position="start" sx={{backgroundImage:'white'}}>
+                            <IconButton className = {classes.iconButton}><SearchRoundedIcon /></IconButton>
+                            </InputAdornment>,
+              }}/>
+             
+        </Box>
+        </Box>
         {
         fetchingStatus === 'SUCCESS'?
         <Box>
@@ -84,17 +139,18 @@ export const PizzaMenu = ()=>{
                 flexWrap: 'wrap'
             }}
             >
-            {
-                ids
+            {   
+                ids.filter(id=>   
+                    !search ? id : products[id].title.toUpperCase().includes(search.toString().toUpperCase())
+                   )
                 .map((id, index) =>{
-                    return (index >= (page - 1)*max && index < page * max) ?
+                    return (index >= (page - 1)*max && index < page * max) &&
                         <Box sx={{marginLeft: '20px'}}>
                             <PizzaCard image={products[id].image_url} name={products[id].title} 
                             rate={products[id].rating} price={products[id].price}
                             id = {id} link = {categories[category].singlePath + id}
                             />
                         </Box>
-                    : false
                 })
             }
             </Box>

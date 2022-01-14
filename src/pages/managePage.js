@@ -1,11 +1,10 @@
 import React from "react";
 import {Box, Typography, Tab } from '@mui/material';
 import {TabContext, TabList, TabPanel} from '@mui/lab';
-import { useSelector } from "react-redux";
 import { ComboManage, PizzaManage } from "../components/manageCategory";
 import { styled } from "@mui/system";
-
-
+import { useAuth } from "../context/AuthContext";
+import { Home } from "./Home";
 export const MyTab = styled(Tab)({
     fontFamily: 'Poppins',
     fontWeight: '600',
@@ -24,13 +23,13 @@ export const MyTab = styled(Tab)({
 
 
 export const ManagePage = ()=>{
-
+    const {currentUser} = useAuth();
     const [value, setValue] = React.useState('1');
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
 
-    return(
+    return( currentUser?
             <Box style={{
                 width: '100%',
                 }}>
@@ -83,6 +82,6 @@ export const ManagePage = ()=>{
                     </TabPanel>
                 </TabContext>
                 </Box>
-            </Box>
+            </Box> : <Home/> 
     )
 }

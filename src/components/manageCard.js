@@ -1,5 +1,6 @@
-import { Box, Divider , IconButton, Rating, Stack, Typography, Button, TextField, Modal, Fade, InputAdornment} from "@mui/material";
-import React, { useState } from "react";
+import { Box, Divider , IconButton, Rating, Stack, Typography, Button, TextField, Modal, Fade, InputAdornment,MenuItem,
+Radio,RadioGroup, FormControlLabel, FormControl, FormLabel} from "@mui/material";
+import React, { useEffect, useState } from "react";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
@@ -21,7 +22,7 @@ import axios from 'axios';
 const timeToDate = (time) =>{
     let date = new Date(time)
     let year = date.getFullYear()
-    let month = date.getMonth()
+    let month = date.getMonth() + 1;
     let day = date.getDate()
     return year + '/' + month + '/' + day;   
 }
@@ -69,10 +70,49 @@ export const PizzaManageCard = (props)=>{
         setHov(prev => !prev);
     }
 
+    const checkItem = () => {
+        if(category == 'pizza'){
+            if(name.length == 0 || description.length ==0 || image.length == 0 || price.length == 0 ||
+                !(toppings[0].name.length ==0 && toppings[0].price.length ==0) || sizes[0].price.length ==0 ||
+                sizes[0].price.length ==0 ){
+                    alert("The form has not been completed !")
+                    return false;
+                }
+            if(isNaN(parseInt(price)) ){
+                alert("Invalid value !");
+                return false;
+            }
+            sizes.forEach(a => {
+                if(isNaN(parseInt(a.number)) || parseInt(a.number) <= 0 || a.name.length == 0){
+                    alert("Invalid value !");
+                    return false;
+                }
+            });
+            if(!(toppings[0].name.length ==0 && toppings[0].price.length ==0) && toppings.length == 1)
+            toppings.forEach(a => {
+                if(isNaN(parseInt(a.number)) || parseInt(a.number) <= 0 || a.name.length == 0){
+                    alert("Invalid value !");
+                    return false;
+                }
+            });
+        }
+        else{
+            if(name.length == 0 || description.length ==0 || image.length == 0 || price.length == 0){
+                    alert("The form has not been completed !")
+                    return false;
+                }
+            if(isNaN(parseInt(price)) ){
+                alert("Invalid value !");
+                return false;
+            }
+        }
+        return true;
+    }
+
     //handle the dynamic Sizes in Modal
     const handleSizeChange = (index, e) => {
         const Sizes = [...sizes];
-        Sizes[index][e.target.id] =e.target.id ==='type_detail' ? e.target.value : parseInt(e.target.value);
+        Sizes[index][e.target.name] =e.target.value ;
         setSizes(Sizes);
     }
 
@@ -90,7 +130,7 @@ export const PizzaManageCard = (props)=>{
     //handle the dynamic Toppings in Modal
     const handleToppingChange = (index, e) => {
         const Toppings = [...toppings];
-        Toppings[index][e.target.id] = e.target.id === 'topping_name' ? e.target.value : parseInt(e.target.value);
+        Toppings[index][e.target.name] = e.target.value;
         setToppings(Toppings);
     }
 
@@ -105,21 +145,21 @@ export const PizzaManageCard = (props)=>{
     }
     // ...........
     const EditHandle = async () => {
-        console.log(id);
         const newItem = {
             comment: props.item.comment,
             description: description,
             image_url: image,
             order_number: props.item.order_number,
-            price: price, 
+            price: parseInt(price), 
             rating: props.item.rating,
             title: name,
         };
-        if(sizes !== undefined){
-            newItem['size'] = sizes;
-            newItem['topping'] = toppings;
+        if(category == 'pizza'){
+            newItem['size'] = [];
+            sizes.forEach(a => newItem['size'].push({"type_detail":a.type_detail, "type_price": parseInt(a.type_price)}));
+            newItem['topping'] = [];
+            toppings.forEach(a => newItem['topping'].push({ "topping_name":a.topping_name, "topping_price": parseInt(a.topping_price)}));
             newItem['type'] = ["Đế giòn","Đế mềm xốp truyền thống"];
-
         }
         try {
             const resp = await axios.put(url, newItem);
@@ -179,7 +219,7 @@ export const PizzaManageCard = (props)=>{
             borderRadius: '50%',
             boxShadow: '0px 30px 30px rgba(234, 106, 18, 0.05)',
             alignSelf: 'center',
-            transform: 'translateY(-30px)',
+            transform: 'translateY(-34px)',
             objectFit: 'cover',
             // boxShadow: '1px -1px 5px rgba(0,0,0, 0.5)',
             width: '150px', height: '150px',
@@ -196,7 +236,7 @@ export const PizzaManageCard = (props)=>{
                         textAlign: 'start',
                         marginBottom: '10px'
                     }}
-                    >{name.length <= 16 ? name : name.slice(0, 15) + '...' }
+                    >{name.length < 16 ? name : name.slice(0, 15) + '...' }
             </Typography>
             <Rating value={props.item.rating} readOnly
             sx={{
@@ -221,7 +261,7 @@ export const PizzaManageCard = (props)=>{
                         color: hov? 'white': '#EA6A12',
                         textAlign: 'start'
                     }}
-                    >$ {price}
+                    > {price} VND
                 </Typography>
                {/* <IconButton
                 size="small"
@@ -333,7 +373,7 @@ export const PizzaManageCard = (props)=>{
                     width: '60%'
                 }}
                 />
-                <TextField onChange={(e) => {setPrice(parseInt(e.target.value))}}
+                <TextField onChange={(e) => {setPrice(e.target.value)}}
                     required defaultValue={price}
                     variant="standard"
                     id="price-field"
@@ -341,7 +381,7 @@ export const PizzaManageCard = (props)=>{
                     multiline
                     maxRows={1}
                     color='warning'
-                    InputProps={{style: {fontFamily: 'Poppins'}, endAdornment: <InputAdornment position="end">$</InputAdornment>,}} // font size of input text
+                    InputProps={{style: {fontFamily: 'Poppins'}, endAdornment: <InputAdornment position="end">VND</InputAdornment>,}} // font size of input text
                     InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
                     sx={{
                         width: '40%'
@@ -350,7 +390,7 @@ export const PizzaManageCard = (props)=>{
                 </Stack>
 
                 {
-                    sizes !== undefined && 
+                    category ==='pizza' &&
                     <Box 
                     sx={{
                     display: 'flex',
@@ -365,7 +405,7 @@ export const PizzaManageCard = (props)=>{
                             <TextField onChange={(e) => {handleSizeChange(index, e)}}
                             required value={size.type_detail}
                             variant="standard" defaultValue={size.type_detail}
-                            id="type_detail"
+                            name="type_detail"
                             label="Size Name"
                             multiline
                             maxRows={1}
@@ -379,12 +419,12 @@ export const PizzaManageCard = (props)=>{
                             <TextField onChange={(e) => {handleSizeChange(index, e)}}
                             required value={size.type_price}
                             variant="standard" defaultValue={size.type_price}
-                            id="type_price"
+                            name="type_price"
                             label="Size Price"
                             multiline
                             maxRows={1}
                             color='warning'
-                            InputProps={{style: {fontFamily: 'Poppins'}, endAdornment: <InputAdornment position="end">$</InputAdornment>,}} // font size of input text
+                            InputProps={{style: {fontFamily: 'Poppins'}, endAdornment: <InputAdornment position="end">VND</InputAdornment>,}} // font size of input text
                             InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
                             sx={{
                                 width: '40%'
@@ -436,7 +476,7 @@ export const PizzaManageCard = (props)=>{
                 />
 
                 {
-                    toppings !== undefined && 
+                    category ==='pizza' &&
                     <Box 
                     sx={{
                         display: 'flex',
@@ -451,7 +491,7 @@ export const PizzaManageCard = (props)=>{
                             <TextField onChange={(e) => {handleToppingChange(index, e)}}
                             required value={topping.topping_name}
                             variant="standard" defaultValue={topping.topping_name}
-                            id="topping_name"
+                            name="topping_name"
                             label="Topping Name"
                             multiline
                             maxRows={1}
@@ -465,12 +505,12 @@ export const PizzaManageCard = (props)=>{
                             <TextField onChange={(e) => {handleToppingChange(index, e)}}
                             required value={topping.topping_price}
                             variant="standard" defaultValue={topping.topping_price}
-                            id="topping_price"
+                            name="topping_price"
                             label="Topping Price"
                             multiline
                             maxRows={1}
                             color='warning'
-                            InputProps={{style: {fontFamily: 'Poppins'}, endAdornment: <InputAdornment position="end">$</InputAdornment>,}} // font size of input text
+                            InputProps={{style: {fontFamily: 'Poppins'}, endAdornment: <InputAdornment position="end">VND</InputAdornment>,}} // font size of input text
                             InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
                             sx={{
                                 width: '40%'
@@ -501,8 +541,11 @@ export const PizzaManageCard = (props)=>{
                     </Box>
                 }
                 <Button variant="contained" 
-                    onClick={()=>{setEditPizza(false);
-                    return EditHandle()}}
+                    onClick={()=>{
+                        if(checkItem()){
+                            setEditPizza(false);
+                            EditHandle()}}
+                        }
                     sx={{
                         backgroundColor: '#EA6A12',
                         borderRadius: '100px',
@@ -610,6 +653,30 @@ export const ComboManageCard = (props) =>{
     const url = props.cardUrl;
     const comboId = props.comboId;
 
+
+    const currencies = [
+        {
+          value: 'dessert',
+          label: 'Dessert',
+        },
+        {
+          value: 'kid',
+          label: 'Kid',
+        },
+        {
+          value: 'vegetable',
+          label: 'Vegetable',
+        },
+        {
+          value: 'drink',
+          label: 'Drink',
+        },
+        {
+            value: 'appetizer',
+            label: 'Appetizer',
+          },
+    ];
+
     //Variable of new Combo
     const [title, setTitle] = useState(combo.title);
     const [subtitle, setSubTitle] = useState(combo.subtitle);
@@ -622,54 +689,121 @@ export const ComboManageCard = (props) =>{
     const [off, setOff] = useState(combo.off);
     const [persons, setPerson] = useState(combo.persons);
     const [pizza, setPizza] = useState(combo.pizza);
+    let b =[{name: '', number:''},];
+    if(combo.hasOwnProperty('free') ){
+        b = [];
+        let key = Object.keys(combo.free);
+        for (const k of key ) b.push({'name' : k, 'number' : combo.free[k]})
+        
+    }
+    const [free, setFree] = useState(b);
     
     let keys = Object.keys(combo);
     let a =[];
     for (const k of keys ) {
         if(k !== "title" && k !== "subtitle" && k !== "banner" && k !== "image" && k !== "description" && k !== "start"
-        && k !== "end" && k !== "persons" && k !== "pizza" && k !== "off"){
+        && k !== "end" && k !== "persons" && k !== "pizza" && k !== "off" && k !== "free"){
             a.push({'name' : k, 'number' : combo[k],})
         }
     }
     const [categorys, setCategorys] = useState(a);
+    const [comboType, setComboType] = useState(combo.hasOwnProperty('free') ? "free" : "off");
+    const [type, setType] = useState(comboType == 'off' ? true : false);
     const switchHov = ()=>{
         setHov(prev => !prev);
+    }
+    const handleChangeType = (event) => {
+        setComboType(event.target.value);
+        setType(!type);
+        
+    };
+
+    const checkCombo = () => {
+        if(title.length == 0 || subtitle.length == 0 || (off.length == 0 && (free[0].number == ''))
+        || persons.length == 0 || pizza.length ==0 || categorys[0].number =='' || description.length ==0
+        || banner.length == 0 || image.length == 0){
+            alert("The form has not been completed !")
+            return false;
+        }
+        if(isNaN(parseInt(persons)) || isNaN(parseInt(pizza)) || (isNaN(parseInt(off)) && comboType == 'off') ){
+            alert("Invalid value !");
+            return false;
+        }
+        if(comboType == 'free'){
+            free.forEach(a => {
+                if(isNaN(parseInt(a.number)) || parseInt(a.number) <= 0){
+                    alert("Invalid value !");
+                    return false;
+                }
+            });
+        }
+        categorys.forEach(a => {
+            if(isNaN(parseInt(a.number)) || parseInt(a.number) <= 0){
+                alert("Invalid value !");
+                return false;
+            }
+        })
+        return true;
     }
 
     //handle the dynamic Sizes in Modal
     const handleCategoryChange = (index, e) => {
+        console.log(e);
         const Categories = [...categorys];
-        Categories[index][e.target.id] = e.target.value ;
-        console.log(e.target.value);
+        Categories[index][e.target.name] =e.target.name ==='name' ? e.target.value : parseInt(e.target.value);
         setCategorys(Categories);
+        console.log(Categories);
     }
 
     const handleAddCategory = () => {
         setCategorys([...categorys, {name: '', number: ''}]);
     }
 
-    const handleRemoveCategory = (index) => {
+    const handleRemoveCategory = (index,e ) => {
         const Categories = [...categorys];
         Categories.splice(index,1);
         setCategorys(Categories);
     }
     // ...........
-    const handleEditCombo = async () => {
+    //handle the dynamic Free in Modal
+    const handleFreeChange = (index, e) => {
+        const Free = [...free];
+        Free[index][e.target.name] =e.target.name ==='name' ? e.target.value : parseInt(e.target.value);
+        setFree(Free);
+    }
 
+    const handleAddFree = () => {
+        setFree([...free, {name: '', number: ''}]);
+    }
+
+    const handleRemoveFree = (index) => {
+        const Free = [...free];
+        Free.splice(index,1);
+        setFree(Free);
+    }
+    // ...........
+
+
+    const handleEditCombo = async () => {
         const newItem = {
             banner: banner,
             description: description,
             image: image,
             start: Date.parse(start) / 1000,
             end: Date.parse(end) / 1000, 
-            persons: persons,
+            persons: parseInt(persons),
             title: title,
             subtitle: subtitle,
-            pizza: pizza,
-            off: off,
+            pizza: parseInt(pizza),
+            off: parseInt(off),
         };
-        if(categorys.length !== 0){
-            categorys.forEach(a => newItem[a.name] = a.number);
+        if(categorys[0].name !== ''){
+            categorys.forEach(a => newItem[a.name] = parseInt(a.number));
+        }
+        if(comboType == 'free'){
+            newItem['free'] = {};
+            free.forEach(a => newItem['free'][a.name] =parseInt(a.number));
+            newItem.off = 0;
         }
 
         try {
@@ -679,7 +813,7 @@ export const ComboManageCard = (props) =>{
             }
         } catch (err) {
             // Handle Error Here
-            console.error(err);
+            alert(err);
         }
     }
 
@@ -757,7 +891,7 @@ export const ComboManageCard = (props) =>{
                         textAlign: 'start',
                         marginBottom: '20px'
                     }}
-                    >{timeToDate(start)} - {timeToDate(end)}   
+                    >{new Date() / 1000 > end/1000 ? "Expired" : timeToDate(start) + " - " + timeToDate(end)}   
             </Typography>
             <Divider variant="light"  sx={{
                 width: '50%',
@@ -882,7 +1016,7 @@ export const ComboManageCard = (props) =>{
             <Modal open={editCombo} onClose = {() => {if(hov === true) switchHov(); setEditCombo(false)}}>
             <Fade in={editCombo} timeout={500}>
             <Stack
-            spacing = {2}
+            spacing = {1}
             sx={{
                 borderRadius: '24px',
                 backgroundColor: 'white',
@@ -906,6 +1040,8 @@ export const ComboManageCard = (props) =>{
                     }}
                     >{'Edit Combo'}
                 </Typography>
+
+                <Stack direction="row" spacing={2}>
                 <TextField onChange={(e) => {setTitle(e.target.value)}}
                 required defaultValue={title}
                 variant="standard"
@@ -917,24 +1053,119 @@ export const ComboManageCard = (props) =>{
                 inputProps={{style: {fontFamily: 'Poppins'}}} // font size of input text
                 InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
                 sx={{
-                    
+                    width: '50%'
                 }}
                 />
-                <Stack direction="row" spacing={2}>
-                <TextField onChange={(e) => {setOff(e.target.value)}}
-                required defaultValue={off}
-                variant="standard"
-                id="Off"
-                label="% Off"
-                multiline
-                maxRows={1}
-                color='warning'
-                inputProps={{style: {fontFamily: 'Poppins'}}} // font size of input text
+                <TextField onChange={(e) => {setSubTitle(e.target.value)}}
+                required variant="standard" multiline color='warning' maxRows={4}
+                id="subtitle" label="Subtitle" defaultValue={subtitle}
+                inputProps={{style: {fontFamily: 'Poppins'},}} // font size of input text
                 InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
                 sx={{
-                    width: '33%'
+                    width: '50%'
                 }}
                 />
+                </Stack>
+                <FormControl component="fieldset">
+                    <FormLabel component="legend">Combo Type</FormLabel>
+                    <RadioGroup row
+                        aria-label="Type Combo"
+                        name="comboType"
+                        value={comboType}
+                        onChange={(e) => handleChangeType(e)}
+                    >
+                        <FormControlLabel value="off" control={<Radio />} label="% Off" />
+                        <FormControlLabel value="free" control={<Radio />} label="Free" />
+                    </RadioGroup>
+                </FormControl>
+                <Stack direction="row" spacing={2}>
+                <TextField onChange={(e) => {setOff((e.target.value))}}
+                    disabled={!type ? true : false} value={off} 
+                    variant="standard"
+                    id="off"
+                    label="%Off"
+                    multiline
+                    maxRows={1}
+                    color='warning'
+                    InputProps={{style: {fontFamily: 'Poppins'}, }} // font size of input text
+                    InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                    sx={{
+                        width: '40%'
+                    }}
+                />
+                <Box 
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    maxHeight:'60px',
+                    overflow: 'auto',
+                    width: '54%'
+                }}
+                >
+                {free && free.map((fre, index) => (
+                    <Stack key={index} direction='row' spacing={2} 
+                    >
+                        <TextField
+                        name="name" variant="standard" disabled={type ? true : false}
+                        select 
+                        label="Category Name"
+                        value={fre.name}
+                        onChange={(e) => {handleFreeChange(index, e)}}
+                        color='warning'
+                        InputProps={{style: {fontFamily: 'Poppins'},}} // font size of input text
+                        InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                        sx={{
+                            width: '70%'
+                        }}
+                        >
+                        {currencies.map((option) => (
+                            <MenuItem key={option.value} value={option.value}>
+                            {option.label}
+                            </MenuItem>
+                        ))}
+
+                        </TextField>
+                        
+                        <TextField onChange={(e) => {handleFreeChange(index, e)}}
+                        value={'' +  fre.number} disabled={type ? true : false}
+                        variant="standard"
+                        name="number"
+                        label="Number"
+                        multiline
+                        maxRows={1}
+                        color='warning'
+                        InputProps={{style: {fontFamily: 'Poppins'},}} // font size of input text
+                        InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                        sx={{
+                            width: '30%'
+                        }}
+                        />
+                        <IconButton disabled={free.length === 1} onClick={(index) => handleRemoveFree(index)}>
+                            <RemoveCircleOutlineIcon 
+                            sx={{
+                                color:  '#EA6A12',
+                                '&:hover, &:active':{
+                                color: '#07143B'
+                                },
+                            }}
+                            ></RemoveCircleOutlineIcon>
+                        </IconButton>
+                        <IconButton disabled={type ? true : false} onClick={() => handleAddFree()}>
+                            <AddCircleOutlineIcon 
+                            sx={{
+                                color:  '#EA6A12',
+                                '&:hover, &:active':{
+                                color: '#07143B'
+                                },
+                            }}
+                            ></AddCircleOutlineIcon>
+                        </IconButton>
+                    </Stack>
+                ))}
+                </Box>
+                </Stack>
+
+                <Stack direction="row" spacing={2}>
                 <TextField onChange={(e) => {setPerson(e.target.value)}}
                     required defaultValue={persons}
                     variant="standard"
@@ -946,21 +1177,21 @@ export const ComboManageCard = (props) =>{
                     InputProps={{style: {fontFamily: 'Poppins'}, }} // font size of input text
                     InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
                     sx={{
-                        width: '33%'
+                        width: '50%'
                     }}
                 />
                 <TextField onChange={(e) => {setPizza(e.target.value)}}
                     required  defaultValue={pizza}
                     variant="standard"
                     id="pizza"
-                    label="Pizza"
+                    label="Pizza" 
                     multiline
                     maxRows={1}
                     color='warning'
                     InputProps={{style: {fontFamily: 'Poppins'}, }} // font size of input text
                     InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
                     sx={{
-                        width: '33%'
+                        width: '50%'
                     }}
                 />
                 </Stack>
@@ -969,31 +1200,38 @@ export const ComboManageCard = (props) =>{
                 sx={{
                     display: 'flex',
                     flexDirection: 'column',
-                    maxHeight:'162px',
+                    maxHeight:'110px',
                     overflow: 'auto',
                 }}
                 >
                 {categorys.map((category, index) => (
                     <Stack key={index} direction='row' spacing={2} sx={{marginTop:'6px'}}
                     >
-                        <TextField onChange={(e) => {handleCategoryChange(index, e)}}
-                        required  defaultValue={category.name}
-                        variant="standard"
-                        id="name"
+                        <TextField
+                        name="name" variant="standard"
+                        select 
                         label="Category Name"
-                        multiline
-                        maxRows={1}
+                        value={category.name}
+                        onChange={(e) => {handleCategoryChange(index, e)}}
                         color='warning'
                         InputProps={{style: {fontFamily: 'Poppins'},}} // font size of input text
                         InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
                         sx={{
                             width: '40%'
                         }}
-                        />
+                        >
+                        {currencies.map((option) => (
+                            <MenuItem key={option.value} value={option.value}>
+                            {option.label}
+                            </MenuItem>
+                        ))}
+
+                        </TextField>
+
                         <TextField onChange={(e) => {handleCategoryChange(index, e)}}
                         required defaultValue={category.number}
                         variant="standard"
-                        id="number"
+                        name="number"
                         label="Number"
                         multiline
                         maxRows={1}
@@ -1004,7 +1242,7 @@ export const ComboManageCard = (props) =>{
                             width: '40%'
                         }}
                         />
-                        <IconButton disabled={categorys.length === 1} onClick={(index) => handleRemoveCategory(index)}>
+                        <IconButton disabled={categorys.length === 1} onClick={(e) => handleRemoveCategory(index,e)}>
                             <RemoveCircleOutlineIcon 
                             sx={{
                                 color:  '#EA6A12',
@@ -1027,15 +1265,6 @@ export const ComboManageCard = (props) =>{
                     </Stack>
                 ))}
                 </Box>
-                <TextField onChange={(e) => {setSubTitle(e.target.value)}}
-                required variant="standard" multiline color='warning' maxRows={4}
-                id="subtitle" label="Subtitle" defaultValue={subtitle}
-                inputProps={{style: {fontFamily: 'Poppins'},}} // font size of input text
-                InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
-                sx={{
-                    width: '100%'
-                }}
-                />
                 <TextField onChange={(e) => {setDescription(e.target.value)}}
                 required variant="standard" multiline color='warning' maxRows={4}
                 id="description" label="Description" defaultValue={description}
@@ -1080,15 +1309,17 @@ export const ComboManageCard = (props) =>{
                     sx={{width:'50%'}}
                     label="Time end"
                     value={end}
-                    onChange={(newValue) => setEnd(newValue)}
+                    onChange={(newValue) => {setEnd(newValue)}}
                     renderInput={(params) => <TextField {...params} />}
                     />
                 </Stack>
                 </LocalizationProvider>
                 <Button variant="contained" 
                     onClick={()=>{
-                        setEditCombo(false);
-                        handleEditCombo();
+                        if(checkCombo()){
+                            setEditCombo(false);
+                            handleEditCombo();
+                        }
                     }}
                     sx={{
                         backgroundColor: '#EA6A12',

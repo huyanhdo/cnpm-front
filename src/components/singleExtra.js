@@ -1,5 +1,5 @@
 import React, {useState } from "react";
-import {Box, Divider, IconButton, Stack, Typography, Rating, Button, List, ListItem, Modal, TextField, Checkbox, Fade, Snackbar} from '@mui/material';
+import {Box, Divider, IconButton, Stack, Typography, Rating, Button, List, ListItem, Modal, TextField, Fade, Snackbar} from '@mui/material';
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
 import  AddRoundedIcon  from "@mui/icons-material/AddRounded";
 import RemoveRoundedIcon from '@mui/icons-material/RemoveRounded';
