@@ -702,7 +702,7 @@ export const ComboCartItem = (props)=>{
                                 for(let i = 0; i < category.number;i++)range.push(i)
                                 return range.map(i =>{
                                     const productId = category.slot[i].productId
-                                    return <ComboMiniItem 
+                                    return productId && category.selector[productId] && <ComboMiniItem 
                                     image = {category.selector[productId].image_url}
                                     title = {category.selector[productId].title}/>
                                 })
@@ -794,11 +794,13 @@ export const Cart = (props)=>{
             }}>
             { 
                 cart.ids.map((itemId) =>{
-                    return(
+                    const cartInfo = cart.entities[itemId]
+                    const pizza = allPizzas[cart.entities[itemId].pizzaId]
+                    return cartInfo && pizza &&(
                             <ListItem>
                                 <PizzaCartItem 
-                                cartInfo = {cart.entities[itemId]}
-                                pizza = {allPizzas[cart.entities[itemId].pizzaId]}
+                                cartInfo = {cartInfo}
+                                pizza = {pizza}
                                 cartId = {itemId}
                                 handleCartChange = {props.handleCartChange}
                                 />
@@ -834,7 +836,7 @@ export const Cart = (props)=>{
                 cartExtras[category].ids.map((itemId) =>{
                     const cartItem = cartExtras[category].entities[itemId]
                     const extra = categories[cartItem.category].selector.entities[itemId]
-                    return(
+                    return extra && cartItem && (
                             <ListItem>
                                 <ExtraCartItem 
                                 category = {category}

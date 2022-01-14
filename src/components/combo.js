@@ -359,7 +359,7 @@ export const ComboList = ()=>{
     const ids = useSelector(state => state.combos.ids);
     const combos = useSelector(state => state.combos.entities);
     const fetchingStatus = useSelector(state => state.combos.fetchingStatus);
-    const max = 5;
+    const max = 6;
     const [page, setPage] = useState(1);
     const totalPage = Math.ceil(ids.length / max);
     const pageList = [];
