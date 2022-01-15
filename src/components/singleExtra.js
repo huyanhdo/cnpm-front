@@ -87,13 +87,13 @@ const postComment = async () =>{
                 newExtra)
             if(result.status === 200){
                 dispatch(categories[category].update({id: productId, item: newExtra}))
-                setMess('Your comment has been posted successfully')
+                setMess('Bình luận của bạn đã được đăng thành công')
                 setPosted(true)
             }
         closeCmt()
     }catch(err){
         console.log(err)
-        setMess('Sorry, Failed to post your comment')
+        setMess('Xin lỗi, có sự cố xảy ra')
         setPosted(true)
     }
 }
@@ -150,7 +150,7 @@ const postComment = async () =>{
                 </Typography>
                 <Typography
                     style={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 400,
                         fontSize: '13px',
                         lineHeight: '22.75px',
@@ -166,14 +166,14 @@ const postComment = async () =>{
                 <Divider sx = {{maxWidth: '50%'}}/>
                 <div
                     style={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 600,
                         fontSize: '20px',
                         lineHeight: '175%',
                         color:'#EA6A12',
                         textAlign: 'start'
                     }}
-                    >$ {extra.price}
+                    > {extra.price} VND
                 </div>
                 <Rating value={extra.rating} readOnly
                 sx={{
@@ -201,7 +201,7 @@ const postComment = async () =>{
                         color: '#07143B',
                         textAlign: 'center',
                     }}
-                    >Number: 
+                    >Số lượng: 
             </Typography>
             <Stack direction="row" spacing={5}
             sx={{
@@ -230,7 +230,7 @@ const postComment = async () =>{
                 </IconButton>
                 <Typography variant="subtitle1"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 600,
                         fontSize: '16px',
                         lineHeight: '175%',
@@ -269,7 +269,7 @@ const postComment = async () =>{
                         color: '#07143B',
                         textAlign: 'center',
                     }}
-                    >Total: $ {round(extra.price * num)}
+                    >Tổng tiền:  {round(extra.price * num)} VND
             </Typography>
         </Box>
         <Button variant="contained" 
@@ -286,7 +286,7 @@ const postComment = async () =>{
                         backgroundColor: '#EA6A12',
                         borderRadius: '100px',
                         //maxWidth: '150px',
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 'normal',
                         fontSize: '15px',
                         lineHeight: '175%',
@@ -297,7 +297,7 @@ const postComment = async () =>{
                         marginTop: 3
                     }}
                     >
-                        Add to Cart
+                        Thêm vào giỏ
         </Button>
         <Divider variant="middle" sx={{m: 5}}/>
         <Box sx={{display: 'flex', justifyContent: 'space-between', padding: '20px 50px'}}>
@@ -310,7 +310,7 @@ const postComment = async () =>{
                         color: '#07143B',
                         textAlign: 'start',
                     }}
-                    >Comments
+                    >Bình luận
         </Typography>
         <Button variant="contained" 
                     onClick = {() => {setCmt(true)}}
@@ -318,7 +318,7 @@ const postComment = async () =>{
                         backgroundColor: '#EA6A12',
                         borderRadius: '100px',
                         //maxWidth: '150px',
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 'normal',
                         fontSize: '15px',
                         lineHeight: '175%',
@@ -329,7 +329,7 @@ const postComment = async () =>{
                         marginBottom: 2
                     }}
                     >
-                        Add Comment
+                        Thêm bình luận
         </Button>
         <Modal open={cmt} onClose = {closeCmt}>
             <Fade in={cmt} timeout={500}>
@@ -356,7 +356,7 @@ const postComment = async () =>{
                         color: '#07143B',
                         textAlign: 'center',
                     }}
-                    >Your Comment
+                    >Bình luận của bạn
                 </Typography>
                 <TextField
                 required
@@ -365,8 +365,8 @@ const postComment = async () =>{
                 multiline
                 maxRows={1}
                 color='warning'
-                inputProps={{style: {fontFamily: 'Poppins'}}} // font size of input text
-                InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                inputProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input text
+                InputLabelProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input label
                 sx={{
                     width: '100%'
                 }}
@@ -382,8 +382,8 @@ const postComment = async () =>{
                 multiline
                 rows={4}
                 maxRows = {4}
-                inputProps={{style: {fontFamily: 'Poppins'}}} // font size of input text
-                InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                inputProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input text
+                InputLabelProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input label
                 onChange={(e)=>{
                     setYourCmt(e.target.value)
                 }}
@@ -393,14 +393,14 @@ const postComment = async () =>{
                 >
                 <Typography variant="h6"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 700,
                         fontSize: '15px',
                         lineHeight: '52px',
                         color: '#07143B',
                         textAlign: 'center',
                     }}
-                    >Rate: 
+                    >Đánh giá: 
                 </Typography>
                 <Rating
                 
@@ -418,7 +418,7 @@ const postComment = async () =>{
                 (yourName.length === 0 || yourCmt.length === 0) &&
                 (<Typography variant="h6"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 700,
                         fontSize: '15px',
                         lineHeight: '52px',
@@ -426,7 +426,7 @@ const postComment = async () =>{
                         textAlign: 'center',
                     }}
                 >
-                    Please fill out the information completely
+                    Hãy điền đủ thông tin
                 </Typography>)
                 }
                 <Button variant="contained" 
@@ -435,7 +435,7 @@ const postComment = async () =>{
                         backgroundColor: '#EA6A12',
                         borderRadius: '100px',
                         alignSelf: 'center',
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 'normal',
                         fontSize: '15px',
                         lineHeight: '175%',
@@ -472,7 +472,7 @@ const postComment = async () =>{
                 <Typography variant="h6"
                     sx={{
                         alignSelf: 'start',
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 700,
                         fontSize: '30px',
                         lineHeight: '52px',
@@ -480,7 +480,7 @@ const postComment = async () =>{
                         textAlign: 'center',
                         marginTop: '50px'
                     }}
-                >No comment
+                >Không có bình luận nào
             </Typography>
             }
             </List>
@@ -515,7 +515,7 @@ const postComment = async () =>{
                         color: '#07143B',
                         textAlign: 'center',
                     }}
-                    >Your Cart has been updated successfully!!
+                    >Giỏ hàng của bạn đã được cập nhập
                 </Typography>
                 <Stack direction="row" spacing={5}>
                 <Button variant="contained" 
@@ -526,7 +526,7 @@ const postComment = async () =>{
                         backgroundColor: '#EA6A12',
                         borderRadius: '100px',
                         //maxWidth: '150px',
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 'normal',
                         fontSize: '15px',
                         lineHeight: '175%',
@@ -538,7 +538,7 @@ const postComment = async () =>{
                         marginBottom: 2
                     }}
                     >
-                        Done
+                        Hoàn tất
                 </Button>
                 <Button variant="contained" 
                     onClick = {()=>{
@@ -549,7 +549,7 @@ const postComment = async () =>{
                         borderRadius: '100px',
                         //maxWidth: '150px',
                         height: '45px',
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 'normal',
                         fontSize: '15px',
                         lineHeight: '175%',
@@ -560,7 +560,7 @@ const postComment = async () =>{
                         marginBottom: 2
                     }}
                     >
-                        Go to cart
+                        Xem giỏ hàng
                 </Button>
                 </Stack>
                 

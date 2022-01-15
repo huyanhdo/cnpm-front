@@ -273,66 +273,6 @@ const Dashboard =() =>{
                     }}>{`${totalcustomer}`}</Typography>
                     </Box>
                                         
-                    {/* <Box sx={{
-                        width:'30%',
-                        backgroundColor:'#1F1D2B',
-                        height:'15%',
-                        borderRadius:'8px',
-                        padding:'16px'
-                    }}>
-                        <Box sx={{
-                        width:'38px',
-                        height:'38px',
-                        backgroundColor:'#252836',
-                        padding:'5px',
-                        borderRadius:'8px'
-                    }}>
-                    <BookmarkRoundedIcon sx={{color:'#FFB572'}}/></Box>
-                    <Typography variant='h1' sx={{
-                        marginTop:'8px',
-                        fontWeight:550,
-                        fontSize:'28px',
-                        textAlign:'start',
-                        color:'black'
-                    }}>{totaldish}</Typography>
-                    <Typography variant='h3' sx={{
-                        marginTop:'8px',
-                        fontWeight:500,
-                        fontSize:'14px',
-                        textAlign:'start',
-                        color:'#ABBBC2'
-                    }}>Total Dish Ordered</Typography>
-                    </Box>
-                    <Box sx={{
-                        width:'30%',
-                        backgroundColor:'#1F1D2B',
-                        height:'15%',
-                        borderRadius:'8px',
-                        padding:'16px'
-                    }}>
-                        <Box sx={{
-                        width:'38px',
-                        height:'38px',
-                        backgroundColor:'#252836',
-                        padding:'5px',
-                        borderRadius:'8px'
-                    }}>
-                    <AccountCircleRoundedIcon sx={{color:'#65B0F6'}}/></Box>
-                    <Typography variant='h1' sx={{
-                        marginTop:'8px',
-                        fontWeight:550,
-                        fontSize:'28px',
-                        textAlign:'start',
-                        color:'black+'
-                    }}>{totalcustomer}</Typography>
-                    <Typography variant='h3' sx={{
-                        marginTop:'8px',
-                        fontWeight:500,
-                        fontSize:'14px',
-                        textAlign:'start',
-                        color:'#ABBBC2'
-                    }}>Total Customer </Typography>
-                    </Box>*/}
                     </Box> 
                     <br/>
                     

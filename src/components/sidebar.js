@@ -12,6 +12,16 @@ import { useAuth } from '../context/AuthContext';
 import ContactSupportRoundedIcon from '@mui/icons-material/ContactSupportRounded'
 import YoutubeSearchedForRoundedIcon from '@mui/icons-material/YoutubeSearchedForRounded';
 import {useNavigate} from 'react-router';
+
+const name ={
+    'pizza': 'Pizza',
+    'dessert': 'Tráng miệng',
+    'appetizer':'Khai vị',
+    'vegetable': 'Món chay',
+    'kid': 'Đồ cho bé',
+    'drink':'Đồ uống',
+}
+
 export const CustomIconButton = styled(IconButton)({
     width: 45,
     height: 45,
@@ -34,7 +44,7 @@ export const CustomListItem = styled(ListItem)({
         color: '#EA6A12',
     },
     '& .typo':{
-        fontFamily: 'Poppins',
+        fontFamily: 'be Vietnam',
         fontWeight: 400,
         fontSize: '16px',
         lineHeight: '28px',
@@ -121,7 +131,7 @@ export const MenuBar = ()=>{
                 
             >
                 <Typography variant="h2" sx={{
-                    fontFamily: 'Playfair Display, serif',
+                    fontFamily: 'be Vietnam',
                     fontWeight: 'bold',
                     fontSize: 48,
                     lineHeight: 120
@@ -142,7 +152,7 @@ export const MenuBar = ()=>{
                     <ListItemButton className='button' onClick={()=>{navigate('/')}}>
                     <HomeRoundedIcon className='icon'/>
                     <Typography className='typo'>
-                        Home
+                        Trang chủ
                     </Typography>
                     </ListItemButton>
                 </CustomListItem>
@@ -188,7 +198,7 @@ export const MenuBar = ()=>{
                     <ListItemButton className='button' onClick={()=>{SetFocus(prev => {return prev==='menu'? '': 'menu'})}}>
                     <MenuRoundedIcon className='icon'/>
                     <Typography className='typo' component="pre">
-                        Menu {'      '} 
+                        Thực đơn {'      '} 
                     </Typography>
                     {focus==='menu'?<ExpandLessIcon/>: <ExpandMoreIcon/>}
                     </ListItemButton>
@@ -206,7 +216,7 @@ export const MenuBar = ()=>{
                                     <ListItemButton className='button' onClick = {()=>{navigate('/menu/' + category)}}>
                                     <FiberManualRecordIcon className='icon'/>
                                     <Typography className='typo'>
-                                        {category}
+                                        {name[category]}
                                     </Typography>
                                     </ListItemButton>
                                 </CustomListItem>
@@ -230,7 +240,7 @@ export const MenuBar = ()=>{
                     <ListItemButton className='button' onClick={()=>{navigate('/order')}}>
                     <ContactSupportRoundedIcon className='icon'/>
                     <Typography className='typo'>
-                        Your Order
+                        Đơn của bạn
                     </Typography>
                     </ListItemButton>
                 </CustomListItem> }
