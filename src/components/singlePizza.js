@@ -68,6 +68,7 @@ export const SinglePizza = ()=>{
                 setMess('Your comment has been posted successfully')
                 setPosted(true)
             }
+            setYourRate(0);
             closeCmt()
         }catch(err){
             setMess('Sorry, Failed to post your comment')
@@ -641,7 +642,7 @@ export const SinglePizza = ()=>{
                         color: '#07143B',
                         textAlign: 'center',
                     }}
-                    >Your Cart has been updated successfully!!
+                    >Đã thêm vào giỏ hàng
                 </Typography>
                 <Stack direction="row" spacing={5}>
                 <Button variant="contained" 
@@ -664,7 +665,7 @@ export const SinglePizza = ()=>{
                         marginBottom: 2
                     }}
                     >
-                        Done
+                        Hoàn thành
                 </Button>
                 <Button variant="contained" 
                     onClick = {()=>{
@@ -686,7 +687,7 @@ export const SinglePizza = ()=>{
                         marginBottom: 2
                     }}
                     >
-                        Go to cart
+                        Xem giỏ hàng
                 </Button>
                 </Stack>
                 

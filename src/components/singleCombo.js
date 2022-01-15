@@ -441,7 +441,7 @@ export const AddedPizza = (props) =>{
                         textAlign: 'start',
                         
                     }}
-                >Price: {pizzaInfo.price}đ
+                >Giá: {pizzaInfo.price}VND
                 </Typography>
             </Box>
             
@@ -469,7 +469,7 @@ export const AddedPizza = (props) =>{
                         color: '#07143B',
                         textAlign: 'start'
                     }}
-                    >Size: 
+                    >Cỡ: 
                 </Typography>
                 <IconButton 
                 onClick = {() =>{
@@ -535,7 +535,7 @@ export const AddedPizza = (props) =>{
                         color: '#07143B',
                         textAlign: 'start'
                     }}
-                    >Sole: 
+                    >Đế: 
                 </Typography>
                 <IconButton
                 onClick = {() =>{
@@ -931,7 +931,7 @@ export const SingleCombo = () =>{
             </Box>
                 </Box>
                 {
-                    combo.pizza && combo.pizza > 0 && 
+                    (combo.pizza && combo.pizza > 0) && 
                     <CustomProduct 
                     category="pizza" number={combo.pizza}
                     slot = {pizzaSlot}

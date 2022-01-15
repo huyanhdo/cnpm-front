@@ -43,7 +43,7 @@ export const Comment = (props) =>{
             />
                 <Typography variant="subtitle1"
                 sx={{
-                    fontFamily: 'Poppins',
+                    fontFamily: 'be Vietnam',
                     fontWeight: 600,
                     fontSize: '13px',
                     lineHeight: '175%',
@@ -60,7 +60,7 @@ export const Comment = (props) =>{
             <Divider sx={{width: '50%'}}/>
             <Typography
                     style={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 400,
                         fontSize: '13px',
                         lineHeight: '22.75px',

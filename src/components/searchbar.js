@@ -1,8 +1,7 @@
-import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { FormControl, InputAdornment, TextField, styled, IconButton, Avatar, AppBar, Toolbar, Box, Stack,Button,Menu,MenuItem } from "@mui/material";
+import { TextField, styled, IconButton, Avatar, AppBar, Toolbar, Box, Stack,Button,Menu,MenuItem } from "@mui/material";
 import { useAuth } from '../context/AuthContext';
-import React,{useState,useEffect} from "react";
+import React,{useState} from "react";
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@mui/styles';
@@ -25,19 +24,7 @@ export const Searchbar = ()=>{
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
-    const CssTextField = styled(TextField)({
-        '& .MuiOutlinedInput-root': {
-          '&.Mui-focused fieldset': {
-            borderColor: 'black',
-          },
-        },
-        '& fieldset':{
-            borderRadius: 100,
-            fontFamily: 'be Vietnam',
-        },
-        //marginTop: 15,
-        marginLeft: 20
-    });
+
     const {logout} = useAuth();
     const {resetPassword} = useAuth(); 
     const {currentUser} = useAuth();
