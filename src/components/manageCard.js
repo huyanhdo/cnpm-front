@@ -925,7 +925,7 @@ export const ComboManageCard = (props) =>{
                         color: hov? 'white': '#EA6A12',
                         textAlign: 'start'
                     }}
-                    >{off}% Off
+                    >{off == 0 ? 'Bonus' : off + '% Off'}
                 </Typography>
                 {/* <IconButton
                 sx={{
