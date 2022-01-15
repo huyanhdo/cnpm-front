@@ -42,7 +42,7 @@ const CartItem = (props)=>{
         >
                 <Typography variant="subtitle1"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 600,
                         fontSize: '16px',
                         lineHeight: '175%',
@@ -64,7 +64,7 @@ const CartItem = (props)=>{
             >
                 <Typography variant="subtitle1"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 600,
                         fontSize: '16px',
                         lineHeight: '175%',
@@ -76,7 +76,7 @@ const CartItem = (props)=>{
                 </Typography>
                 <Typography variant="subtitle1"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 600,
                         fontSize: '16px',
                         lineHeight: '175%',
@@ -84,7 +84,7 @@ const CartItem = (props)=>{
                         textAlign: 'start',
                         marginBottom: '10px',
                     }}
-                    > {price}đ
+                    > {price} VND
                 </Typography>
             </Box>
         </Stack>
@@ -145,7 +145,7 @@ export const Cart = ()=>{
                         textAlign: 'start',
                         marginLeft: '10%'
                     }}
-                >My Cart
+                >Giỏ hàng của tôi
             </Typography>
             
             <Divider variant="middle"/>
@@ -214,7 +214,7 @@ export const Cart = ()=>{
                 <Typography variant="h6"
                     sx={{
                         alignSelf: 'start',
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 700,
                         fontSize: '16px',
                         lineHeight: '52px',
@@ -222,7 +222,7 @@ export const Cart = ()=>{
                         textAlign: 'center',
                         
                     }}
-                >Your cart is empty.
+                >Giỏ hàng đang rỗng
                 </Typography>
                 </Box>
                 
@@ -234,7 +234,7 @@ export const Cart = ()=>{
                     sx={{
                         backgroundColor: '#EA6A12',
                         borderRadius: '100px',
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 'normal',
                         fontSize: '13px',
                         lineHeight: '175%',
@@ -246,7 +246,7 @@ export const Cart = ()=>{
                         }
                     }}
             >
-                Checkout
+                Kiểm tra giỏ
             </Button>
         </Card>
     )

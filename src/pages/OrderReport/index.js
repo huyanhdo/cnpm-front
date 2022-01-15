@@ -74,7 +74,7 @@ function OrderReport() {
                     
                     
                 }}>
-                    Order Report
+                    Thông tin đơn hàng
                 </Typography>
                 
                 </Box>

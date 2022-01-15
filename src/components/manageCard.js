@@ -1,6 +1,6 @@
 import { Box, Divider , IconButton, Rating, Stack, Typography, Button, TextField, Modal, Fade, InputAdornment,MenuItem,
 Radio,RadioGroup, FormControlLabel, FormControl, FormLabel} from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
@@ -75,34 +75,34 @@ export const PizzaManageCard = (props)=>{
             if(name.length == 0 || description.length ==0 || image.length == 0 || price.length == 0 ||
                 !(toppings[0].name.length ==0 && toppings[0].price.length ==0) || sizes[0].price.length ==0 ||
                 sizes[0].price.length ==0 ){
-                    alert("The form has not been completed !")
+                    alert("Chưa điền đủ thông tin !")
                     return false;
                 }
             if(isNaN(parseInt(price)) ){
-                alert("Invalid value !");
+                alert("Giá trị không hợp lệ !");
                 return false;
             }
             sizes.forEach(a => {
                 if(isNaN(parseInt(a.number)) || parseInt(a.number) <= 0 || a.name.length == 0){
-                    alert("Invalid value !");
+                    alert("Giá trị không hợp lệ !");
                     return false;
                 }
             });
             if(!(toppings[0].name.length ==0 && toppings[0].price.length ==0) && toppings.length == 1)
             toppings.forEach(a => {
                 if(isNaN(parseInt(a.number)) || parseInt(a.number) <= 0 || a.name.length == 0){
-                    alert("Invalid value !");
+                    alert("Giá trị không hợp lệ !");
                     return false;
                 }
             });
         }
         else{
             if(name.length == 0 || description.length ==0 || image.length == 0 || price.length == 0){
-                    alert("The form has not been completed !")
+                    alert("Chưa điền đủ thông tin !")
                     return false;
                 }
             if(isNaN(parseInt(price)) ){
-                alert("Invalid value !");
+                alert("Giá trị không hợp lệ !");
                 return false;
             }
         }
@@ -228,7 +228,7 @@ export const PizzaManageCard = (props)=>{
             />
             <Typography variant="subtitle1"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 600,
                         fontSize: '16px',
                         lineHeight: '175%',
@@ -254,7 +254,7 @@ export const PizzaManageCard = (props)=>{
             >
                 <Typography variant="subtitle1"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 600,
                         fontSize: '13px',
                         lineHeight: '175%',
@@ -263,19 +263,6 @@ export const PizzaManageCard = (props)=>{
                     }}
                     > {price} VND
                 </Typography>
-               {/* <IconButton
-                size="small"
-                sx={{
-                width: '24px',
-                height: '24px'
-                }}
-                >
-                <AddCircleRoundedIcon
-                    sx={{
-                        color: hov ? 'white':'rgba(234, 106, 18, 0.7)',
-                    }}
-                />
-                </IconButton>  */}
             </Stack>
             <Stack
             spacing={2}
@@ -294,7 +281,7 @@ export const PizzaManageCard = (props)=>{
                 >
                     <Typography variant="subtitle1"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 600,
                         fontSize: '14px',
                         lineHeight: '175%',
@@ -302,7 +289,7 @@ export const PizzaManageCard = (props)=>{
                         textAlign: 'center',
                         
                     }}
-                    >Edit
+                    >Sửa
                 </Typography>
                 </Button>
                 <Button variant="contained" startIcon = {<DeleteIcon sx={{color: hov?  '#EA6A12': 'white'}}/>}
@@ -318,14 +305,14 @@ export const PizzaManageCard = (props)=>{
                 >
                     <Typography variant="subtitle1"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 600,
                         fontSize: '14px',
                         lineHeight: '175%',
                         color: hov?  '#EA6A12': 'white',
                         textAlign: 'center'
                     }}
-                    >Delete
+                    >Xóa
                 </Typography>
                 </Button>
             </Stack>
@@ -355,7 +342,7 @@ export const PizzaManageCard = (props)=>{
                         color: '#07143B',
                         textAlign: 'center',
                     }}
-                    >Edit Item
+                    >Sửa món
                 </Typography>
 
                 <Stack direction="row" spacing={2}>
@@ -363,12 +350,12 @@ export const PizzaManageCard = (props)=>{
                 required defaultValue={name}
                 variant="standard"
                 id="name-field"
-                label="Name"
+                label="Tên"
                 multiline
                 maxRows={1}
                 color='warning'
-                inputProps={{style: {fontFamily: 'Poppins'}}} // font size of input text
-                InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                inputProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input text
+                InputLabelProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input label
                 sx={{
                     width: '60%'
                 }}
@@ -377,12 +364,12 @@ export const PizzaManageCard = (props)=>{
                     required defaultValue={price}
                     variant="standard"
                     id="price-field"
-                    label="Price"
+                    label="Giá"
                     multiline
                     maxRows={1}
                     color='warning'
-                    InputProps={{style: {fontFamily: 'Poppins'}, endAdornment: <InputAdornment position="end">VND</InputAdornment>,}} // font size of input text
-                    InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                    InputProps={{style: {fontFamily: 'be Vietnam'}, endAdornment: <InputAdornment position="end">VND</InputAdornment>,}} // font size of input text
+                    InputLabelProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input label
                     sx={{
                         width: '40%'
                     }}
@@ -406,12 +393,12 @@ export const PizzaManageCard = (props)=>{
                             required value={size.type_detail}
                             variant="standard" defaultValue={size.type_detail}
                             name="type_detail"
-                            label="Size Name"
+                            label="Cỡ"
                             multiline
                             maxRows={1}
                             color='warning'
-                            InputProps={{style: {fontFamily: 'Poppins'},}} // font size of input text
-                            InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                            InputProps={{style: {fontFamily: 'be Vietnam'},}} // font size of input text
+                            InputLabelProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input label
                             sx={{
                                 width: '40%'
                             }}
@@ -420,12 +407,12 @@ export const PizzaManageCard = (props)=>{
                             required value={size.type_price}
                             variant="standard" defaultValue={size.type_price}
                             name="type_price"
-                            label="Size Price"
+                            label="Giá cỡ"
                             multiline
                             maxRows={1}
                             color='warning'
-                            InputProps={{style: {fontFamily: 'Poppins'}, endAdornment: <InputAdornment position="end">VND</InputAdornment>,}} // font size of input text
-                            InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                            InputProps={{style: {fontFamily: 'be Vietnam'}, endAdornment: <InputAdornment position="end">VND</InputAdornment>,}} // font size of input text
+                            InputLabelProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input label
                             sx={{
                                 width: '40%'
                             }}
@@ -458,18 +445,18 @@ export const PizzaManageCard = (props)=>{
 
                 <TextField onChange={(e) => {setDescription(e.target.value)}}
                 required variant="standard" multiline color='warning' maxRows={4}
-                id="description-field" label="Description" defaultValue={description}
-                inputProps={{style: {fontFamily: 'Poppins'},}} // font size of input text
-                InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                id="description-field" label="Mô tả" defaultValue={description}
+                inputProps={{style: {fontFamily: 'be Vietnam'},}} // font size of input text
+                InputLabelProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input label
                 sx={{
                     width: '100%'
                 }}
                 />
                 <TextField onChange={(e) => {setImage(e.target.value)}}
                 required variant="standard" multiline color='warning' maxRows={1}
-                id="image-field" label="URL Image" defaultValue={image}
-                inputProps={{style: {fontFamily: 'Poppins'}}} // font size of input text
-                InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                id="image-field" label="URL Ảnh" defaultValue={image}
+                inputProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input text
+                InputLabelProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input label
                 sx={{
                     width: '100%'
                 }}
@@ -492,12 +479,12 @@ export const PizzaManageCard = (props)=>{
                             required value={topping.topping_name}
                             variant="standard" defaultValue={topping.topping_name}
                             name="topping_name"
-                            label="Topping Name"
+                            label="Tên Topping"
                             multiline
                             maxRows={1}
                             color='warning'
-                            InputProps={{style: {fontFamily: 'Poppins'},}} // font size of input text
-                            InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                            InputProps={{style: {fontFamily: 'be Vietnam'},}} // font size of input text
+                            InputLabelProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input label
                             sx={{
                                 width: '40%'
                             }}
@@ -506,12 +493,12 @@ export const PizzaManageCard = (props)=>{
                             required value={topping.topping_price}
                             variant="standard" defaultValue={topping.topping_price}
                             name="topping_price"
-                            label="Topping Price"
+                            label="Giá Topping"
                             multiline
                             maxRows={1}
                             color='warning'
-                            InputProps={{style: {fontFamily: 'Poppins'}, endAdornment: <InputAdornment position="end">VND</InputAdornment>,}} // font size of input text
-                            InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                            InputProps={{style: {fontFamily: 'be Vietnam'}, endAdornment: <InputAdornment position="end">VND</InputAdornment>,}} // font size of input text
+                            InputLabelProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input label
                             sx={{
                                 width: '40%'
                             }}
@@ -550,7 +537,7 @@ export const PizzaManageCard = (props)=>{
                         backgroundColor: '#EA6A12',
                         borderRadius: '100px',
                         alignSelf: 'center',
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 'normal',
                         fontSize: '15px',
                         lineHeight: '175%',
@@ -561,7 +548,7 @@ export const PizzaManageCard = (props)=>{
                         marginBottom: 2
                     }}
                     >
-                    Save
+                    Lưu
                 </Button>
                
             </Stack>
@@ -592,7 +579,7 @@ export const PizzaManageCard = (props)=>{
                         color: '#07143B',
                         textAlign: 'center',
                     }}
-                    >Delete this Item ?
+                    >Bạn có chắc muốn xóa món này ?
                 </Typography>
 
                 <Stack direction="row" spacing={2}>
@@ -603,7 +590,7 @@ export const PizzaManageCard = (props)=>{
                         backgroundColor: '#EA6A12',
                         borderRadius: '100px',
                         alignSelf: 'center',
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 'normal',
                         fontSize: '15px',
                         lineHeight: '175%',
@@ -614,7 +601,7 @@ export const PizzaManageCard = (props)=>{
                         width: '50%'
                     }}
                     >
-                    Yes
+                    Có
                 </Button>
                 <Button variant="contained" 
                     onClick={()=>{setDeletePizza(false)}}
@@ -622,7 +609,7 @@ export const PizzaManageCard = (props)=>{
                         backgroundColor: '#EA6A12',
                         borderRadius: '100px',
                         alignSelf: 'center',
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 'normal',
                         fontSize: '15px',
                         lineHeight: '175%',
@@ -633,7 +620,7 @@ export const PizzaManageCard = (props)=>{
                         width: '50%'
                     }}
                     >
-                    No
+                    Không
                 </Button>
                 </Stack>
                
@@ -722,24 +709,24 @@ export const ComboManageCard = (props) =>{
         if(title.length == 0 || subtitle.length == 0 || (off.length == 0 && (free[0].number == ''))
         || persons.length == 0 || pizza.length ==0 || categorys[0].number =='' || description.length ==0
         || banner.length == 0 || image.length == 0){
-            alert("The form has not been completed !")
+            alert("Chưa điền đủ thông tin !")
             return false;
         }
         if(isNaN(parseInt(persons)) || isNaN(parseInt(pizza)) || (isNaN(parseInt(off)) && comboType == 'off') ){
-            alert("Invalid value !");
+            alert("Giá trị không hợp lệ !");
             return false;
         }
         if(comboType == 'free'){
             free.forEach(a => {
                 if(isNaN(parseInt(a.number)) || parseInt(a.number) <= 0){
-                    alert("Invalid value !");
+                    alert("Giá trị không hợp lệ !");
                     return false;
                 }
             });
         }
         categorys.forEach(a => {
             if(isNaN(parseInt(a.number)) || parseInt(a.number) <= 0){
-                alert("Invalid value !");
+                alert("Giá trị không hợp lệ !");
                 return false;
             }
         })
@@ -809,7 +796,7 @@ export const ComboManageCard = (props) =>{
         try {
             const resp = await axios.put(url, newItem);
             if (resp.statusText !== "OK"){
-                alert("Sua khong thanh cong !");
+                alert("Sửa không thành công !");
             }
         } catch (err) {
             // Handle Error Here
@@ -860,7 +847,7 @@ export const ComboManageCard = (props) =>{
             <Stack spacing={1} sx={{minWidth: '150px'}}>
             <Typography variant="subtitle1" 
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 400,
                         fontSize: '13px',
                         lineHeight: '22.75px',
@@ -871,7 +858,7 @@ export const ComboManageCard = (props) =>{
             </Typography>
             <Typography variant="subtitle1"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 600,
                         fontSize: '16px',
                         lineHeight: '175%',
@@ -883,7 +870,7 @@ export const ComboManageCard = (props) =>{
             </Typography>
             <Typography variant="subtitle1"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 400,
                         fontSize: '13px',
                         lineHeight: '22.75px',
@@ -899,7 +886,7 @@ export const ComboManageCard = (props) =>{
             }}/>
             <Typography variant="subtitle1"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 400,
                         fontSize: '13px',
                         lineHeight: '22.75px',
@@ -907,7 +894,7 @@ export const ComboManageCard = (props) =>{
                         color: hov? 'white': '#959895',
                         marginBottom: '20px'
                     }}
-                    >{persons} persons                    
+                    >{persons} người             
             </Typography>
             <Stack
             direction='row'
@@ -918,7 +905,7 @@ export const ComboManageCard = (props) =>{
             >
                 <Typography variant="subtitle1"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 600,
                         fontSize: '13px',
                         lineHeight: '175%',
@@ -927,19 +914,7 @@ export const ComboManageCard = (props) =>{
                     }}
                     >{off == 0 ? 'Bonus' : off + '% Off'}
                 </Typography>
-                {/* <IconButton
-                sx={{
-                width: '24px',
-                height: '24px'
-                }}
-                onClick={() => {navigate('/combo/' + props.comboId)}}
-                >
-                <AddCircleRounded
-                    sx={{
-                        color: hov ? 'white':'rgba(234, 106, 18, 0.7)',
-                    }}
-                />
-                </IconButton> */}
+    
             </Stack>
             
             </Stack>
@@ -976,7 +951,7 @@ export const ComboManageCard = (props) =>{
                     >
                     <Typography variant="subtitle1"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 600,
                         fontSize: '14px',
                         lineHeight: '175%',
@@ -984,7 +959,7 @@ export const ComboManageCard = (props) =>{
                         textAlign: 'center',
                         
                     }}
-                    >Edit
+                    >Sửa
                 </Typography>
                 </Button>
                 <Button variant="contained" startIcon = {<DeleteIcon sx={{color: hov?  '#EA6A12': 'white'}}/>}
@@ -1000,14 +975,14 @@ export const ComboManageCard = (props) =>{
                 >
                     <Typography variant="subtitle1"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 600,
                         fontSize: '14px',
                         lineHeight: '175%',
                         color: hov?  '#EA6A12': 'white',
                         textAlign: 'center'
                     }}
-                    >Delete
+                    >Xóa
                 </Typography>
                 </Button>
             </Stack>
@@ -1038,7 +1013,7 @@ export const ComboManageCard = (props) =>{
                         color: '#07143B',
                         textAlign: 'center',
                     }}
-                    >{'Edit Combo'}
+                    >{'Sửa Combo'}
                 </Typography>
 
                 <Stack direction="row" spacing={2}>
@@ -1046,36 +1021,36 @@ export const ComboManageCard = (props) =>{
                 required defaultValue={title}
                 variant="standard"
                 id="title"
-                label="Title"
+                label="Tên Combo"
                 multiline
                 maxRows={1}
                 color='warning'
-                inputProps={{style: {fontFamily: 'Poppins'}}} // font size of input text
-                InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                inputProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input text
+                InputLabelProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input label
                 sx={{
                     width: '50%'
                 }}
                 />
                 <TextField onChange={(e) => {setSubTitle(e.target.value)}}
                 required variant="standard" multiline color='warning' maxRows={4}
-                id="subtitle" label="Subtitle" defaultValue={subtitle}
-                inputProps={{style: {fontFamily: 'Poppins'},}} // font size of input text
-                InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                id="subtitle" label="Phụ đề" defaultValue={subtitle}
+                inputProps={{style: {fontFamily: 'be Vietnam'},}} // font size of input text
+                InputLabelProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input label
                 sx={{
                     width: '50%'
                 }}
                 />
                 </Stack>
                 <FormControl component="fieldset">
-                    <FormLabel component="legend">Combo Type</FormLabel>
+                    <FormLabel component="legend">Loại Combo</FormLabel>
                     <RadioGroup row
                         aria-label="Type Combo"
                         name="comboType"
                         value={comboType}
                         onChange={(e) => handleChangeType(e)}
                     >
-                        <FormControlLabel value="off" control={<Radio />} label="% Off" />
-                        <FormControlLabel value="free" control={<Radio />} label="Free" />
+                        <FormControlLabel value="off" control={<Radio />} label="% Giảm giá" />
+                        <FormControlLabel value="free" control={<Radio />} label="Miễn phí" />
                     </RadioGroup>
                 </FormControl>
                 <Stack direction="row" spacing={2}>
@@ -1083,12 +1058,12 @@ export const ComboManageCard = (props) =>{
                     disabled={!type ? true : false} value={off} 
                     variant="standard"
                     id="off"
-                    label="%Off"
+                    label="%Giảm giá"
                     multiline
                     maxRows={1}
                     color='warning'
-                    InputProps={{style: {fontFamily: 'Poppins'}, }} // font size of input text
-                    InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                    InputProps={{style: {fontFamily: 'be Vietnam'}, }} // font size of input text
+                    InputLabelProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input label
                     sx={{
                         width: '40%'
                     }}
@@ -1108,12 +1083,12 @@ export const ComboManageCard = (props) =>{
                         <TextField
                         name="name" variant="standard" disabled={type ? true : false}
                         select 
-                        label="Category Name"
+                        label="Loại"
                         value={fre.name}
                         onChange={(e) => {handleFreeChange(index, e)}}
                         color='warning'
-                        InputProps={{style: {fontFamily: 'Poppins'},}} // font size of input text
-                        InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                        InputProps={{style: {fontFamily: 'be Vietnam'},}} // font size of input text
+                        InputLabelProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input label
                         sx={{
                             width: '70%'
                         }}
@@ -1130,12 +1105,12 @@ export const ComboManageCard = (props) =>{
                         value={'' +  fre.number} disabled={type ? true : false}
                         variant="standard"
                         name="number"
-                        label="Number"
+                        label="Số lượng"
                         multiline
                         maxRows={1}
                         color='warning'
-                        InputProps={{style: {fontFamily: 'Poppins'},}} // font size of input text
-                        InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                        InputProps={{style: {fontFamily: 'be Vietnam'},}} // font size of input text
+                        InputLabelProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input label
                         sx={{
                             width: '30%'
                         }}
@@ -1170,12 +1145,12 @@ export const ComboManageCard = (props) =>{
                     required defaultValue={persons}
                     variant="standard"
                     id="persons"
-                    label="Persons"
+                    label="Số người"
                     multiline
                     maxRows={1}
                     color='warning'
-                    InputProps={{style: {fontFamily: 'Poppins'}, }} // font size of input text
-                    InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                    InputProps={{style: {fontFamily: 'be Vietnam'}, }} // font size of input text
+                    InputLabelProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input label
                     sx={{
                         width: '50%'
                     }}
@@ -1188,8 +1163,8 @@ export const ComboManageCard = (props) =>{
                     multiline
                     maxRows={1}
                     color='warning'
-                    InputProps={{style: {fontFamily: 'Poppins'}, }} // font size of input text
-                    InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                    InputProps={{style: {fontFamily: 'be Vietnam'}, }} // font size of input text
+                    InputLabelProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input label
                     sx={{
                         width: '50%'
                     }}
@@ -1210,12 +1185,12 @@ export const ComboManageCard = (props) =>{
                         <TextField
                         name="name" variant="standard"
                         select 
-                        label="Category Name"
+                        label="Loại"
                         value={category.name}
                         onChange={(e) => {handleCategoryChange(index, e)}}
                         color='warning'
-                        InputProps={{style: {fontFamily: 'Poppins'},}} // font size of input text
-                        InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                        InputProps={{style: {fontFamily: 'be Vietnam'},}} // font size of input text
+                        InputLabelProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input label
                         sx={{
                             width: '40%'
                         }}
@@ -1232,12 +1207,12 @@ export const ComboManageCard = (props) =>{
                         required defaultValue={category.number}
                         variant="standard"
                         name="number"
-                        label="Number"
+                        label="Số lượng"
                         multiline
                         maxRows={1}
                         color='warning'
-                        InputProps={{style: {fontFamily: 'Poppins'},}} // font size of input text
-                        InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                        InputProps={{style: {fontFamily: 'be Vietnam'},}} // font size of input text
+                        InputLabelProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input label
                         sx={{
                             width: '40%'
                         }}
@@ -1267,9 +1242,9 @@ export const ComboManageCard = (props) =>{
                 </Box>
                 <TextField onChange={(e) => {setDescription(e.target.value)}}
                 required variant="standard" multiline color='warning' maxRows={4}
-                id="description" label="Description" defaultValue={description}
-                inputProps={{style: {fontFamily: 'Poppins'},}} // font size of input text
-                InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                id="description" label="Mô tả" defaultValue={description}
+                inputProps={{style: {fontFamily: 'be Vietnam'},}} // font size of input text
+                InputLabelProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input label
                 sx={{
                     width: '100%'
                 }}
@@ -1277,17 +1252,17 @@ export const ComboManageCard = (props) =>{
                 <TextField onChange={(e) => {setBanner(e.target.value)}}
                 required variant="standard" multiline color='warning' maxRows={1}
                 id="banner" label="URL Banner" defaultValue={banner}
-                inputProps={{style: {fontFamily: 'Poppins'}}} // font size of input text
-                InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                inputProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input text
+                InputLabelProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input label
                 sx={{
                     width: '100%'
                 }}
                 />
                 <TextField onChange={(e) => {setImage(e.target.value)}}
                 required variant="standard" multiline color='warning' maxRows={1}
-                id="image" label="URL Image" defaultValue = {image}
-                inputProps={{style: {fontFamily: 'Poppins'}}} // font size of input text
-                InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                id="image" label="URL Ảnh" defaultValue = {image}
+                inputProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input text
+                InputLabelProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input label
                 sx={{
                     width: '100%'
                 }}
@@ -1298,7 +1273,7 @@ export const ComboManageCard = (props) =>{
                 >
                     <DateTimePicker
                     sx={{width:'50%'}} 
-                    label="Time start" 
+                    label="Bắt đầu" 
                     value={start}
                     onChange={(newValue) => {
                         setStart(newValue);
@@ -1307,7 +1282,7 @@ export const ComboManageCard = (props) =>{
                     />
                     <DateTimePicker
                     sx={{width:'50%'}}
-                    label="Time end"
+                    label="Kết thúc"
                     value={end}
                     onChange={(newValue) => {setEnd(newValue)}}
                     renderInput={(params) => <TextField {...params} />}
@@ -1325,7 +1300,7 @@ export const ComboManageCard = (props) =>{
                         backgroundColor: '#EA6A12',
                         borderRadius: '100px',
                         alignSelf: 'center',
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 'normal',
                         fontSize: '15px',
                         lineHeight: '175%',
@@ -1336,7 +1311,7 @@ export const ComboManageCard = (props) =>{
                         marginBottom: 2
                     }}
                     >
-                    Save
+                    Lưu 
                 </Button>
                
             </Stack>
@@ -1369,7 +1344,7 @@ export const ComboManageCard = (props) =>{
                         color: '#07143B',
                         textAlign: 'center',
                     }}
-                    >Delete this Combo ?
+                    >Bạn có muốn xóa combo này?
                 </Typography>
 
                 <Stack direction="row" spacing={2}>
@@ -1380,7 +1355,7 @@ export const ComboManageCard = (props) =>{
                         backgroundColor: '#EA6A12',
                         borderRadius: '100px',
                         alignSelf: 'center',
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 'normal',
                         fontSize: '15px',
                         lineHeight: '175%',
@@ -1391,7 +1366,7 @@ export const ComboManageCard = (props) =>{
                         width: '50%'
                     }}
                     >
-                    Yes
+                    Có
                 </Button>
                 <Button variant="contained" 
                     onClick={()=>{setDeleteCombo(false)}}
@@ -1399,7 +1374,7 @@ export const ComboManageCard = (props) =>{
                         backgroundColor: '#EA6A12',
                         borderRadius: '100px',
                         alignSelf: 'center',
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 'normal',
                         fontSize: '15px',
                         lineHeight: '175%',
@@ -1410,7 +1385,7 @@ export const ComboManageCard = (props) =>{
                         width: '50%'
                     }}
                     >
-                    No
+                    Không
                 </Button>
                 </Stack>
                

@@ -84,7 +84,7 @@ export const PizzaCartItem = (props)=>{
                         textAlign: 'start',
                         display: {md: 'block', sm: 'none', xs: 'none'}
                     }}
-                    >Total:  {cartInfo.total}đ
+                    >Tổng tiền:  {cartInfo.total}VND
                     </Typography>
                         <IconButton
                         onClick={() =>{
@@ -140,7 +140,7 @@ export const PizzaCartItem = (props)=>{
                 >
                     <Typography variant="subtitle1"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 600,
                         fontSize: {md: '16px', sm: '14px', xs: '13px'},
                         lineHeight: '175%',
@@ -148,11 +148,11 @@ export const PizzaCartItem = (props)=>{
                         textAlign: 'start',
                         marginBottom: '10px'
                     }}
-                    >Size: {pizza.size[cartInfo.size].type_detail}
+                    >Cỡ: {pizza.size[cartInfo.size].type_detail}
                     </Typography>
                     <Typography variant="subtitle1"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 600,
                         fontSize: {md: '16px', sm: '14px', xs: '13px'},
                         lineHeight: '175%',
@@ -160,11 +160,11 @@ export const PizzaCartItem = (props)=>{
                         textAlign: 'start',
                         marginBottom: '10px'
                     }}
-                    >Sole: {pizza.type[cartInfo.sole]}
+                    >Đế: {pizza.type[cartInfo.sole]}
                     </Typography>
                     <Typography variant="subtitle1"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 600,
                         fontSize: {md: '16px', sm: '14px', xs: '13px'},
                         lineHeight: '175%',
@@ -172,7 +172,7 @@ export const PizzaCartItem = (props)=>{
                         textAlign: 'start',
                         marginBottom: '10px'
                     }}
-                    >Number: {cartInfo.number}
+                    >Số lượng: {cartInfo.number}
                     </Typography>
                 </Stack>
                 <Typography variant="h6"
@@ -186,7 +186,7 @@ export const PizzaCartItem = (props)=>{
                         textAlign: 'start',
                         display: {md: 'none', sm: 'block', xs: 'block'}
                     }}
-                    >Total: {cartInfo.total}đ
+                    >Tổng tiền: {cartInfo.total}đ
                     </Typography>
                 <Divider sx={{width: '50%'}}/>
                 <Box
@@ -202,12 +202,12 @@ export const PizzaCartItem = (props)=>{
                             return cartInfo.toppings[toppingId] && 
                             <Chip label={topping.topping_name} sx={{
                                 margin: '5px 5px 5px 0',
-                                fontFamily: 'Poppins'
+                                fontFamily: 'be Vietnam'
                             }}/>
                         })
                         // : <Chip label='No Topping' sx={{
                         //     margin: '5px 5px 5px 0',
-                        //     fontFamily: 'Poppins'
+                        //     fontFamily: 'be Vietnam'
                         // }}/>
                     }
                 </Box>
@@ -291,7 +291,7 @@ export const ExtraCartItem = (props)=>{
                         textAlign: 'start',
                         display: {md: 'block', sm: 'none', xs: 'none'}
                     }}
-                    >Total:  {round(num * price)}đ
+                    >Tổng tiền:  {round(num * price)}VND
                     </Typography>
                         <IconButton
                         sx={{
@@ -318,14 +318,14 @@ export const ExtraCartItem = (props)=>{
                 <Stack spacing={2} direction="row">
             <Typography variant="h6"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 700,
                         fontSize: {md: '20px', sm: '16px', xs: '15px'},
                         lineHeight: '52px',
                         color: '#07143B',
                         textAlign: 'center',
                     }}
-                    >Number: 
+                    >Số lượng: 
             </Typography>
             <Stack direction="row" spacing={5}
             sx={{
@@ -363,7 +363,7 @@ export const ExtraCartItem = (props)=>{
                 </IconButton>
                 <Typography variant="subtitle1"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 600,
                         fontSize: '16px',
                         lineHeight: '175%',
@@ -412,7 +412,7 @@ export const ExtraCartItem = (props)=>{
                         textAlign: 'start',
                         display: {md: 'none', sm: 'block', xs: 'block'}
                     }}
-                    >Total: {round(price * num)}đ
+                    >Tổng tiền: {round(price * num)}VND
                     </Typography>
             </Stack>
         </Box>
@@ -445,7 +445,7 @@ export const ComboMiniItem = (props) =>{
             />
             <Typography variant="subtitle1"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 600,
                         fontSize: {md: '16px', sm: '14px', xs: '13px'},
                         lineHeight: '175%',
@@ -562,7 +562,7 @@ export const ComboCartItem = (props)=>{
                         textAlign: 'start',
                         display: {md: 'block', sm: 'none', xs: 'none'}
                     }}
-                    >Total: {cartInfo.total}đ
+                    >Tổng tiền: {cartInfo.total}VND
                     </Typography>
                         <IconButton
                         onClick={() =>{
@@ -639,7 +639,7 @@ export const ComboCartItem = (props)=>{
                 >
                     <Typography variant="subtitle1"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 600,
                         fontSize: {md: '16px', sm: '14px', xs: '13px'},
                         lineHeight: '175%',
@@ -651,7 +651,7 @@ export const ComboCartItem = (props)=>{
                     </Typography>
                     <Typography variant="subtitle1"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 600,
                         fontSize: {md: '16px', sm: '14px', xs: '13px'},
                         lineHeight: '175%',
@@ -659,7 +659,7 @@ export const ComboCartItem = (props)=>{
                         textAlign: 'start',
                         marginBottom: '10px'
                     }}
-                    >Number: {cartInfo.number}
+                    >Số lượng: {cartInfo.number}
                     </Typography>
                 </Stack>
                 <Typography variant="h6"
@@ -673,7 +673,7 @@ export const ComboCartItem = (props)=>{
                         textAlign: 'start',
                         display: {md: 'none', sm: 'block', xs: 'block'}
                     }}
-                    >Total: {cartInfo.total}đ
+                    >Tổng tiền: {cartInfo.total}VND
                 </Typography>
                 
             </Stack>
@@ -769,7 +769,7 @@ export const Cart = (props)=>{
                         marginTop: '50px',
                         marginBottom: '50px'
                     }}
-                >Your Cart
+                >Giỏ hàng của bạn
             </Typography>
             <Divider variant="middle"/>
             {

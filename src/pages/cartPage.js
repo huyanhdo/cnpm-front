@@ -26,7 +26,7 @@ export const EmptyCart = () =>{
             />
         <Typography variant="subtitle1"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 700,
                         fontSize: '35px',
                         lineHeight: '175%',
@@ -34,7 +34,7 @@ export const EmptyCart = () =>{
                         textAlign: 'center',
                         marginTop: '50px'
                     }}
-                    >Your cart is empty.
+                    >Giỏ hàng trống
                 </Typography>
         </Box>
 
@@ -219,13 +219,13 @@ export const CartPage = ()=>{
             )
             if(result && result.status === 200){
                 console.log(result)
-                setMessage('Your order has been posted successfully')
+                setMessage('Thêm món thành công')
                 dispatch(addOrder({id:result.data.name, data: order}))
             }
-            else setMessage('Opps...Sorry, something went wrong!')
+            else setMessage('Có lỗi xảy ra!')
             setPosted(true)
         }catch(err){
-            setMessage('Opps...Sorry, something went wrong!')
+            setMessage('Có lỗi xảy ra!')
             setPosted(true)
         }
     }
@@ -253,7 +253,7 @@ export const CartPage = ()=>{
                         color: '#07143B',
                         textAlign: 'start'
                     }}
-                    >Total: {totalValue}đ
+                    >Tổng tiền: {totalValue} VND
                     </Typography>
                     <Button variant="contained" 
                     disabled = {totalValue < 0.01}
@@ -262,7 +262,7 @@ export const CartPage = ()=>{
                         zIndex: 10,
                         backgroundColor: '#EA6A12',
                         borderRadius: '50px',
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 'normal',
                         fontSize: '16px',
                         width: '100px',
@@ -273,7 +273,7 @@ export const CartPage = ()=>{
                         },
                     }}
                 >
-                    Order
+                    Đặt hàng
                 </Button>
                 </Box>
                 <Modal open={pay} onClose = {() => {SetPay(false)}}>
@@ -301,7 +301,7 @@ export const CartPage = ()=>{
                         color: '#07143B',
                         textAlign: 'center',
                     }}
-                    >Please fill this form
+                    > Vui lòng điền đơn này                
                 </Typography>
                 <TextField
                 required
@@ -314,8 +314,8 @@ export const CartPage = ()=>{
                 multiline
                 maxRows={1}
                 color='warning'
-                inputProps={{style: {fontFamily: 'Poppins'}}} // font size of input text
-                InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                inputProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input text
+                InputLabelProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input label
                 />
                 <TextField
                 required
@@ -329,8 +329,8 @@ export const CartPage = ()=>{
                 type="number"
                 maxRows={1}
                 color='warning'
-                inputProps={{style: {fontFamily: 'Poppins'}}} // font size of input text
-                InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                inputProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input text
+                InputLabelProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input label
                 />
                 <FormControlLabel
                 label="Đặt tại quán"
@@ -353,9 +353,9 @@ export const CartPage = ()=>{
                 onChange={(e) =>{
                     setProvince(e.target.value)
                 }}
-                inputProps={{style: {fontFamily: 'Poppins'}}}
-                MenuProps={{style: {fontFamily: 'Poppins'}}}
-                SelectDisplayProps={{style: {fontFamily: 'Poppins'}}}
+                inputProps={{style: {fontFamily: 'be Vietnam'}}}
+                MenuProps={{style: {fontFamily: 'be Vietnam'}}}
+                SelectDisplayProps={{style: {fontFamily: 'be Vietnam'}}}
                 color='warning'
                 >
                     {
@@ -363,7 +363,7 @@ export const CartPage = ()=>{
                             <MenuItem 
                             value={pro}
                             sx={{
-                                fontFamily: 'Poppins'
+                                fontFamily: 'be Vietnam'
                             }}
                             >
                                 {pro}
@@ -384,14 +384,14 @@ export const CartPage = ()=>{
                 }}
                 maxRows={1}
                 color='warning'
-                inputProps={{style: {fontFamily: 'Poppins'}}} // font size of input text
-                InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                inputProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input text
+                InputLabelProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input label
                 />
                 }
                 
                 <Typography variant="h6"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 700,
                         fontSize: '15px',
                         lineHeight: '52px',
@@ -402,7 +402,7 @@ export const CartPage = ()=>{
                 </Typography>
                 <Typography variant="h6"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 700,
                         fontSize: '20px',
                         lineHeight: '52px',
@@ -421,7 +421,7 @@ export const CartPage = ()=>{
                         backgroundColor: '#EA6A12',
                         borderRadius: '100px',
                         alignSelf: 'center',
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 'normal',
                         fontSize: '15px',
                         lineHeight: '175%',
@@ -433,7 +433,7 @@ export const CartPage = ()=>{
                         width: '150px'
                     }}
                     >
-                    Order
+                    Đặt hàng
                 </Button>
             </Stack>
             </Fade>

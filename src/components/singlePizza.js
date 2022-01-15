@@ -147,7 +147,7 @@ export const SinglePizza = ()=>{
                 </Typography>
                 <Typography
                     style={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 400,
                         fontSize: '13px',
                         lineHeight: '22.75px',
@@ -163,7 +163,7 @@ export const SinglePizza = ()=>{
                 <Divider sx = {{maxWidth: '50%'}}/>
                 <div
                     style={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 600,
                         fontSize: '20px',
                         lineHeight: '175%',
@@ -186,14 +186,14 @@ export const SinglePizza = ()=>{
                 >
                 <Typography variant="body1"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 400,
                         fontSize: '20px',
                         lineHeight: '22.75px',
                         color: '#07143B',
                         textAlign: 'start'
                     }}
-                    >Size: 
+                    >Cỡ: 
                 </Typography>
                 <IconButton 
                 onClick={() => sizeChanged(size, size > 0 ? size - 1 : 0)}
@@ -226,14 +226,14 @@ export const SinglePizza = ()=>{
                 >
                 <Typography variant="body1"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 400,
                         fontSize: '20px',
                         lineHeight: '22.75px',
                         color: '#07143B',
                         textAlign: 'start'
                     }}
-                    >Sole: 
+                    >Đế: 
                 </Typography>
                 <IconButton
                 onClick={() => setSole(prev => {return prev === 1 ? 0: 1})}
@@ -311,7 +311,7 @@ export const SinglePizza = ()=>{
                         color: '#07143B',
                         textAlign: 'center',
                     }}
-                    >Number: 
+                    >Số lượng: 
             </Typography>
             <Stack direction="row" spacing={5}
             sx={{
@@ -340,7 +340,7 @@ export const SinglePizza = ()=>{
                 </IconButton>
                 <Typography variant="subtitle1"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 600,
                         fontSize: '16px',
                         lineHeight: '175%',
@@ -379,7 +379,7 @@ export const SinglePizza = ()=>{
                         color: '#07143B',
                         textAlign: 'center',
                     }}
-                    >Total: $ {round(total * num)}
+                    >Tổng tiền:  {round(total * num)} VND
             </Typography>
         </Box>
         <Button variant="contained" 
@@ -413,7 +413,7 @@ export const SinglePizza = ()=>{
                         backgroundColor: '#EA6A12',
                         borderRadius: '100px',
                         //maxWidth: '150px',
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 'normal',
                         fontSize: '15px',
                         lineHeight: '175%',
@@ -424,7 +424,7 @@ export const SinglePizza = ()=>{
                         marginTop: 3
                     }}
                     >
-                        {location.state ? "Update Cart" : "Add to Cart"}
+                        {location.state ? "Cập nhập giỏ hàng" : "Thêm vào giỏ hàng"}
         </Button>
         <Divider variant="middle" sx={{m: 5}}/>
         <Box sx={{display: 'flex', justifyContent: 'space-between', padding: '20px 50px'}}>
@@ -437,7 +437,7 @@ export const SinglePizza = ()=>{
                         color: '#07143B',
                         textAlign: 'start',
                     }}
-                    >Comments
+                    >Bình luận
         </Typography>
         <Button variant="contained" 
                     onClick = {() => {setCmt(true)}}
@@ -445,7 +445,7 @@ export const SinglePizza = ()=>{
                         backgroundColor: '#EA6A12',
                         borderRadius: '100px',
                         //maxWidth: '150px',
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 'normal',
                         fontSize: '15px',
                         lineHeight: '175%',
@@ -456,7 +456,7 @@ export const SinglePizza = ()=>{
                         marginBottom: 2
                     }}
                     >
-                        Add Comment
+                        Thêm bình luận
         </Button>
         <Modal open={cmt} onClose = {closeCmt}>
             <Fade in={cmt} timeout={500}>
@@ -483,17 +483,17 @@ export const SinglePizza = ()=>{
                         color: '#07143B',
                         textAlign: 'center',
                     }}
-                    >Your Comment
+                    >Bình luận của bạn
                 </Typography>
                 <TextField
                 required
                 id="name-field"
-                label="Name"
+                label="Tên"
                 multiline
                 maxRows={1}
                 color='warning'
-                inputProps={{style: {fontFamily: 'Poppins'}}} // font size of input text
-                InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                inputProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input text
+                InputLabelProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input label
                 sx={{
                     width: '100%'
                 }}
@@ -505,12 +505,12 @@ export const SinglePizza = ()=>{
                 color='warning'
                 required
                 id="name-field"
-                label="Comment"
+                label="Bình luận"
                 multiline
                 rows={4}
                 maxRows = {4}
-                inputProps={{style: {fontFamily: 'Poppins'}}} // font size of input text
-                InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                inputProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input text
+                InputLabelProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input label
                 onChange={(e)=>{
                     setYourCmt(e.target.value)
                 }}
@@ -520,14 +520,14 @@ export const SinglePizza = ()=>{
                 >
                 <Typography variant="h6"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 700,
                         fontSize: '15px',
                         lineHeight: '52px',
                         color: '#07143B',
                         textAlign: 'center',
                     }}
-                    >Rate: 
+                    >Đánh giá: 
                 </Typography>
                 <Rating
                 
@@ -545,7 +545,7 @@ export const SinglePizza = ()=>{
                 (yourName.length === 0 || yourCmt.length === 0) &&
                 (<Typography variant="h6"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 700,
                         fontSize: '15px',
                         lineHeight: '52px',
@@ -553,7 +553,7 @@ export const SinglePizza = ()=>{
                         textAlign: 'center',
                     }}
                 >
-                    Please fill out the information completely
+                    Hãy điền đủ thông tin
                 </Typography>)
                 }
                 <Button variant="contained" 
@@ -562,7 +562,7 @@ export const SinglePizza = ()=>{
                         backgroundColor: '#EA6A12',
                         borderRadius: '100px',
                         alignSelf: 'center',
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 'normal',
                         fontSize: '15px',
                         lineHeight: '175%',
@@ -574,7 +574,7 @@ export const SinglePizza = ()=>{
                     }}
                     disabled = {yourName.length === 0 || yourCmt.length === 0}
                     >
-                    Post
+                    Đăng
                 </Button>
             </Stack>
             </Fade>
@@ -598,7 +598,7 @@ export const SinglePizza = ()=>{
                 <Typography variant="h6"
                     sx={{
                         alignSelf: 'start',
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 700,
                         fontSize: '30px',
                         lineHeight: '52px',
@@ -652,7 +652,7 @@ export const SinglePizza = ()=>{
                         backgroundColor: '#EA6A12',
                         borderRadius: '100px',
                         //maxWidth: '150px',
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 'normal',
                         fontSize: '15px',
                         lineHeight: '175%',
@@ -675,7 +675,7 @@ export const SinglePizza = ()=>{
                         borderRadius: '100px',
                         //maxWidth: '150px',
                         height: '45px',
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 'normal',
                         fontSize: '15px',
                         lineHeight: '175%',

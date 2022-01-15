@@ -53,7 +53,7 @@ export const Comment = (props) =>{
                 }}
                 >
                     {
-                        'Time: '+year+'/'+month+'/'+day+'-'+hour+':'+minute+':'+second
+                        'Thời gian: '+year+'/'+month+'/'+day+'-'+hour+':'+minute+':'+second
                     }
                 </Typography>
             </Stack>

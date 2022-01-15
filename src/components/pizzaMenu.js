@@ -5,6 +5,15 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { makeStyles } from "@mui/styles";
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
+const label ={
+    'Kids':'Đồ cho bé',
+    'Pizzas':'Pizza',
+    'Appetizers':'Khai vị',
+    'Vegetables':'Đồ chay',
+    'Drinks':'Đồ uống',
+    'Desserts':'Tráng miệng',
+    'Combo':'Combo',
+}
 const useStyle = makeStyles({
     textField:{
     '& .MuiOutlinedInput-root': {
@@ -37,7 +46,7 @@ const useStyle = makeStyles({
 
 export const CustomPagination = styled(Pagination)({
     "& .MuiPaginationItem-root": {
-        fontFamily: 'Poppins'
+        fontFamily: 'be Vietnam'
     },
     "& .MuiPaginationItem-root:active": {
         backgroundColor: 'rgb(234, 106, 18, 0.5)',
@@ -111,12 +120,12 @@ export const PizzaMenu = ()=>{
                         textAlign: 'start',
                         m: 3
                     }}
-                    >{categories[category].menuName}
+                    >{label[categories[category].menuName]}
         </Typography>
         <Box sx={{display:'flex',alignItems:'center'}}>
         <TextField 
             className = {classes.textField}
-            placeholder="Search..."
+            placeholder="Tìm kiếm..."
             value={search}
             onChange = {(e)=>setSearch(e.target.value)}
             InputProps={{
@@ -163,7 +172,7 @@ export const PizzaMenu = ()=>{
         <Box sx= {{width: '100%', alignItems: 'center'}}>
             <Typography variant="h6"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 700,
                         fontSize: '30px',
                         lineHeight: '52px',
@@ -171,14 +180,14 @@ export const PizzaMenu = ()=>{
                         textAlign: 'start',
                         m: 3
                     }}
-                    >Please Wait
+                    >Hãy đợi một chút
             </Typography>
             <CircularProgress/>
         </Box>
         :<Box sx= {{width: '100%', alignItems: 'center'}}>
         <Typography variant="h6"
                 sx={{
-                    fontFamily: 'Poppins',
+                    fontFamily: 'be Vietnam',
                     fontWeight: 700,
                     fontSize: '30px',
                     lineHeight: '52px',
@@ -186,7 +195,7 @@ export const PizzaMenu = ()=>{
                     textAlign: 'start',
                     m: 3
                 }}
-                >Opps...Sorry, something went wrong
+                >Có vẻ có lỗi đã xảy ra
         </Typography>
         </Box>
         }

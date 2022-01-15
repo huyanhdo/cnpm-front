@@ -7,6 +7,14 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 export const Category = (props)=>{
+    const label ={
+        'Kid':'Đồ cho bé',
+        'Pizza':'Pizza',
+        'Appetizer':'Khai vị',
+        'Vegetable':'Đồ chay',
+        'Drink':'Đồ uống',
+        'Dessert':'Tráng miệng'
+    }
     const navigate = useNavigate();
     const category = props.category;
     const [hov, setHov] = useState(false);
@@ -42,14 +50,14 @@ export const Category = (props)=>{
             />
             <Typography variant="subtitle1"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 600,
                         fontSize: '13px',
                         lineHeight: '175%',
                         color: hov? 'white': 'black',
                         textAlign: 'start'
                     }}
-                    >{category.name}
+                    >{label[category.name]  }
             </Typography>
             <Divider variant="middle" 
             sx={{
@@ -89,14 +97,14 @@ export const ViewAll = ()=>{
         >
             <Typography variant="subtitle1"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 400,
                         fontSize: '13px',
                         lineHeight: '22.75px',
                         color: 'black',
                         textAlign: 'start'
                     }}
-                    >View all
+                    >Xem tất cả
             </Typography>
             <IconButton
             size="small"
@@ -174,7 +182,7 @@ export const PizzaCard = (props)=>{
             />
             <Typography variant="subtitle1"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 600,
                         fontSize: '16px',
                         lineHeight: '175%',
@@ -199,14 +207,14 @@ export const PizzaCard = (props)=>{
             }}>
                 <Typography variant="subtitle1"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 600,
                         fontSize: '13px',
                         lineHeight: '175%',
                         color: hov? 'white': '#EA6A12',
                         textAlign: 'start'
                     }}
-                    >$ {price}
+                    >{price} VND
                 </Typography>
                 <IconButton
                 size="small"
@@ -251,7 +259,7 @@ export const Categories = ()=>{
                         m: 3,
                         
                     }}
-                    >Menu categories
+                    >Danh mục các món
         </Typography>
     <Box
     sx={{
@@ -288,7 +296,7 @@ export const Newest = () =>{
                         textAlign: 'start',
                         m:3
                     }}
-                    >Best Rating Pizzas
+                    >Đánh giá tốt nhất
         </Typography>
     <Box
     sx={{

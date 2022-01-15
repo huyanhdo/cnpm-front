@@ -2,7 +2,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { FormControl, InputAdornment, TextField, styled, IconButton, Avatar, AppBar, Toolbar, Box, Stack,Button,Menu,MenuItem } from "@mui/material";
 import { useAuth } from '../context/AuthContext';
-import React,{useState} from "react";
+import React,{useState,useEffect} from "react";
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@mui/styles';
@@ -20,6 +20,7 @@ const useStyles = makeStyles({
      
     }
 })
+
 export const Searchbar = ()=>{
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = useState(null);
@@ -32,7 +33,7 @@ export const Searchbar = ()=>{
         },
         '& fieldset':{
             borderRadius: 100,
-            fontFamily: 'Poppins',
+            fontFamily: 'be Vietnam',
         },
         //marginTop: 15,
         marginLeft: 20
@@ -41,7 +42,7 @@ export const Searchbar = ()=>{
     const {resetPassword} = useAuth(); 
     const {currentUser} = useAuth();
     const navigate = useNavigate();
-    const handlelogout= ()=>{logout();navigate('/') }
+    const handlelogout= ()=>{logout();setAnchorEl(null);navigate('/') }
 
     const changePassword = async ()=>{
         resetPassword(currentUser.email);
@@ -50,6 +51,7 @@ export const Searchbar = ()=>{
 
     const handleClose = () => {setAnchorEl(null)}
     const handleClick = (e) => {setAnchorEl(e.currentTarget);}
+
     return(
         <AppBar
             position='sticky'
@@ -59,6 +61,7 @@ export const Searchbar = ()=>{
                 zIndex: 105,
             }}
         >
+            {console.log(anchorEl)}
             <Toolbar
             sx={{
                 width: '100%'
@@ -116,7 +119,7 @@ export const Searchbar = ()=>{
                             }
                         }}
                         >
-                            Sign in</Button>
+                            Đăng nhập</Button>
              
                 }
             </Stack>

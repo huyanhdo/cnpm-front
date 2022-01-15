@@ -105,7 +105,7 @@ export const ComboCarousel = function(){
                     </Typography>
                     <Typography variant="body1"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 400,
                         fontSize: '13px',
                         lineHeight: '22.75px',
@@ -179,7 +179,7 @@ export const ComboCarousel = function(){
                     </Typography>
                     <Typography variant="body1"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 400,
                         fontSize: '13px',
                         lineHeight: '22.75px',

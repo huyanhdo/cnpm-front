@@ -1,10 +1,19 @@
 import { Box, Card, Divider, Step, StepLabel, Stepper, Typography } from '@mui/material'
 import React from 'react'
 export const Bill = (props) =>{
+    const label ={
+        'kid':'Đồ cho bé',
+        'pizza':'Pizza',
+        'appetizer':'Khai vị',
+        'vegetable':'Đồ chay',
+        'drink':'Đồ uống',
+        'dessert':'Tráng miệng'
+    }
     const order = props.order;
     console.log(order);
     const categories = ['kid', 'dessert', 'appetizer', 'drink', 'vegetable']
-    const steps = ['Pending', 'Preparing', 'Shipping', 'Completed']
+    //const categories = ['Đồ cho bé', 'Tráng miệng', 'Khai vị', 'Đồ uống', 'Đồ chay']
+    const steps = ['Duyệt', 'Chuẩn bị', 'Vận chuyển', 'Hoàn thành']
     const activeStep = steps.findIndex(step => step === order.status)
     const timeToDate = (time) =>{
         let date = new Date(time)
@@ -25,7 +34,7 @@ export const Bill = (props) =>{
         >
             <Typography variant="h6"
                 sx={{
-                    fontFamily: 'Poppins',
+                    fontFamily: 'be Vietnam',
                     fontWeight: 700,
                     fontSize: '30px',
                     lineHeight: '52px',
@@ -34,12 +43,12 @@ export const Bill = (props) =>{
                     m: 3,
                     width: '100%'
                 }}
-                >{"Order Code: " + props.code}
+                >{"Mã đơn: " + props.code}
             </Typography>
             <Divider variant='middle'/>
             <pre
                 style={{
-                    fontFamily: 'Poppins',
+                    fontFamily: 'be Vietnam',
                     fontWeight: 700,
                     fontSize: '16px',
                     lineHeight: '52px',
@@ -47,14 +56,14 @@ export const Bill = (props) =>{
                     textAlign: 'start',
                     marginLeft: '20px',
                 }}
-                >{"Name: " + order.customer + "\t\t\tPhone: " + order.phone + 
-                "\nAddress: " + order.address + "\t\t\tTime: " + timeToDate(order.time)}
+                >{"Tên: " + order.customer + "\t\t\tSố điện thoại: " + order.phone + 
+                "\nĐịa chỉ: " + order.address + "\t\t\tThời gian: " + timeToDate(order.time)}
             </pre>
             <Divider variant='middle'/>
             {order.detail.pizza &&
             <Typography variant="h6"
                 sx={{
-                    fontFamily: 'Poppins',
+                    fontFamily: 'be Vietnam',
                     fontWeight: 1000,
                     fontSize: '20px',
                     lineHeight: '52px',
@@ -70,7 +79,7 @@ export const Bill = (props) =>{
                 <pre
                 style={{
                     width: '50%',
-                    fontFamily: 'Poppins',
+                    fontFamily: 'be Vietnam',
                     fontWeight: 700,
                     fontSize: '16px',
                     lineHeight: '52px',
@@ -79,7 +88,7 @@ export const Bill = (props) =>{
                     marginLeft: '20px',
                     m: 3,
                 }}
-                >{"+ Product code: " + pizza.id + "\t\tx" + pizza.number}
+                >{"+ Mã sản phẩm: " + pizza.id + "\t\tx" + pizza.number}
                 </pre>
             )}
             <Box
@@ -94,7 +103,7 @@ export const Bill = (props) =>{
                     <Divider variant='middle' sx={{width: '50%'}}/>
                     <Typography variant="h6"
                 sx={{
-                    fontFamily: 'Poppins',
+                    fontFamily: 'be Vietnam',
                     fontWeight: 1000,
                     fontSize: '20px',
                     lineHeight: '52px',
@@ -103,13 +112,13 @@ export const Bill = (props) =>{
                     marginLeft: '20px',
                     m: 3,
                 }}
-                >{category.replace(/^\w/, (c) => c.toUpperCase())}s: 
+                >{label[category]} 
             </Typography>
                     {
                     order.detail[category].map(product =>
                         <pre
                         style={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 700,
                         fontSize: '16px',
                         lineHeight: '52px',
@@ -118,7 +127,7 @@ export const Bill = (props) =>{
                         marginLeft: '20px',
                         m: 3,
                         }}
-                        >{"+ Product Code: " + product.id + "\t\tx" + product.number}
+                        >{"+ Mã sản phẩm: " + product.id + "\t\tx" + product.number}
                         </pre>
                     )}
                     </Box>
@@ -128,7 +137,7 @@ export const Bill = (props) =>{
             <Divider variant='middle'/>
             <pre
                 style={{
-                    fontFamily: 'Poppins',
+                    fontFamily: 'be Vietnam',
                     fontWeight: 700,
                     fontSize: '16px',
                     lineHeight: '52px',
@@ -137,11 +146,11 @@ export const Bill = (props) =>{
                     marginLeft: '20px',
                     m: 3,
                 }}
-                >{"Total payment: " + order['total payment'] + "\nShipping payment: " + order['shipping payment']}
+                >{"Tổng tiền: " + order['total payment'] + "\nPhí vận chuyển: " + order['shipping payment']}
             </pre>
             <Typography variant="h6"
                 sx={{
-                    fontFamily: 'Poppins',
+                    fontFamily: 'be Vietnam',
                     fontWeight: 1000,
                     fontSize: '20px',
                     lineHeight: '52px',
@@ -149,7 +158,7 @@ export const Bill = (props) =>{
                     width: '100%',
                     m: 3,
                 }}
-                >Status:
+                >Trạng thái:
             </Typography>
             <Stepper
             color='warning'

@@ -6,9 +6,9 @@ import { styled } from "@mui/system";
 import { useAuth } from "../context/AuthContext";
 import { Home } from "./Home";
 export const MyTab = styled(Tab)({
-    fontFamily: 'Poppins',
+    fontFamily: 'be Vietnam',
     fontWeight: '600',
-    fontSize: '16px',
+    fontSize: '20px',
     borderBottom: '1px solid #e8e8e8',
     '& .MuiTabs-indicator': {
     backgroundColor: '#1890ff',
@@ -43,18 +43,18 @@ export const ManagePage = ()=>{
                         textAlign: 'start',
                         m: 3
                     }}
-                    >Products Management
+                    >Quản lý món
                 </Typography>
                 <Box sx={{ width: '100%', typography: 'body1' }}>
                 <TabContext value={value}>
                     <Box sx={{ borderBottom: 1, borderColor: 'divider', marginLeft:3 }}>
                     <TabList onChange={handleChange} aria-label="lab API tabs example">
                         <MyTab label="Pizza" value="1" />
-                        <MyTab label="Dessert" value="2" />
-                        <MyTab label="Appetizer" value="3" />
-                        <MyTab label="Vegetable" value="4" />
-                        <MyTab label="Kid" value="5" />
-                        <MyTab label="Drink" value="6" />
+                        <MyTab label="Tráng miệng" value="2" />
+                        <MyTab label="Khai vị" value="3" />
+                        <MyTab label="Món chay" value="4" />
+                        <MyTab label="Đồ cho bé" value="5" />
+                        <MyTab label="Đồ uống" value="6" />
                         <MyTab label="Combo" value="7" />
 
                     </TabList>

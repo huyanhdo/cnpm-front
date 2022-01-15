@@ -15,7 +15,7 @@ export const SingleComboPage = ()=>{
         <Box sx= {{width: '100%', alignItems: 'center'}}>
             <Typography variant="h6"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 700,
                         fontSize: '30px',
                         lineHeight: '52px',
@@ -23,14 +23,14 @@ export const SingleComboPage = ()=>{
                         textAlign: 'start',
                         m: 3
                     }}
-                    >Please Wait
+                    >hãy chờ một chút
             </Typography>
             <CircularProgress/>
         </Box>
         :<Box sx= {{width: '100%', alignItems: 'center'}}>
         <Typography variant="h6"
                 sx={{
-                    fontFamily: 'Poppins',
+                    fontFamily: 'be Vietnam',
                     fontWeight: 700,
                     fontSize: '30px',
                     lineHeight: '52px',
@@ -38,7 +38,7 @@ export const SingleComboPage = ()=>{
                     textAlign: 'start',
                     m: 3
                 }}
-                >Opps...Sorry, something went wrong
+                >Có lỗi xảy ra
         </Typography>
         </Box>
         }

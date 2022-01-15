@@ -26,7 +26,7 @@ export const ToppingCard = (props) =>{
             >
                 <Typography variant="subtitle1"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 600,
                         fontSize: '18px',
                         lineHeight: '175%',
@@ -42,7 +42,7 @@ export const ToppingCard = (props) =>{
                 }}>
                 <Typography variant="subtitle1"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 600,
                         fontSize: '16px',
                         lineHeight: '175%',
@@ -50,7 +50,7 @@ export const ToppingCard = (props) =>{
                         textAlign: 'start',
                         marginRight:'20px'
                     }}
-                    >$ {price}
+                    > {price} VND
                 </Typography>
                 <IconButton
                 sx={{

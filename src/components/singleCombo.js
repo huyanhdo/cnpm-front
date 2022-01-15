@@ -7,6 +7,14 @@ import { CustomPagination } from './pizzaMenu';
 import { useNavigate, useLocation } from 'react-router-dom';
 import {useDispatch} from 'react-redux'
 import {itemAdded, itemUpdated} from '../store/cartComboSlice'
+const label ={
+    'kid':'đồ cho bé',
+    'pizza':'pizza',
+    'appetizer':'khai vị',
+    'vegetable':'đồ chay',
+    'drink':'đồ uống',
+    'dessert':'tráng miệng'
+}
 const timeToDate = (time) =>{
     let date = new Date(time * 1000)
     let year = date.getFullYear()
@@ -72,7 +80,7 @@ export const ChooseCard = (props)=>{
             />
             <Typography variant="subtitle1"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 600,
                         fontSize: '16px',
                         lineHeight: '175%',
@@ -84,7 +92,7 @@ export const ChooseCard = (props)=>{
             </Typography>
                 <Typography variant="subtitle1"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 600,
                         fontSize: '13px',
                         lineHeight: '175%',
@@ -179,7 +187,7 @@ export const ComboChooseModal = (props) =>{
                         textAlign: 'start',
                         margin: '20px'
                     }}
-                    >Choose your {category} dish
+                    >Chọn {label[category]} 
             </Typography>
             <Box sx={{
                 m: 1,
@@ -249,14 +257,14 @@ export const AddSlot = (props) =>{
                 </IconButton>
             <Typography
                     style={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 400,
                         fontSize: '20px',
                         lineHeight: '22.75px',
                         color: 'black',
                         textAlign: 'center',
                     }}
-                    >Choose your {category} dish
+                    >Chọn {label[category]}
             </Typography>
         </Box>
     )
@@ -328,7 +336,7 @@ export const AddedExtra = (props) =>{
             <Divider variant='middle' sx={{width: '50%'}}/>
             <Typography variant="h6"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 700,
                         fontSize: {md: '25px', sm: '20px', xs: '20px'},
                         lineHeight: '52px',
@@ -425,7 +433,7 @@ export const AddedPizza = (props) =>{
                 </Typography>
                 <Typography variant="h6"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 700,
                         fontSize: {md: '25px', sm: '20px', xs: '20px'},
                         lineHeight: '52px',
@@ -454,7 +462,7 @@ export const AddedPizza = (props) =>{
                 >
                 <Typography variant="body1"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 400,
                         fontSize: {md: '20px', sm: '15px', xs: '15px'},
                         lineHeight: '22.75px',
@@ -520,7 +528,7 @@ export const AddedPizza = (props) =>{
                 >
                 <Typography variant="body1"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 400,
                         fontSize: {md: '20px', sm: '15px', xs: '15px'},
                         lineHeight: '22.75px',
@@ -575,7 +583,7 @@ export const AddedPizza = (props) =>{
 
             <Typography variant="body1"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 400,
                         fontSize: {md: '20px', sm: '15px', xs: '15px'},
                         lineHeight: '22.75px',
@@ -623,7 +631,7 @@ export const AddedPizza = (props) =>{
                             />
                             <Typography variant="body1"
                             sx={{
-                            fontFamily: 'Poppins',
+                            fontFamily: 'be Vietnam',
                             fontWeight: 700,
                             fontSize: '15px',
                             lineHeight: '22.75px',
@@ -686,7 +694,7 @@ export const CustomProduct = (props) =>{
                         marginTop: '50px',
                         marginLeft: '20px'
                     }}
-                    >{category.replace(/^\w/, (c) => c.toUpperCase())} x{number}
+                    >{label[category]} x{number}
             </Typography>
             <Box sx={{alignItems: 'center', display: 'flex', flexWrap: 'wrap'}}>
                 {
@@ -818,7 +826,7 @@ export const SingleCombo = () =>{
                 </Typography>
                 <Typography
                     style={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 400,
                         fontSize: '15px',
                         lineHeight: '22.75px',
@@ -834,7 +842,7 @@ export const SingleCombo = () =>{
                 <Stack spacing={1}>
                 <Typography
                     style={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 1000,
                         fontSize: '15px',
                         lineHeight: '22px',
@@ -850,7 +858,7 @@ export const SingleCombo = () =>{
                     combo.off > 0 &&
                 <Typography
                     style={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 1000,
                         fontSize: '15px',
                         lineHeight: '22px',
@@ -866,7 +874,7 @@ export const SingleCombo = () =>{
                 }
                 <Typography
                     style={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 400,
                         fontSize: '15px',
                         lineHeight: '22.75px',
@@ -880,7 +888,7 @@ export const SingleCombo = () =>{
                 </Typography>
                 <Typography
                     style={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 400,
                         fontSize: '15px',
                         lineHeight: '22.75px',
@@ -890,7 +898,7 @@ export const SingleCombo = () =>{
                         maxHeight: '65px',
                         overflow: 'hidden'
                     }}
-                    >{combo.persons} persons
+                    >{combo.persons} người
                 </Typography>
                 </Stack>
             </Stack>
@@ -991,7 +999,7 @@ export const SingleCombo = () =>{
                         marginBottom: '10px',
                         m: 3
                     }}
-                    >Bonus (100% free)
+                    >Bonus (100% miễn phí)
                     </Typography>
                     {
                         combo.free.pizza && combo.free.pizza > 0 && 
@@ -1068,7 +1076,7 @@ export const SingleCombo = () =>{
                         textAlign: 'start',
                         marginBottom: '10px'
                     }}
-                    >Number: 
+                    >Số lượng: 
                 </Typography>
                 <IconButton
                 sx={{
@@ -1090,7 +1098,7 @@ export const SingleCombo = () =>{
                 </IconButton>
                 <Typography variant="subtitle1"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 600,
                         fontSize: '16px',
                         lineHeight: '175%',
@@ -1130,7 +1138,7 @@ export const SingleCombo = () =>{
                         textAlign: 'center',
                         textOverflow: 'ellipsis'
                     }}
-                    >Total: {round(total* num *(100 - combo.off) / 100)}đ
+                    >Tổng tiền: {round(total* num *(100 - combo.off) / 100)} VND
                     </Typography>
                     {
                     combo.off > 0 &&
@@ -1145,7 +1153,7 @@ export const SingleCombo = () =>{
                         textOverflow: 'ellipsis',
                         textDecoration: 'line-through'
                     }}
-                    >({round(total * num)}đ)
+                    >({round(total * num)} vnd)
                     </Typography>
                     }
                 </Stack>
@@ -1156,7 +1164,7 @@ export const SingleCombo = () =>{
                         backgroundColor: '#EA6A12',
                         borderRadius: '100px',
                         //maxWidth: '150px',
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 'normal',
                         fontSize: '15px',
                         lineHeight: '175%',
@@ -1197,7 +1205,7 @@ export const SingleCombo = () =>{
                         setDone(true)
                     }}
                     >
-                        {cartId >= 0 ? "Update Cart" : "Add To Cart"}
+                        {cartId >= 0 ? "Cập nhập giỏ hàng" : "Thêm vào giỏ hàng"}
                 </Button>
                 <Modal open={done} >
             <Fade in={done} timeout={500}>
@@ -1224,7 +1232,7 @@ export const SingleCombo = () =>{
                         color: '#07143B',
                         textAlign: 'center',
                     }}
-                    >Your Cart has been updated successfully!!
+                    >Đã cập nhập giỏ hàng của bạn
                 </Typography>
                 <Stack direction="row" spacing={5}>
                 <Button variant="contained" 
@@ -1235,7 +1243,7 @@ export const SingleCombo = () =>{
                         backgroundColor: '#EA6A12',
                         borderRadius: '100px',
                         //maxWidth: '150px',
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 'normal',
                         fontSize: '15px',
                         lineHeight: '175%',
@@ -1247,7 +1255,7 @@ export const SingleCombo = () =>{
                         marginBottom: 2
                     }}
                     >
-                        Done
+                        Xong
                 </Button>
                 <Button variant="contained" 
                     onClick = {()=>{
@@ -1258,7 +1266,7 @@ export const SingleCombo = () =>{
                         borderRadius: '100px',
                         //maxWidth: '150px',
                         height: '45px',
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 'normal',
                         fontSize: '15px',
                         lineHeight: '175%',
@@ -1269,7 +1277,7 @@ export const SingleCombo = () =>{
                         marginBottom: 2
                     }}
                     >
-                        Go to cart
+                        Xem giỏ hàng
                 </Button>
                 </Stack>
                 
@@ -1291,7 +1299,7 @@ export const SingleCombo = () =>{
                         marginBottom: '10px',
                         m: 3
                     }}
-                    >Opps.. Sorry! This combo is expired or not started yet...
+                    >Combo này đã hết hạn hoặc có lỗi xảy ra
                     </Typography>
     )
 }

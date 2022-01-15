@@ -1,11 +1,7 @@
 import { Stack, Typography, Box, IconButton, Divider , Collapse, Grow} from '@mui/material';
 import React, { useState } from 'react';
 import AddCircleRounded from '@mui/icons-material/AddCircleRounded';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { useSelector, useDispatch } from 'react-redux';
-//import { useNavigate } from 'react-router-dom';
-import { itemAdded } from '../store/cartComboSlice';
-//import { useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { CustomPagination } from './pizzaMenu';
 const timeToDate = (time) =>{
@@ -61,7 +57,7 @@ export const ComboPizzaItem = (props) =>{
             <Stack direction="row">
             <Typography variant="h6"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 700,
                         fontSize: {md: '15px', sm: '13px', xs: '12px'},
                         lineHeight: '52px',
@@ -73,7 +69,7 @@ export const ComboPizzaItem = (props) =>{
             </Typography>
             <Typography variant="h6"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 700,
                         fontSize: {md: '15px'},
                         lineHeight: '52px',
@@ -82,7 +78,7 @@ export const ComboPizzaItem = (props) =>{
                         marginLeft: {md: '20px'},
                         display: {md: 'block', sm: 'none', xs: 'none'}
                     }}
-                >(See more)
+                >(Xem thêm)
             </Typography>
             </Stack>
             <Box sx={{
@@ -95,7 +91,7 @@ export const ComboPizzaItem = (props) =>{
             }}>
             <Typography variant="h6"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 700,
                         fontSize: {md: '15px', sm: '15px', xs: '13px'},
                         lineHeight: '52px',
@@ -113,30 +109,30 @@ export const ComboPizzaItem = (props) =>{
             <Stack direction="row" spacing={5}>
             <Typography variant="h6"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 700,
                         fontSize: {md: '15px', sm: '15px', xs: '13px'},
                         lineHeight: '52px',
                         color: '#07143B',
                         textAlign: 'start',
                     }}
-                >Size: {item.size}
+                >Cỡ: {item.size}
             </Typography>
             <Typography variant="h6"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 700,
                         fontSize: {md: '15px', sm: '15px', xs: '13px'},
                         lineHeight: '52px',
                         color: '#07143B',
                         textAlign: 'start',
                     }}
-                >Sole: {item.sole}
+                >Đế: {item.sole}
             </Typography>
             </Stack>
             <Typography variant="h6"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 700,
                         fontSize: {md: '15px', sm: '15px', xs: '13px'},
                         lineHeight: '52px',
@@ -193,7 +189,7 @@ export const ComboExtraItem = (props) =>{
             />
             <Typography variant="h6"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 700,
                         fontSize: {md: '15px', sm: '13px', xs: '12px'},
                         lineHeight: '52px',
@@ -213,7 +209,7 @@ export const ComboExtraItem = (props) =>{
             }}>
             <Typography variant="h6"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 700,
                         fontSize: {md: '15px', sm: '15px', xs: '13px'},
                         lineHeight: '52px',
@@ -257,7 +253,7 @@ export const ComboMenuItem = (props) =>{
             <Typography variant="subtitle1"
                     sx={{
                         
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 400,
                         fontSize: '13px',
                         lineHeight: '22.75px',
@@ -268,7 +264,7 @@ export const ComboMenuItem = (props) =>{
             </Typography>
             <Typography variant="subtitle1"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 600,
                         fontSize: '16px',
                         lineHeight: '175%',
@@ -280,7 +276,7 @@ export const ComboMenuItem = (props) =>{
             </Typography>
             <Typography variant="subtitle1"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 400,
                         fontSize: '13px',
                         lineHeight: '22.75px',
@@ -296,7 +292,7 @@ export const ComboMenuItem = (props) =>{
             }}/>
             <Typography variant="subtitle1"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 400,
                         fontSize: '13px',
                         lineHeight: '22.75px',
@@ -304,7 +300,7 @@ export const ComboMenuItem = (props) =>{
                         color: hov? 'white': '#959895',
                         marginBottom: '20px'
                     }}
-                    >{combo.persons} persons                    
+                    >{combo.persons} người                 
             </Typography>
             <Stack
             direction='row'
@@ -315,7 +311,7 @@ export const ComboMenuItem = (props) =>{
             >
                 <Typography variant="subtitle1"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 600,
                         fontSize: '13px',
                         lineHeight: '175%',
