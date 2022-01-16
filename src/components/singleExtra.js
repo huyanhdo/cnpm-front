@@ -50,7 +50,7 @@ export const SingleExtra = ()=>{
     }
     const {category , productId} = useParams();
     const extra = categories[category].selector.entities[productId];
-    const comments = extra.comment;
+    const comments = extra.comment ? extra.comment : [];
     const [num, setNum] = useState(1);
     const [cmt, setCmt] = useState(false);
     const [done, setDone] = useState(false);
@@ -80,7 +80,7 @@ const postComment = async () =>{
         }
         let newExtra = {}
         newExtra = Object.assign(newExtra, extra)
-        newExtra.comment = [...newExtra.comment, newCmt]
+        newExtra.comment = [...comments, newCmt]
         newExtra.rating = (extra.rating * comments.length + yourRate)/ (comments.length + 1)
             const result = await axios.put(
                 categories[category].link + productId + '/.json',
