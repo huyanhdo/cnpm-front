@@ -73,9 +73,9 @@ export const PizzaManageCard = (props)=>{
     const checkItem = () => {
         if(category == 'pizza'){
             if(name.length == 0 || description.length ==0 || image.length == 0 || price.length == 0 ||
-                !(toppings[0].name.length ==0 && toppings[0].price.length ==0) || sizes[0].price.length ==0 ||
-                sizes[0].price.length ==0 ){
-                    alert("Chưa điền đủ thông tin !")
+                (toppings[0].topping_name.length ==0 && toppings[0].topping_price.length ==0) || sizes[0].type_price.length ==0 ||
+                sizes[0].type_detail.length == 0 ){
+                    alert("Hãy điền đủ thông tin!")
                     return false;
                 }
             if(isNaN(parseInt(price)) ){
@@ -83,14 +83,14 @@ export const PizzaManageCard = (props)=>{
                 return false;
             }
             sizes.forEach(a => {
-                if(isNaN(parseInt(a.number)) || parseInt(a.number) <= 0 || a.name.length == 0){
+                if(isNaN(parseInt(a.type_price)) || parseInt(a.type_price) < 0 || a.type_detail.length == 0){
                     alert("Giá trị không hợp lệ !");
                     return false;
                 }
             });
             if(!((toppings[0].topping_name.length ==0 && toppings[0].topping_price.length ==0) && toppings.length == 1))
             toppings.forEach(a => {
-                if(isNaN(parseInt(a.number)) || parseInt(a.number) <= 0 || a.name.length == 0){
+                if(isNaN(parseInt(a.topping_price)) || parseInt(a.topping_price) <= 0 || a.topping_name.length == 0){
                     alert("Giá trị không hợp lệ !");
                     return false;
                 }
@@ -98,11 +98,11 @@ export const PizzaManageCard = (props)=>{
         }
         else{
             if(name.length == 0 || description.length ==0 || image.length == 0 || price.length == 0){
-                    alert("Chưa điền đủ thông tin !")
+                    alert("Hãy điền đủ thông tin!")
                     return false;
                 }
             if(isNaN(parseInt(price)) ){
-                alert("Giá trị không hợp lệ !");
+                alert("Giá trị không hợp lệ!");
                 return false;
             }
         }

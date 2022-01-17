@@ -714,43 +714,42 @@ export const PizzaManage = (props)=> {
     }
 
     const checkItem = () => {
-        if(category == 'pizza'){
-            if(newName.length == 0 || newDescription.length ==0 || newImage.length == 0 || newPrice.length == 0 ||
-                !(newToppings[0].topping_name.length ==0 && newToppings[0].topping_price.length ==0) || 
-                newSizes[0].type_price.length ==0 || newSizes[0].type_detail.length ==0 ){
-                    alert("Chưa điền đủ thông tin !")
-                    return false;
-                }
-                if(isNaN(parseInt(newPrice)) ){
-                    alert("Giá trị không hợp lệ !");
-                    return false;
-                }
-                newSizes.forEach(a => {
-                    if(isNaN(parseInt(a.type_price)) || parseInt(a.type_price) <= 0 || a.type_detail.length == 0){
-                        alert("Giá trị không hợp lệ !");
+            if(category == 'pizza'){
+                if(newName.length == 0 || newDescription.length ==0 || newImage.length == 0 || newPrice.length == 0 ||
+                    !(newToppings[0].topping_name.length ==0 && newToppings[0].topping_price.length ==0) || 
+                    newSizes[0].type_price.length ==0 || newSizes[0].type_detail.length ==0 ){
+                        alert("Hãy điền đủ thông tin!")
                         return false;
                     }
-                });
-                newToppings.forEach(a => {
-                    if(isNaN(parseInt(a.topping_price)) || parseInt(a.topping_price) <= 0 || a.topping_name.length == 0){
-                        alert("Giá trị không hợp lệ !");
+                    if(isNaN(parseInt(newPrice)) ){
+                        alert("Giá trị không hợp lệ");
                         return false;
                     }
-                });
+                    newSizes.forEach(a => {
+                        if(isNaN(parseInt(a.type_price)) || parseInt(a.type_price) < 0 || a.type_detail.length == 0){
+                            alert("Giá trị không hợp lệ !");
+                            return false;
+                        }
+                    });
+                    newToppings.forEach(a => {
+                        if(isNaN(parseInt(a.topping_price)) || parseInt(a.topping_price) <= 0 || a.topping_name.length == 0){
+                            alert("Giá trị không hợp lệ!");
+                            return false;
+                        }
+                    });
+            }
+            else{
+                if(newName.length == 0 || newDescription.length ==0 || newImage.length == 0 || newPrice.length == 0){
+                        alert("Chưa điền đủ thông tin !")
+                        return false;
+                    }
+                    if(isNaN(parseInt(newPrice)) ){
+                        alert("Giá trị không hợp lệ!");
+                        return false;
+                    }
+            }
+            return true;
         }
-        else{
-            if(newName.length == 0 || newDescription.length ==0 || newImage.length == 0 || newPrice.length == 0){
-                    alert("Chưa điền đủ thông tin !")
-                    return false;
-                }
-                if(isNaN(parseInt(newPrice)) ){
-                    alert("Giá trị không hợp lệ !");
-                    return false;
-                }
-        }
-        return true;
-    }
-
     //handle the dynamic Sizes in Modal
     const handleSizeChange = (index, e) => {
         const Sizes = [...newSizes];
