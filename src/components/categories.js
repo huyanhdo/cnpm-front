@@ -280,9 +280,12 @@ export const Categories = ()=>{
 }
 export const Newest = () =>{
     const pizzas = useSelector(state => state.pizzas);
+    const fetchingStatus = pizzas.fetchingStatus;
+
     let sortedIds = [...pizzas.ids];
+    if(fetchingStatus === 'SUCCESS')
     sortedIds.sort((id1, id2)=> pizzas.entities[id2].rating - pizzas.entities[id1].rating)
-    return (
+    return fetchingStatus === 'SUCCESS' && (
         <Box sx = {{
             width: '100%'
         }}>

@@ -16,6 +16,7 @@ import { add1Drink } from "../store/categories/drinkSlice";
 import { add1Kid } from "../store/categories/kidSlice";
 import { add1Vegetable } from "../store/categories/vegetableSlice";
 import { PizzaManageCard, ComboManageCard } from "./manageCard";
+import { Categories } from "./categories";
 
 
 const axios = require('axios');
@@ -214,7 +215,7 @@ export const ComboManage = ()=> {
         try {
             const resp = await axios.post(url, newItem);
             if (resp.statusText === "OK"){
-                dispatch(add1Combo({id: resp.data.name, itm: newItem}));
+                dispatch(add1Combo({id: resp.data.name, item: newItem}));
                 setMess('Đã thêm thành công');
                 setPosted(true);
             }
@@ -677,6 +678,7 @@ export const PizzaManage = (props)=> {
     const category = props.category;
     const products = categories[category].selector.entities;
     const ids = categories[category].selector.ids;
+    const fetchingStatus = categories[category].selector.fetchingStatus;
     const [addPizza, setAddPizza] = useState(false);
     const url= 'https://pizzahust-d7124-default-rtdb.asia-southeast1.firebasedatabase.app/menu/menu_' + categories[category].dbPath + '.json';
     const max = 30;
@@ -804,7 +806,7 @@ export const PizzaManage = (props)=> {
         try {
             const resp = await axios.post(url, newItem);
             if (resp.status === 200){
-                dispatch(categories[category].add({id: resp.data.name, itm: newItem}));
+                dispatch(categories[category].add({id: resp.data.name, item: newItem}));
 
 
                 setMess('Đã thêm thành công');
@@ -823,7 +825,7 @@ export const PizzaManage = (props)=> {
 
 
     for(let i = 1;i <= totalPage;i++)pageList.push(i);
-    return(
+    return fetchingStatus === 'SUCCESS' && (
         <Box sx={{p: 5, marginBottom: '100px', width: '100%'}}>
         <Box sx={{display: 'flex', justifyContent: 'space-between', padding: '0 50px 30px 50px'}}
         >

@@ -18,7 +18,7 @@ const comboSlice = createSlice({
     reducers: {
         add1Combo(state, action){
             const id = action.payload.id;
-            state.entities[id] = action.payload.itm;
+            state.entities[id] = action.payload.item;
             state.ids.push(id);
         },
         delete1Combo(state, action){
