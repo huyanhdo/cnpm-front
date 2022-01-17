@@ -117,7 +117,7 @@ export const ComboManage = ()=> {
         setCategorys([...categorys, {name: 'dessert', number: ''}]);
     }
 
-    const handleRemoveCategory = (index) => {
+    const handleRemoveCategory = (index, e) => {
         const Categories = [...categorys];
         Categories.splice(index,1);
         setCategorys(Categories);
@@ -135,7 +135,7 @@ export const ComboManage = ()=> {
         setFree([...free, {name: 'dessert', number: ''}]);
     }
 
-    const handleRemoveFree = (index) => {
+    const handleRemoveFree = (index, e) => {
         const Free = [...free];
         Free.splice(index,1);
         setFree(Free);
@@ -389,7 +389,7 @@ export const ComboManage = ()=> {
                             width: '30%'
                         }}
                         />
-                        <IconButton disabled={free.length === 1} onClick={(index) => handleRemoveFree(index)}>
+                        <IconButton disabled={free.length === 1} onClick={(e) => handleRemoveFree(index, e)}>
                             <RemoveCircleOutlineIcon 
                             sx={{
                                 color:  '#EA6A12',
@@ -489,7 +489,7 @@ export const ComboManage = ()=> {
                             width: '40%'
                         }}
                         />
-                        <IconButton disabled={categorys.length === 1} onClick={(index) => handleRemoveCategory(index)}>
+                        <IconButton disabled={categorys.length === 1} onClick={(e) => handleRemoveCategory(index, e)}>
                             <RemoveCircleOutlineIcon 
                             sx={{
                                 color:  '#EA6A12',
@@ -726,7 +726,7 @@ export const PizzaManage = (props)=> {
                     return false;
                 }
                 newSizes.forEach(a => {
-                    if(isNaN(parseInt(a.type_price)) || parseInt(a.type_price) <= 0 || a.type_detail.length == 0){
+                    if(isNaN(parseInt(a.type_price)) || parseInt(a.type_price) < 0 || a.type_detail.length == 0){
                         alert("Invalid value !");
                         return false;
                     }
@@ -762,7 +762,7 @@ export const PizzaManage = (props)=> {
         setNewSizes([...newSizes, {type_detail: '', type_price: ''}]);
     }
 
-    const handleRemoveSize = (index) => {
+    const handleRemoveSize = (index, e) => {
         const Sizes = [...newSizes];
         Sizes.splice(index,1);
         setNewSizes(Sizes);
@@ -780,7 +780,7 @@ export const PizzaManage = (props)=> {
         setNewToppings([...newToppings, {topping_name: '', topping_price: ''}]);
     }
 
-    const handleRemoveTopping = (index) => {
+    const handleRemoveTopping = (index, e) => {
         const Toppings = [...newToppings];
         Toppings.splice(index,1);
         setNewToppings(Toppings);
@@ -974,7 +974,7 @@ export const PizzaManage = (props)=> {
                                 width: '40%'
                             }}
                             />
-                            <IconButton disabled={newSizes.length === 1} onClick={(index) => handleRemoveSize(index)}>
+                            <IconButton disabled={newSizes.length === 1} onClick={(e) => handleRemoveSize(index, e)}>
                                 <RemoveCircleOutlineIcon 
                                 sx={{
                                     color:  '#EA6A12',
@@ -1058,7 +1058,7 @@ export const PizzaManage = (props)=> {
                                 width: '40%'
                             }}
                             />
-                            <IconButton disabled={newToppings.length === 1} onClick={(index) => handleRemoveTopping(index)}>
+                            <IconButton disabled={newToppings.length === 1} onClick={(e) => handleRemoveTopping(index, e)}>
                                 <RemoveCircleOutlineIcon 
                                 sx={{
                                     color:  '#EA6A12',

@@ -73,8 +73,8 @@ export const PizzaManageCard = (props)=>{
     const checkItem = () => {
         if(category == 'pizza'){
             if(name.length == 0 || description.length ==0 || image.length == 0 || price.length == 0 ||
-                !(toppings[0].name.length ==0 && toppings[0].price.length ==0) || sizes[0].price.length ==0 ||
-                sizes[0].price.length ==0 ){
+                (toppings[0].topping_name.length ==0 && toppings[0].topping_price.length ==0) || sizes[0].type_price.length ==0 ||
+                sizes[0].type_detail.length == 0 ){
                     alert("The form has not been completed !")
                     return false;
                 }
@@ -83,14 +83,14 @@ export const PizzaManageCard = (props)=>{
                 return false;
             }
             sizes.forEach(a => {
-                if(isNaN(parseInt(a.number)) || parseInt(a.number) <= 0 || a.name.length == 0){
-                    alert("Invalid value !");
+                if(isNaN(parseInt(a.type_price)) || parseInt(a.type_price) < 0 || a.type_detail.length == 0){
+                    alert("Invalid value !2");
                     return false;
                 }
             });
-            if(!(toppings[0].name.length ==0 && toppings[0].price.length ==0) && toppings.length == 1)
+            if(!((toppings[0].topping_name.length ==0 && toppings[0].topping_price.length ==0) && toppings.length == 1))
             toppings.forEach(a => {
-                if(isNaN(parseInt(a.number)) || parseInt(a.number) <= 0 || a.name.length == 0){
+                if(isNaN(parseInt(a.topping_price)) || parseInt(a.topping_price) <= 0 || a.topping_name.length == 0){
                     alert("Invalid value !");
                     return false;
                 }
@@ -543,6 +543,7 @@ export const PizzaManageCard = (props)=>{
                 <Button variant="contained" 
                     onClick={()=>{
                         if(checkItem()){
+                            if(hov === true) switchHov()
                             setEditPizza(false);
                             EditHandle()}}
                         }
@@ -748,11 +749,9 @@ export const ComboManageCard = (props) =>{
 
     //handle the dynamic Sizes in Modal
     const handleCategoryChange = (index, e) => {
-        console.log(e);
         const Categories = [...categorys];
         Categories[index][e.target.name] =e.target.name ==='name' ? e.target.value : parseInt(e.target.value);
         setCategorys(Categories);
-        console.log(Categories);
     }
 
     const handleAddCategory = () => {
@@ -1317,6 +1316,7 @@ export const ComboManageCard = (props) =>{
                 <Button variant="contained" 
                     onClick={()=>{
                         if(checkCombo()){
+                            if(hov === true) switchHov()
                             setEditCombo(false);
                             handleEditCombo();
                         }
