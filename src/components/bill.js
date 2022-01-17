@@ -8,13 +8,13 @@ export const Bill = (props) =>{
         'vegetable':'Đồ chay',
         'drink':'Đồ uống',
         'dessert':'Tráng miệng'
-    }
+    };
+    const statusStepper = {'Pending':'Duyệt','Prepairing':'Chuẩn bị','Shipping':'Vận chuyển','Completed':'Hoàn thành'}
     const order = props.order;
-    console.log(order);
     const categories = ['kid', 'dessert', 'appetizer', 'drink', 'vegetable']
     //const categories = ['Đồ cho bé', 'Tráng miệng', 'Khai vị', 'Đồ uống', 'Đồ chay']
     const steps = ['Duyệt', 'Chuẩn bị', 'Vận chuyển', 'Hoàn thành']
-    const activeStep = steps.findIndex(step => step === order.status)
+    const activeStep = steps.findIndex(step => step === statusStepper[order.status])
     const timeToDate = (time) =>{
         let date = new Date(time)
         let year = date.getFullYear()

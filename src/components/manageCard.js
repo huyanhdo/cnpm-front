@@ -529,11 +529,11 @@ export const PizzaManageCard = (props)=>{
                 }
                 <Button variant="contained" 
                     onClick={()=>{
-                        if(checkItem()){
+                        
                             if(hov === true) switchHov()
                             setEditPizza(false);
                             EditHandle()}}
-                        }
+                        
                     sx={{
                         backgroundColor: '#EA6A12',
                         borderRadius: '100px',

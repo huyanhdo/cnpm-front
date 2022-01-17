@@ -1066,10 +1066,10 @@ export const PizzaManage = (props)=> {
 
                 <Button variant="contained" 
                     onClick={()=>{
-                        if(checkItem()){
+                        
                             setAddPizza(false);
                             handleAddPizza();
-                        }                  
+                                          
                     }}
                     sx={{
                         backgroundColor: '#EA6A12',
