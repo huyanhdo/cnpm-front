@@ -21,7 +21,7 @@ import { PizzaManageCard, ComboManageCard } from "./manageCard";
 const axios = require('axios');
 export const CustomPagination = styled(Pagination)({
     "& .MuiPaginationItem-root": {
-        fontFamily: 'Poppins'
+        fontFamily: 'be Vietnam'
     },
     "& .MuiPaginationItem-root:active": {
         backgroundColor: 'rgb(234, 106, 18, 0.5)',
@@ -215,14 +215,14 @@ export const ComboManage = ()=> {
             const resp = await axios.post(url, newItem);
             if (resp.statusText === "OK"){
                 dispatch(add1Combo({id: resp.data.name, itm: newItem}));
-                setMess('Your item has been added successfully');
+                setMess('Đã thêm thành công');
                 setPosted(true);
             }
             closeCmt();
         } catch (err) {
             // Handle Error Here
             alert(err);
-            setMess('Sorry, Failed to add your item!');
+            setMess('Có sự cố xảy ra');
             setPosted(false);
         }
     }
@@ -249,7 +249,7 @@ export const ComboManage = ()=> {
                     sx={{
                         backgroundColor: '#EA6A12',
                         borderRadius: '100px',
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 'normal',
                         fontSize: '15px',
                         lineHeight: '175%',
@@ -261,7 +261,7 @@ export const ComboManage = ()=> {
                         marginRight: 2
                     }}
                     >
-                        Add Combo
+                        Thêm Combo
         </Button>
         <Modal open={addCombo} onClose = {() => {setAddCombo(false)}}>
             <Fade in={addCombo} timeout={500}>
@@ -288,43 +288,43 @@ export const ComboManage = ()=> {
                         color: '#07143B',
                         textAlign: 'center',
                     }}
-                    >{'Your Combo'}
+                    >{'Combo của bạn'}
                 </Typography>
                 <Stack direction="row" spacing={2}>
                 <TextField onChange={(e) => {setTitle(e.target.value)}}
                 required
                 variant="standard"
                 id="title"
-                label="Title"
+                label="Combo"
                 multiline
                 maxRows={1}
                 color='warning'
-                inputProps={{style: {fontFamily: 'Poppins'}}} // font size of input text
-                InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                inputProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input text
+                InputLabelProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input label
                 sx={{
                     width: '50%'
                 }}
                 />
                 <TextField onChange={(e) => {setSubTitle(e.target.value)}}
                 required variant="standard" multiline color='warning' maxRows={4}
-                id="subtitle" label="Subtitle"
-                inputProps={{style: {fontFamily: 'Poppins'},}} // font size of input text
-                InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                id="subtitle" label="Phụ đề"
+                inputProps={{style: {fontFamily: 'be Vietnam'},}} // font size of input text
+                InputLabelProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input label
                 sx={{
                     width: '50%'
                 }}
                 />
                 </Stack>
                 <FormControl component="fieldset">
-                    <FormLabel component="legend">Combo Type</FormLabel>
+                    <FormLabel component="legend">Loại Combo</FormLabel>
                     <RadioGroup row
                         aria-label="Type Combo"
                         name="comboType"
                         value={comboType}
                         onChange={(e) => handleChange(e)}
                     >
-                        <FormControlLabel value="off" control={<Radio />} label="% Off" />
-                        <FormControlLabel value="free" control={<Radio />} label="Free" />
+                        <FormControlLabel value="off" control={<Radio />} label="% Giảm giá" />
+                        <FormControlLabel value="free" control={<Radio />} label="Miễn phí" />
                     </RadioGroup>
                 </FormControl>
                 
@@ -333,12 +333,12 @@ export const ComboManage = ()=> {
                     disabled={!type ? true : false} value={off}
                     variant="standard"
                     id="off"
-                    label="%Off"
+                    label="% giảm giá"
                     multiline
                     maxRows={1}
                     color='warning'
-                    InputProps={{style: {fontFamily: 'Poppins'}, }} // font size of input text
-                    InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                    InputProps={{style: {fontFamily: 'be Vietnam'}, }} // font size of input text
+                    InputLabelProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input label
                     sx={{
                         width: '40%'
                     }}
@@ -358,12 +358,12 @@ export const ComboManage = ()=> {
                         <TextField
                         name="name" variant="standard" disabled={type ? true : false}
                         select 
-                        label="Category Name"
+                        label="Loại"
                         value={fre.name}
                         onChange={(e) => {handleFreeChange(index, e)}}
                         color='warning'
-                        InputProps={{style: {fontFamily: 'Poppins'},}} // font size of input text
-                        InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                        InputProps={{style: {fontFamily: 'be Vietnam'},}} // font size of input text
+                        InputLabelProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input label
                         sx={{
                             width: '70%'
                         }}
@@ -379,12 +379,12 @@ export const ComboManage = ()=> {
                         value={'' +  fre.number} disabled={type ? true : false}
                         variant="standard"
                         name="number"
-                        label="Number"
+                        label="Số lượng"
                         multiline
                         maxRows={1}
                         color='warning'
-                        InputProps={{style: {fontFamily: 'Poppins'},}} // font size of input text
-                        InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                        InputProps={{style: {fontFamily: 'be Vietnam'},}} // font size of input text
+                        InputLabelProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input label
                         sx={{
                             width: '30%'
                         }}
@@ -419,12 +419,12 @@ export const ComboManage = ()=> {
                     required 
                     variant="standard"
                     id="person"
-                    label="Person"
+                    label="Người"
                     multiline
                     maxRows={1}
                     color='warning'
-                    InputProps={{style: {fontFamily: 'Poppins'}, }} // font size of input text
-                    InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                    InputProps={{style: {fontFamily: 'be Vietnam'}, }} // font size of input text
+                    InputLabelProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input label
                     sx={{
                         width: '50%'
                     }}
@@ -437,8 +437,8 @@ export const ComboManage = ()=> {
                     multiline
                     maxRows={1}
                     color='warning'
-                    InputProps={{style: {fontFamily: 'Poppins'}, }} // font size of input text
-                    InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                    InputProps={{style: {fontFamily: 'be Vietnam'}, }} // font size of input text
+                    InputLabelProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input label
                     sx={{
                         width: '50%'
                     }}
@@ -459,12 +459,12 @@ export const ComboManage = ()=> {
                         <TextField
                         name="name" variant="standard"
                         select 
-                        label="Category Name"
+                        label="Loại"
                         value={category.name}
                         onChange={(e) => {handleCategoryChange(index, e)}}
                         color='warning'
-                        InputProps={{style: {fontFamily: 'Poppins'},}} // font size of input text
-                        InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                        InputProps={{style: {fontFamily: 'be Vietnam'},}} // font size of input text
+                        InputLabelProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input label
                         sx={{
                             width: '40%'
                         }}
@@ -479,12 +479,12 @@ export const ComboManage = ()=> {
                         required value={'' +  category.number}
                         variant="standard"
                         name="number"
-                        label="Number"
+                        label="Số lượng"
                         multiline
                         maxRows={1}
                         color='warning'
-                        InputProps={{style: {fontFamily: 'Poppins'},}} // font size of input text
-                        InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                        InputProps={{style: {fontFamily: 'be Vietnam'},}} // font size of input text
+                        InputLabelProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input label
                         sx={{
                             width: '40%'
                         }}
@@ -514,9 +514,9 @@ export const ComboManage = ()=> {
                 </Box>
                 <TextField onChange={(e) => {setDescription(e.target.value)}}
                 required variant="standard" multiline color='warning' maxRows={4}
-                id="description" label="Description"
-                inputProps={{style: {fontFamily: 'Poppins'},}} // font size of input text
-                InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                id="description" label="Mô tả"
+                inputProps={{style: {fontFamily: 'be Vietnam'},}} // font size of input text
+                InputLabelProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input label
                 sx={{
                     width: '100%'
                 }}
@@ -524,17 +524,17 @@ export const ComboManage = ()=> {
                 <TextField onChange={(e) => {setBanner(e.target.value)}}
                 required variant="standard" multiline color='warning' maxRows={1}
                 id="banner" label="URL Banner"
-                inputProps={{style: {fontFamily: 'Poppins'}}} // font size of input text
-                InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                inputProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input text
+                InputLabelProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input label
                 sx={{
                     width: '100%'
                 }}
                 />
                 <TextField onChange={(e) => {setImage(e.target.value)}}
                 required variant="standard" multiline color='warning' maxRows={1}
-                id="image" label="URL Image"
-                inputProps={{style: {fontFamily: 'Poppins'}}} // font size of input text
-                InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                id="image" label="URL Ảnh"
+                inputProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input text
+                InputLabelProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input label
                 sx={{
                     width: '100%'
                 }}
@@ -545,7 +545,7 @@ export const ComboManage = ()=> {
                 >
                     <DateTimePicker
                     sx={{width:'50%'}} variant="standard"
-                    label="Time start" 
+                    label="Bắt đầu" 
                     value={start}
                     onChange={(newValue) => {
                         setStart(newValue);
@@ -554,7 +554,7 @@ export const ComboManage = ()=> {
                     />
                     <DateTimePicker
                     sx={{width:'50%'}}
-                    label="Time end"
+                    label="Kết thúc"
                     value={end}
                     onChange={(newValue) => setEnd(newValue)}
                     renderInput={(params) => <TextField {...params} />}
@@ -572,7 +572,7 @@ export const ComboManage = ()=> {
                         backgroundColor: '#EA6A12',
                         borderRadius: '100px',
                         alignSelf: 'center',
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 'normal',
                         fontSize: '15px',
                         lineHeight: '175%',
@@ -583,7 +583,7 @@ export const ComboManage = ()=> {
                         marginBottom: 2,
                     }}
                     >
-                    Add
+                    Thêm
                 </Button>
                
             </Stack>
@@ -645,31 +645,31 @@ export const PizzaManage = (props)=> {
         },
         'dessert':{
             selector: useSelector(state => state.desserts),
-            menuName: 'Desserts',
+            menuName: 'Tráng miệng',
             add: add1Dessert,
             dbPath: 'dessert'
         },
         'drink':{
             selector: useSelector(state => state.drinks),
-            menuName: 'Drinks',
+            menuName: 'Đồ uống',
             add: add1Drink,
             dbPath: 'drink'
         },
         'vegetable':{
             selector: useSelector(state => state.vegetables),
-            menuName: 'Vegetables',
+            menuName: 'Món chay',
             add: add1Vegetable,
             dbPath: 'vegetarian'
         },
         'kid':{
             selector: useSelector(state => state.kids),
-            menuName: 'Kids',
+            menuName: 'Đồ cho bé',
             add: add1Kid,
             dbPath: 'kid'
         },
         'appetizer':{
             selector: useSelector(state => state.appetizers),
-            menuName: 'Appetizers',
+            menuName: 'Khai vị',
             add: add1Appetizer,
             dbPath: 'appetizer'
         }
@@ -718,33 +718,33 @@ export const PizzaManage = (props)=> {
             if(newName.length == 0 || newDescription.length ==0 || newImage.length == 0 || newPrice.length == 0 ||
                 !(newToppings[0].topping_name.length ==0 && newToppings[0].topping_price.length ==0) || 
                 newSizes[0].type_price.length ==0 || newSizes[0].type_detail.length ==0 ){
-                    alert("The form has not been completed !")
+                    alert("Chưa điền đủ thông tin !")
                     return false;
                 }
                 if(isNaN(parseInt(newPrice)) ){
-                    alert("Invalid value !");
+                    alert("Giá trị không hợp lệ !");
                     return false;
                 }
                 newSizes.forEach(a => {
-                    if(isNaN(parseInt(a.type_price)) || parseInt(a.type_price) < 0 || a.type_detail.length == 0){
-                        alert("Invalid value !");
+                    if(isNaN(parseInt(a.type_price)) || parseInt(a.type_price) <= 0 || a.type_detail.length == 0){
+                        alert("Giá trị không hợp lệ !");
                         return false;
                     }
                 });
                 newToppings.forEach(a => {
                     if(isNaN(parseInt(a.topping_price)) || parseInt(a.topping_price) <= 0 || a.topping_name.length == 0){
-                        alert("Invalid value !");
+                        alert("Giá trị không hợp lệ !");
                         return false;
                     }
                 });
         }
         else{
             if(newName.length == 0 || newDescription.length ==0 || newImage.length == 0 || newPrice.length == 0){
-                    alert("The form has not been completed !")
+                    alert("Chưa điền đủ thông tin !")
                     return false;
                 }
                 if(isNaN(parseInt(newPrice)) ){
-                    alert("Invalid value !");
+                    alert("Giá trị không hợp lệ !");
                     return false;
                 }
         }
@@ -767,9 +767,7 @@ export const PizzaManage = (props)=> {
         Sizes.splice(index,1);
         setNewSizes(Sizes);
     }
-    // ...........
 
-    //handle the dynamic Toppings in Modal
     const handleToppingChange = (index, e) => {
         const Toppings = [...newToppings];
         Toppings[index][e.target.name] = e.target.value ;
@@ -785,22 +783,6 @@ export const PizzaManage = (props)=> {
         Toppings.splice(index,1);
         setNewToppings(Toppings);
     }
-    // ...........
-
-    // const handleaddPizza = () => {
-    //     console.log( {
-    //         comment : [],
-    //         description : newDescription,
-    //         image_url : newImage,
-    //         order_number : 0,
-    //         price : newPrice,
-    //         rating: 0,
-    //         size: newSizes,
-    //         title: newName,
-    //         topping: newToppings,
-    //         type: ["Đế giòn","Đế mềm xốp truyền thống"]
-    //     })
-    // }
     
 
     const handleAddPizza = async () => {
@@ -826,7 +808,7 @@ export const PizzaManage = (props)=> {
                 dispatch(categories[category].add({id: resp.data.name, itm: newItem}));
 
 
-                setMess('Your item has been added successfully');
+                setMess('Đã thêm thành công');
                 setPosted(true);
                 // setInterval(window.location.reload(), 1000);
             }
@@ -834,7 +816,7 @@ export const PizzaManage = (props)=> {
         } catch (err) {
             // Handle Error Here
             console.error(err);
-            setMess('Sorry, Failed to add your item!');
+            setMess('Có sự cố xảy ra');
             setPosted(true);
         }
     }
@@ -862,7 +844,7 @@ export const PizzaManage = (props)=> {
                     sx={{
                         backgroundColor: '#EA6A12',
                         borderRadius: '100px',
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 'normal',
                         fontSize: '15px',
                         lineHeight: '175%',
@@ -874,7 +856,7 @@ export const PizzaManage = (props)=> {
                         marginRight: 2
                     }}
                     >
-                        {'Add ' + categories[category].menuName.slice(0, categories[category].menuName.length - 1)}
+                        {'Thêm ' + categories[category].menuName.slice(0, categories[category].menuName.length )}
         </Button>
         <Modal open={addPizza} onClose = {() => {setAddPizza(false)}}>
             <Fade in={addPizza} timeout={500}>
@@ -901,19 +883,19 @@ export const PizzaManage = (props)=> {
                         color: '#07143B',
                         textAlign: 'center',
                     }}
-                    >{'Your ' + categories[category].menuName.slice(0, categories[category].menuName.length - 1)}
+                    >{categories[category].menuName.slice(0, categories[category].menuName.length )}
                 </Typography>
                 <Stack direction="row" spacing={2}>
                 <TextField onChange={(e) => {setNewName(e.target.value)}}
                 required
                 variant="standard"
                 id="name-field"
-                label="Name"
+                label="Tên"
                 multiline
                 maxRows={1}
                 color='warning'
-                inputProps={{style: {fontFamily: 'Poppins'}}} // font size of input text
-                InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                inputProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input text
+                InputLabelProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input label
                 sx={{
                     width: '60%'
                 }}
@@ -922,12 +904,12 @@ export const PizzaManage = (props)=> {
                     required 
                     variant="standard"
                     id="price-field"
-                    label="Price"
+                    label="Giá"
                     multiline
                     maxRows={1}
                     color='warning'
-                    InputProps={{style: {fontFamily: 'Poppins'}, endAdornment: <InputAdornment position="end">VND</InputAdornment>,}} // font size of input text
-                    InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                    InputProps={{style: {fontFamily: 'be Vietnam'}, endAdornment: <InputAdornment position="end">VND</InputAdornment>,}} // font size of input text
+                    InputLabelProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input label
                     sx={{
                         width: '40%'
                     }}
@@ -950,12 +932,12 @@ export const PizzaManage = (props)=> {
                             required value={newSize.type_detail}
                             variant="standard"
                             name="type_detail"
-                            label="Size Name"
+                            label="Cỡ"
                             multiline
                             maxRows={1}
                             color='warning'
-                            InputProps={{style: {fontFamily: 'Poppins'},}} // font size of input text
-                            InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                            InputProps={{style: {fontFamily: 'be Vietnam'},}} // font size of input text
+                            InputLabelProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input label
                             sx={{
                                 width: '40%'
                             }}
@@ -964,12 +946,12 @@ export const PizzaManage = (props)=> {
                             required value={newSize.type_price}
                             variant="standard"
                             name="type_price"
-                            label="Size Price"
+                            label="Giá cỡ"
                             multiline
                             maxRows={1}
                             color='warning'
-                            InputProps={{style: {fontFamily: 'Poppins'}, endAdornment: <InputAdornment position="end">VND</InputAdornment>,}} // font size of input text
-                            InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                            InputProps={{style: {fontFamily: 'be Vietnam'}, endAdornment: <InputAdornment position="end">VND</InputAdornment>,}} // font size of input text
+                            InputLabelProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input label
                             sx={{
                                 width: '40%'
                             }}
@@ -1001,18 +983,18 @@ export const PizzaManage = (props)=> {
 
                 <TextField onChange={(e) => {setNewDescription(e.target.value)}}
                 required variant="standard" multiline color='warning' maxRows={4}
-                id="description-field" label="Description"
-                inputProps={{style: {fontFamily: 'Poppins'},}} // font size of input text
-                InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                id="description-field" label="Mô tả"
+                inputProps={{style: {fontFamily: 'be Vietnam'},}} // font size of input text
+                InputLabelProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input label
                 sx={{
                     width: '100%'
                 }}
                 />
                 <TextField onChange={(e) => {setNewImage(e.target.value)}}
                 required variant="standard" multiline color='warning' maxRows={1}
-                id="image-field" label="URL Image"
-                inputProps={{style: {fontFamily: 'Poppins'}}} // font size of input text
-                InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                id="image-field" label="URL Ảnh"
+                inputProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input text
+                InputLabelProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input label
                 sx={{
                     width: '100%'
                 }}
@@ -1034,12 +1016,12 @@ export const PizzaManage = (props)=> {
                             required value={newTopping.topping_name}
                             variant="standard"
                             name="topping_name"
-                            label="Topping Name"
+                            label="Tên Topping"
                             multiline
                             maxRows={1}
                             color='warning'
-                            InputProps={{style: {fontFamily: 'Poppins'},}} // font size of input text
-                            InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                            InputProps={{style: {fontFamily: 'be Vietnam'},}} // font size of input text
+                            InputLabelProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input label
                             sx={{
                                 width: '40%'
                             }}
@@ -1048,12 +1030,12 @@ export const PizzaManage = (props)=> {
                             required value={newTopping.topping_price}
                             variant="standard"
                             name="topping_price"
-                            label="Topping Price"
+                            label="Giá Topping"
                             multiline
                             maxRows={1}
                             color='warning'
-                            InputProps={{style: {fontFamily: 'Poppins'}, endAdornment: <InputAdornment position="end">VND</InputAdornment>,}} // font size of input text
-                            InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                            InputProps={{style: {fontFamily: 'be Vietnam'}, endAdornment: <InputAdornment position="end">VND</InputAdornment>,}} // font size of input text
+                            InputLabelProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input label
                             sx={{
                                 width: '40%'
                             }}
@@ -1094,7 +1076,7 @@ export const PizzaManage = (props)=> {
                         backgroundColor: '#EA6A12',
                         borderRadius: '100px',
                         alignSelf: 'center',
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 'normal',
                         fontSize: '15px',
                         lineHeight: '175%',
@@ -1105,7 +1087,7 @@ export const PizzaManage = (props)=> {
                         marginBottom: 2
                     }}
                     >
-                    Add
+                    Thêm món
                 </Button>
                
             </Stack>

@@ -1,6 +1,5 @@
-import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { FormControl, InputAdornment, TextField, styled, IconButton, Avatar, AppBar, Toolbar, Box, Stack,Button,Menu,MenuItem } from "@mui/material";
+import { TextField, styled, IconButton, Avatar, AppBar, Toolbar, Box, Stack,Button,Menu,MenuItem } from "@mui/material";
 import { useAuth } from '../context/AuthContext';
 import React,{useState} from "react";
 import { useNavigate } from 'react-router-dom';
@@ -20,28 +19,17 @@ const useStyles = makeStyles({
      
     }
 })
+
 export const Searchbar = ()=>{
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
-    const CssTextField = styled(TextField)({
-        '& .MuiOutlinedInput-root': {
-          '&.Mui-focused fieldset': {
-            borderColor: 'black',
-          },
-        },
-        '& fieldset':{
-            borderRadius: 100,
-            fontFamily: 'Poppins',
-        },
-        //marginTop: 15,
-        marginLeft: 20
-    });
+
     const {logout} = useAuth();
     const {resetPassword} = useAuth(); 
     const {currentUser} = useAuth();
     const navigate = useNavigate();
-    const handlelogout= ()=>{logout();navigate('/') }
+    const handlelogout= ()=>{logout();setAnchorEl(null);navigate('/') }
 
     const changePassword = async ()=>{
         resetPassword(currentUser.email);
@@ -50,6 +38,7 @@ export const Searchbar = ()=>{
 
     const handleClose = () => {setAnchorEl(null)}
     const handleClick = (e) => {setAnchorEl(e.currentTarget);}
+
     return(
         <AppBar
             position='sticky'
@@ -59,6 +48,7 @@ export const Searchbar = ()=>{
                 zIndex: 105,
             }}
         >
+            {console.log(anchorEl)}
             <Toolbar
             sx={{
                 width: '100%'
@@ -116,7 +106,7 @@ export const Searchbar = ()=>{
                             }
                         }}
                         >
-                            Sign in</Button>
+                            Đăng nhập</Button>
              
                 }
             </Stack>

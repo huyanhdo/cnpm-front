@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Box, Button, Typography, Modal, TextField, Fade, Stack, Select, MenuItem, Snackbar} from '@mui/material';
+import {Box, Button, Typography, Modal, TextField, Fade, Stack, Select, MenuItem, Snackbar, Checkbox, FormControlLabel} from '@mui/material';
 import { Cart } from "../components/mainCart";
 import { useSelector, useDispatch } from "react-redux";
 import {itemRemoved} from '../store/cartSlice';
@@ -26,7 +26,7 @@ export const EmptyCart = () =>{
             />
         <Typography variant="subtitle1"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 700,
                         fontSize: '35px',
                         lineHeight: '175%',
@@ -34,7 +34,7 @@ export const EmptyCart = () =>{
                         textAlign: 'center',
                         marginTop: '50px'
                     }}
-                    >Your cart is empty.
+                    >Giỏ hàng trống
                 </Typography>
         </Box>
 
@@ -84,19 +84,22 @@ export const CartPage = ()=>{
     const [phone, setPhone] = useState('')
     const [province, setProvince] = useState('Ha Noi')
     const [address, setAddress] = useState('')
+    const [inPlace, setInPlace] = useState(false);
     const [posted, setPosted] = useState(false)
     const [message, setMessage] = useState('')
     const pros = ['Ha Noi', 'Ha Nam', 'Ninh Binh', 'Nam Dinh', 'Hai Duong', 'Hung Yen']
     const validForm = () =>{
         if(customer.length ===0) return false;
+        if(!inPlace){
         if(address.length ===0) return false;
         if(province.length ===0) return false;
+        }
         return /[0-9]{10}/.test(phone)
     }
     const pizzas = useSelector(state => state.pizzas.entities)
     const combos = useSelector(state => state.combos.entities)
     const makeOrder = () =>{
-        const shipment = province ==='Ha Noi'? 0 : 30000
+        const shipment = inPlace || province ==='Ha Noi'? 0 : 30000
         const time = Date.now()
         const detail = {
             'pizza': [],
@@ -127,8 +130,8 @@ export const CartPage = ()=>{
                 const comboId = cartCombo.comboId
                 const combo = combos[comboId]
                 const comboNumber = cartCombo.number;
-                const pizzaNumber = combo.pizza
-                
+                let pizzaNumber = combo.pizza
+                if(combo.free && combo.free.pizza) pizzaNumber += combo.free.pizza;
                 if(pizzaNumber && pizzaNumber > 0){
                     const pizzaSlot = cartCombo.pizzaSlot
                     for(let i = 0;i< pizzaNumber;i++){
@@ -146,19 +149,19 @@ export const CartPage = ()=>{
                 }
                 const categories = {
                     'drink': {
-                        comNumber: combo.drink, slot: cartCombo.drinkSlot
+                        comNumber: combo.drink ? combo.drink : 0 + combo.free && combo.free.drink ? combo.free.drink : 0, slot: cartCombo.drinkSlot
                     },
                     'kid': {
-                        comNumber: combo.kid, slot: cartCombo.kidSlot
+                        comNumber: combo.kid ? combo.kid : 0 + combo.free && combo.free.kid ? combo.free.kid : 0, slot: cartCombo.kidSlot
                     },
                     'appetizer': {
-                        comNumber: combo.appetizer, slot: cartCombo.appetizerSlot
+                        comNumber: combo.appetizer ? combo.appetizer : 0 + combo.free && combo.free.appetizer ? combo.free.appetizer : 0, slot: cartCombo.appetizerSlot
                     },
                     'dessert': {
-                        comNumber: combo.dessert, slot: cartCombo.dessertSlot
+                        comNumber: combo.dessert ? combo.dessert : 0 + combo.free && combo.free.dessert ? combo.free.dessert : 0, slot: cartCombo.dessertSlot
                     },
                     'vegetable': {
-                        comNumber: combo.vegetable, slot: cartCombo.vegetableSlot
+                        comNumber: combo.vegetable ? combo.vegetable : 0 + combo.free && combo.free.vegetable ? combo.free.vegetable : 0, slot: cartCombo.vegetableSlot
                     },
                 }
                 Object.keys(categories).map(category =>{
@@ -193,7 +196,7 @@ export const CartPage = ()=>{
             })
         })
         detail['pizza'] = orderedPizzas;
-        const fullAddress = address + '-' + province
+        const fullAddress = inPlace ? "Đặt tại quán" :address + ',' + province
         const order = {
             "customer": customer,
             "phone": phone,
@@ -216,13 +219,13 @@ export const CartPage = ()=>{
             )
             if(result && result.status === 200){
                 console.log(result)
-                setMessage('Your order has been posted successfully')
+                setMessage('Thêm món thành công')
                 dispatch(addOrder({id:result.data.name, data: order}))
             }
-            else setMessage('Opps...Sorry, something went wrong!')
+            else setMessage('Có lỗi xảy ra!')
             setPosted(true)
         }catch(err){
-            setMessage('Opps...Sorry, something went wrong!')
+            setMessage('Có lỗi xảy ra!')
             setPosted(true)
         }
     }
@@ -250,7 +253,7 @@ export const CartPage = ()=>{
                         color: '#07143B',
                         textAlign: 'start'
                     }}
-                    >Total: $ {totalValue}
+                    >Tổng tiền: {totalValue} VND
                     </Typography>
                     <Button variant="contained" 
                     disabled = {totalValue < 0.01}
@@ -259,7 +262,7 @@ export const CartPage = ()=>{
                         zIndex: 10,
                         backgroundColor: '#EA6A12',
                         borderRadius: '50px',
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 'normal',
                         fontSize: '16px',
                         width: '100px',
@@ -270,7 +273,7 @@ export const CartPage = ()=>{
                         },
                     }}
                 >
-                    Order
+                    Đặt hàng
                 </Button>
                 </Box>
                 <Modal open={pay} onClose = {() => {SetPay(false)}}>
@@ -298,12 +301,12 @@ export const CartPage = ()=>{
                         color: '#07143B',
                         textAlign: 'center',
                     }}
-                    >Please fill this form
+                    > Vui lòng điền đơn này                
                 </Typography>
                 <TextField
                 required
                 id="name-field"
-                label="Name"
+                label="Tên"
                 value={customer}
                 onChange={(e) =>{
                     setCustomer(e.target.value)
@@ -311,13 +314,13 @@ export const CartPage = ()=>{
                 multiline
                 maxRows={1}
                 color='warning'
-                inputProps={{style: {fontFamily: 'Poppins'}}} // font size of input text
-                InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                inputProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input text
+                InputLabelProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input label
                 />
                 <TextField
                 required
                 id="name-field"
-                label="Phone Number"
+                label="Số điện thoại"
                 value = {phone}
                 onChange={(e) =>{
                     setPhone(e.target.value)
@@ -326,18 +329,33 @@ export const CartPage = ()=>{
                 type="number"
                 maxRows={1}
                 color='warning'
-                inputProps={{style: {fontFamily: 'Poppins'}}} // font size of input text
-                InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                inputProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input text
+                InputLabelProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input label
                 />
+                <FormControlLabel
+                label="Đặt tại quán"
+                control = {
+                    <Checkbox
+                        color="warning"
+                        checked={inPlace}
+                        onChange={e => setInPlace(prev => !prev)}
+                    />
+                }
+                />
+                
+                
+                
+                
+                { !inPlace &&
                 <Select
                 label="Province"
                 value={province}
                 onChange={(e) =>{
                     setProvince(e.target.value)
                 }}
-                inputProps={{style: {fontFamily: 'Poppins'}}}
-                MenuProps={{style: {fontFamily: 'Poppins'}}}
-                SelectDisplayProps={{style: {fontFamily: 'Poppins'}}}
+                inputProps={{style: {fontFamily: 'be Vietnam'}}}
+                MenuProps={{style: {fontFamily: 'be Vietnam'}}}
+                SelectDisplayProps={{style: {fontFamily: 'be Vietnam'}}}
                 color='warning'
                 >
                     {
@@ -345,7 +363,7 @@ export const CartPage = ()=>{
                             <MenuItem 
                             value={pro}
                             sx={{
-                                fontFamily: 'Poppins'
+                                fontFamily: 'be Vietnam'
                             }}
                             >
                                 {pro}
@@ -353,10 +371,12 @@ export const CartPage = ()=>{
                         )    
                     }
                 </Select>
+                }
+                {!inPlace &&
                 <TextField
                 required
                 id="name-field"
-                label="Address"
+                label="Địa chỉ chi tiết"
                 multiline
                 value={address}
                 onChange={(e) =>{
@@ -364,30 +384,32 @@ export const CartPage = ()=>{
                 }}
                 maxRows={1}
                 color='warning'
-                inputProps={{style: {fontFamily: 'Poppins'}}} // font size of input text
-                InputLabelProps={{style: {fontFamily: 'Poppins'}}} // font size of input label
+                inputProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input text
+                InputLabelProps={{style: {fontFamily: 'be Vietnam'}}} // font size of input label
                 />
+                }
+                
                 <Typography variant="h6"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 700,
                         fontSize: '15px',
                         lineHeight: '52px',
                         color: '#07143B',
                         textAlign: 'start',
                     }}
-                    >Shipping Fee: {province ==='Ha Noi'? 0 : 30000}
+                    >Phí ship: {inPlace || province ==='Ha Noi'? 0 : 30000}
                 </Typography>
                 <Typography variant="h6"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 700,
                         fontSize: '20px',
                         lineHeight: '52px',
                         color: '#07143B',
                         textAlign: 'start',
                     }}
-                    >Total Pay: {totalValue + (province ==='Ha Noi'? 0 : 30000)}
+                    >Tổng đơn: {totalValue + (inPlace || province ==='Ha Noi'? 0 : 30000)}
                 </Typography>
                 <Button variant="contained" 
                     disabled={!validForm()}
@@ -399,7 +421,7 @@ export const CartPage = ()=>{
                         backgroundColor: '#EA6A12',
                         borderRadius: '100px',
                         alignSelf: 'center',
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 'normal',
                         fontSize: '15px',
                         lineHeight: '175%',
@@ -411,7 +433,7 @@ export const CartPage = ()=>{
                         width: '150px'
                     }}
                     >
-                    Order
+                    Đặt hàng
                 </Button>
             </Stack>
             </Fade>

@@ -3,6 +3,14 @@ import { Divider, IconButton, Stack, Typography, Box } from '@mui/material';
 import React, {useState} from 'react';
 import { useSelector } from 'react-redux';
 import {useNavigate} from 'react-router-dom'
+const label ={
+    'kid':'Đồ cho bé',
+    'pizza':'Pizza',
+    'appetizer':'Khai vị',
+    'vegetable':'Đồ chay',
+    'drink':'Đồ uống',
+    'dessert':'Tráng miệng'
+}
 export const Trending = (props)=>{
     const navigate = useNavigate();
     const order = props.order;
@@ -34,18 +42,18 @@ export const Trending = (props)=>{
             <Typography variant="subtitle1"
                     sx={{
                         
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 400,
                         fontSize: '13px',
                         lineHeight: '22.75px',
                         color: hov? 'white':'#EA6A12',
                         textAlign: 'start'
                     }}
-                    >👑 Top {category}s
+                    >👑 {label[category]}
             </Typography>
             <Typography variant="subtitle1"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 600,
                         fontSize: '16px',
                         lineHeight: '175%',
@@ -57,7 +65,7 @@ export const Trending = (props)=>{
             </Typography>
             <Typography variant="subtitle1"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 400,
                         fontSize: '13px',
                         lineHeight: '22.75px',
@@ -65,7 +73,7 @@ export const Trending = (props)=>{
                         textAlign: 'start',
                         marginBottom: '20px'
                     }}
-                    >{order.order_number} orders                    
+                    >{order.order_number} người đã gọi                 
             </Typography>
             <Divider variant="light"  sx={{
                 width: '50%',
@@ -80,14 +88,14 @@ export const Trending = (props)=>{
             >
                 <Typography variant="subtitle1"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 600,
                         fontSize: '13px',
                         lineHeight: '175%',
                         color: hov? 'white': '#EA6A12',
                         textAlign: 'start'
                     }}
-                    >$ {order.price}
+                    >{order.price} VND
                 </Typography>
                 <IconButton
                 size="small"
@@ -163,7 +171,7 @@ export const TrendingList = ()=>{
                         color: '#07143B',
                         textAlign: 'start'
                     }}
-                    >Most Orders
+                    >Được gọi nhiều nhất
         </Typography>
         </Box>
         <Box

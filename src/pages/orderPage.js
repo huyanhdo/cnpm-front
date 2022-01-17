@@ -29,7 +29,7 @@ export const OrderPage = () =>{
             }}>
                 <Typography variant="h6"
                 sx={{
-                    fontFamily: 'Poppins',
+                    fontFamily: 'be Vietnam',
                     fontWeight: 700,
                     fontSize: '30px',
                     lineHeight: '52px',
@@ -38,15 +38,20 @@ export const OrderPage = () =>{
                     marginBottom: '10px',
                     width: '100%'
                 }}
-                >Orders List
+                >Danh sách đơn hàng
             </Typography>
+            <Box sx={{
+                width: '100%',
+                overflow: "auto",
+                maxHeight: '1000px'
+            }}>
             {
                 orders.ids.map((id,index) =>
                     <Box
                     sx={{
                         marginBottom: '10px',
                         borderRadius: '24px',
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 700,
                         fontSize: '16px',
                         lineHeight: '52px',
@@ -59,10 +64,11 @@ export const OrderPage = () =>{
                         setCurrentId(index)
                     }}
                     >
-                        {"Order code: " + id}
+                        {"Mã đơn hàng: " + id}
                     </Box>
                 )
             }
+            </Box>
             </Box>
         </Box>
     )

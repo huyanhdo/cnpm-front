@@ -3,7 +3,6 @@ import {Box, Divider, IconButton, Stack, Typography, Card, List, ListItem, Chip,
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useSelector} from "react-redux";
-import { ComboCard } from "./combo";
 import { useNavigate } from "react-router";
 import AddRounded from "@mui/icons-material/AddRounded";
 import { ExpandLess, ExpandMore, RemoveRounded } from "@mui/icons-material";
@@ -85,7 +84,7 @@ export const PizzaCartItem = (props)=>{
                         textAlign: 'start',
                         display: {md: 'block', sm: 'none', xs: 'none'}
                     }}
-                    >Total: $ {cartInfo.total}
+                    >Tổng tiền:  {cartInfo.total}VND
                     </Typography>
                         <IconButton
                         onClick={() =>{
@@ -141,7 +140,7 @@ export const PizzaCartItem = (props)=>{
                 >
                     <Typography variant="subtitle1"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 600,
                         fontSize: {md: '16px', sm: '14px', xs: '13px'},
                         lineHeight: '175%',
@@ -149,11 +148,11 @@ export const PizzaCartItem = (props)=>{
                         textAlign: 'start',
                         marginBottom: '10px'
                     }}
-                    >Size: {pizza.size[cartInfo.size].type_detail}
+                    >Cỡ: {pizza.size[cartInfo.size].type_detail}
                     </Typography>
                     <Typography variant="subtitle1"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 600,
                         fontSize: {md: '16px', sm: '14px', xs: '13px'},
                         lineHeight: '175%',
@@ -161,11 +160,11 @@ export const PizzaCartItem = (props)=>{
                         textAlign: 'start',
                         marginBottom: '10px'
                     }}
-                    >Sole: {pizza.type[cartInfo.sole]}
+                    >Đế: {pizza.type[cartInfo.sole]}
                     </Typography>
                     <Typography variant="subtitle1"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 600,
                         fontSize: {md: '16px', sm: '14px', xs: '13px'},
                         lineHeight: '175%',
@@ -173,7 +172,7 @@ export const PizzaCartItem = (props)=>{
                         textAlign: 'start',
                         marginBottom: '10px'
                     }}
-                    >Number: {cartInfo.number}
+                    >Số lượng: {cartInfo.number}
                     </Typography>
                 </Stack>
                 <Typography variant="h6"
@@ -187,7 +186,7 @@ export const PizzaCartItem = (props)=>{
                         textAlign: 'start',
                         display: {md: 'none', sm: 'block', xs: 'block'}
                     }}
-                    >Total: $ {cartInfo.total}
+                    >Tổng tiền: {cartInfo.total}đ
                     </Typography>
                 <Divider sx={{width: '50%'}}/>
                 <Box
@@ -203,12 +202,12 @@ export const PizzaCartItem = (props)=>{
                             return cartInfo.toppings[toppingId] && 
                             <Chip label={topping.topping_name} sx={{
                                 margin: '5px 5px 5px 0',
-                                fontFamily: 'Poppins'
+                                fontFamily: 'be Vietnam'
                             }}/>
                         })
                         // : <Chip label='No Topping' sx={{
                         //     margin: '5px 5px 5px 0',
-                        //     fontFamily: 'Poppins'
+                        //     fontFamily: 'be Vietnam'
                         // }}/>
                     }
                 </Box>
@@ -292,7 +291,7 @@ export const ExtraCartItem = (props)=>{
                         textAlign: 'start',
                         display: {md: 'block', sm: 'none', xs: 'none'}
                     }}
-                    >Total: $ {round(num * price)}
+                    >Tổng tiền:  {round(num * price)}VND
                     </Typography>
                         <IconButton
                         sx={{
@@ -319,14 +318,14 @@ export const ExtraCartItem = (props)=>{
                 <Stack spacing={2} direction="row">
             <Typography variant="h6"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 700,
                         fontSize: {md: '20px', sm: '16px', xs: '15px'},
                         lineHeight: '52px',
                         color: '#07143B',
                         textAlign: 'center',
                     }}
-                    >Number: 
+                    >Số lượng: 
             </Typography>
             <Stack direction="row" spacing={5}
             sx={{
@@ -364,7 +363,7 @@ export const ExtraCartItem = (props)=>{
                 </IconButton>
                 <Typography variant="subtitle1"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 600,
                         fontSize: '16px',
                         lineHeight: '175%',
@@ -413,7 +412,7 @@ export const ExtraCartItem = (props)=>{
                         textAlign: 'start',
                         display: {md: 'none', sm: 'block', xs: 'block'}
                     }}
-                    >Total: $ {round(price * num)}
+                    >Tổng tiền: {round(price * num)}VND
                     </Typography>
             </Stack>
         </Box>
@@ -446,7 +445,7 @@ export const ComboMiniItem = (props) =>{
             />
             <Typography variant="subtitle1"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 600,
                         fontSize: {md: '16px', sm: '14px', xs: '13px'},
                         lineHeight: '175%',
@@ -467,23 +466,31 @@ export const ComboCartItem = (props)=>{
     const [expand, setExpand] = useState(false);
     const categories = {
         'pizza':{
-            number: combo.pizza, slot: cartInfo.pizzaSlot, selector: useSelector(state => state.pizzas.entities)
+            number: combo.pizza ? combo.pizza : 0, slot: cartInfo.pizzaSlot, selector: useSelector(state => state.pizzas.entities)
         },
         'kid':{
-            number: combo.kid, slot: cartInfo.kidSlot, selector: useSelector(state => state.kids.entities)
+            number: combo.kid ? combo.kid : 0, slot: cartInfo.kidSlot, selector: useSelector(state => state.kids.entities)
         },
         'vegetable':{
-            number: combo.vegetable, slot: cartInfo.vegetableSlot, selector: useSelector(state => state.vegetables.entities)
+            number: combo.vegetable ? combo.vegetable : 0, slot: cartInfo.vegetableSlot, selector: useSelector(state => state.vegetables.entities)
         },
         'appetizer':{
-            number: combo.appetizer, slot: cartInfo.appetizerSlot, selector: useSelector(state => state.appetizers.entities)
+            number: combo.appetizer ? combo.appetizer : 0, slot: cartInfo.appetizerSlot, selector: useSelector(state => state.appetizers.entities)
         },
         'dessert':{
-            number: combo.dessert, slot: cartInfo.dessertSlot, selector: useSelector(state => state.desserts.entities)
+            number: combo.dessert ? combo.dessert : 0, slot: cartInfo.dessertSlot, selector: useSelector(state => state.desserts.entities)
         },
         'drink':{
-            number: combo.drink, slot: cartInfo.drinkSlot, selector: useSelector(state => state.drinks.entities)
+            number: combo.drink ? combo.drink : 0, slot: cartInfo.drinkSlot, selector: useSelector(state => state.drinks.entities)
         },
+    }
+    if(combo.free){
+        categories['pizza'].number += combo.free.pizza ? combo.free.pizza : 0;
+        categories['kid'].number += combo.free.kid ? combo.free.kid : 0;
+        categories['vegetable'].number += combo.free.vegetable ? combo.free.vegetable : 0;
+        categories['appetizer'].number += combo.free.appetizer ? combo.free.appetizer : 0;
+        categories['dessert'].number += combo.free.dessert ? combo.free.dessert : 0;
+        categories['drink'].number += combo.free.drink ? combo.free.drink : 0;
     }
     const navigate = useNavigate()
     return (
@@ -555,7 +562,7 @@ export const ComboCartItem = (props)=>{
                         textAlign: 'start',
                         display: {md: 'block', sm: 'none', xs: 'none'}
                     }}
-                    >Total: $ {cartInfo.total}
+                    >Tổng tiền: {cartInfo.total}VND
                     </Typography>
                         <IconButton
                         onClick={() =>{
@@ -632,7 +639,7 @@ export const ComboCartItem = (props)=>{
                 >
                     <Typography variant="subtitle1"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 600,
                         fontSize: {md: '16px', sm: '14px', xs: '13px'},
                         lineHeight: '175%',
@@ -640,11 +647,11 @@ export const ComboCartItem = (props)=>{
                         textAlign: 'start',
                         marginBottom: '10px'
                     }}
-                    >{combo.off}% Off
+                    >{combo.off > 0 ? combo.off + " %Off" : "Bonus"}
                     </Typography>
                     <Typography variant="subtitle1"
                     sx={{
-                        fontFamily: 'Poppins',
+                        fontFamily: 'be Vietnam',
                         fontWeight: 600,
                         fontSize: {md: '16px', sm: '14px', xs: '13px'},
                         lineHeight: '175%',
@@ -652,7 +659,7 @@ export const ComboCartItem = (props)=>{
                         textAlign: 'start',
                         marginBottom: '10px'
                     }}
-                    >Number: {cartInfo.number}
+                    >Số lượng: {cartInfo.number}
                     </Typography>
                 </Stack>
                 <Typography variant="h6"
@@ -666,7 +673,7 @@ export const ComboCartItem = (props)=>{
                         textAlign: 'start',
                         display: {md: 'none', sm: 'block', xs: 'block'}
                     }}
-                    >Total: $ {cartInfo.total}
+                    >Tổng tiền: {cartInfo.total}VND
                 </Typography>
                 
             </Stack>
@@ -695,7 +702,7 @@ export const ComboCartItem = (props)=>{
                                 for(let i = 0; i < category.number;i++)range.push(i)
                                 return range.map(i =>{
                                     const productId = category.slot[i].productId
-                                    return <ComboMiniItem 
+                                    return productId && category.selector[productId] && <ComboMiniItem 
                                     image = {category.selector[productId].image_url}
                                     title = {category.selector[productId].title}/>
                                 })
@@ -762,7 +769,7 @@ export const Cart = (props)=>{
                         marginTop: '50px',
                         marginBottom: '50px'
                     }}
-                >Your Cart
+                >Giỏ hàng của bạn
             </Typography>
             <Divider variant="middle"/>
             {
@@ -787,11 +794,13 @@ export const Cart = (props)=>{
             }}>
             { 
                 cart.ids.map((itemId) =>{
-                    return(
+                    const cartInfo = cart.entities[itemId]
+                    const pizza = allPizzas[cart.entities[itemId].pizzaId]
+                    return cartInfo && pizza &&(
                             <ListItem>
                                 <PizzaCartItem 
-                                cartInfo = {cart.entities[itemId]}
-                                pizza = {allPizzas[cart.entities[itemId].pizzaId]}
+                                cartInfo = {cartInfo}
+                                pizza = {pizza}
                                 cartId = {itemId}
                                 handleCartChange = {props.handleCartChange}
                                 />
@@ -827,7 +836,7 @@ export const Cart = (props)=>{
                 cartExtras[category].ids.map((itemId) =>{
                     const cartItem = cartExtras[category].entities[itemId]
                     const extra = categories[cartItem.category].selector.entities[itemId]
-                    return(
+                    return extra && cartItem && (
                             <ListItem>
                                 <ExtraCartItem 
                                 category = {category}
