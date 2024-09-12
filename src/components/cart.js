@@ -84,7 +84,7 @@ const CartItem = (props)=>{
                         textAlign: 'start',
                         marginBottom: '10px',
                     }}
-                    >$ {price}
+                    > {price}đ
                 </Typography>
             </Box>
         </Stack>
@@ -156,12 +156,14 @@ export const Cart = ()=>{
             
             {
                 cart.ids && cart.ids.map(id =>{
-                    return(
+                    const cartInfo = cart.entities[id]
+                    const pizza = pizzas[cartInfo.pizzaId]
+                    return pizza && cartInfo && (
                         <CartItem 
-                        image={pizzas[cart.entities[id].pizzaId].image_url} 
-                        name={pizzas[cart.entities[id].pizzaId].title}
-                        number={cart.entities[id].number} 
-                        price={cart.entities[id].total}
+                        image={pizza.image_url} 
+                        name={pizza.title}
+                        number={cartInfo.number} 
+                        price={cartInfo.total}
                         />
                     )
                 })
@@ -172,12 +174,14 @@ export const Cart = ()=>{
             cartExtras[category] && cartExtras[category].ids && cartExtras[category].ids.length > 0 &&
             
                 cartExtras[category].ids.map((itemId) =>{
-                    return(
+                    const extra = categories[category].selector[itemId]
+                    const cartInfo = cartExtras[category].entities[itemId]
+                    return extra && cartInfo && (
                         <CartItem 
-                            image = {categories[category].selector[itemId].image_url}
-                            name = {categories[category].selector[itemId].title}
-                            number = {cartExtras[category].entities[itemId].number}
-                            price = {cartExtras[category].entities[itemId].total}
+                            image = {extra.image_url}
+                            name = {extra.title}
+                            number = {cartInfo.number}
+                            price = {cartInfo.total}
                         />
                     )
                 })
@@ -185,13 +189,15 @@ export const Cart = ()=>{
             
             {
             cartCombos.ids && cartCombos.ids.map(id =>{
-                    const comboId = cartCombos.entities[id].comboId;
-                    return(
+                    const cartInfo = cartCombos.entities[id]
+                    const comboId = cartInfo.comboId;
+                    const combo = combos[comboId];
+                    return combo && cartInfo && (
                         <CartItem 
-                        image={combos[comboId].image} 
-                        name={combos[comboId].title}
-                        number={cartCombos.entities[id].number} 
-                        price={cartCombos.entities[id].total}
+                        image={combo.image} 
+                        name={combo.title}
+                        number={cartInfo.number} 
+                        price={cartInfo.total}
                         />
                     )
                 })

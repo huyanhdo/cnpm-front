@@ -39,7 +39,7 @@ export const SinglePizza = ()=>{
     const [posted, setPosted] = useState(false);
     const [message, setMess] = useState('');
     const max = 2
-    const totalPage = Math.ceil(comments.length / max);
+    const totalPage = Math.ceil(comments ? comments.length / max : 1);
     const pageList = [];
     for(let i = 1;i <= totalPage;i++)pageList.push(i);
     const [page, setPage] = useState(1);

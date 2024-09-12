@@ -23,7 +23,7 @@ const dessertSlice = createSlice({
         },
         add1Dessert(state, action){
             const id = action.payload.id;
-            state.entities[id] = action.payload.itm;
+            state.entities[id] = action.payload.item;
             state.ids.push(id);
         },
         delete1Dessert(state, action){

@@ -23,7 +23,7 @@ const kidSlice = createSlice({
         },
         add1Kid(state, action){
             const id = action.payload.id;
-            state.entities[id] = action.payload.itm;
+            state.entities[id] = action.payload.item;
             state.ids.push(id);
         },
         delete1Kid(state, action){
